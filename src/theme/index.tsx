@@ -1,153 +1,88 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-Thin.ttf");
-    font-style: normal;
-    font-weight: 100;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-ThinItalic.ttf");
-    font-style: italic;
-    font-weight: 100;
-    font-display: swap;
-  }
 
   @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-ExtraLight.ttf");
-    font-style: normal;
-    font-weight: 200;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-ExtraLightItalic.ttf");
-    font-style: italic;
-    font-weight: 200;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-Light.ttf");
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-LightItalic.ttf");
-    font-style: italic;
-    font-weight: 300;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-Regular.ttf");
+    font-family: "Proxima Nova";
+    src: url("/fonts/ProximaNova/ProximaNova-Regular.woff2");
     font-style: normal;
     font-weight: 400;
     font-display: swap;
   }
-  
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-RegularItalic.ttf");
-    font-style: italic;
-    font-weight: 400;
-    font-display: swap;
-  }
 
   @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-Medium.ttf");
+    font-family: "Proxima Nova";
+    src: url("/fonts/ProximaNova/ProximaNova-Medium.woff2");
     font-style: normal;
     font-weight: 500;
     font-display: swap;
   }
 
   @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-MediumItalic.ttf");
-    font-style: italic;
-    font-weight: 500;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-SemiBold.ttf");
+    font-family: "Proxima Nova";
+    src: url("/fonts/ProximaNova/ProximaNova-Semibold.woff2");
     font-style: normal;
     font-weight: 600;
     font-display: swap;
   }
-  
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-SemiBoldItalic.ttf");
-    font-style: italic;
-    font-weight: 600;
-    font-display: swap;
-  }
 
   @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-Bold.ttf");
+    font-family: "Proxima Nova";
+    src: url("/fonts/ProximaNova/ProximaNova-Bold.woff2");
     font-style: normal;
     font-weight: 700;
     font-display: swap;
   }
   
   @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-BoldItalic.ttf");
-    font-style: italic;
-    font-weight: 700;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-ExtraBold.ttf");
+    font-family: "Proxima Nova";
+    src: url("/fonts/ProximaNova/ProximaNova-ExtraBold.woff2");
     font-style: normal;
     font-weight: 800;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-ExtraBoldItalic.ttf");
-    font-style: italic;
-    font-weight: 800;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-Black.ttf");
-    font-style: normal;
-    font-weight: 900;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: "Poppins";
-    src: url("/fonts/Poppins/Poppins-BlackItalic.ttf");
-    font-style: italic;
-    font-weight: 900;
     font-display: swap;
   }
 
-  body {
+  .slide {
+    min-width: 359px;
+    padding: 0px 12px;
+
+    @media screen and (max-width: 464px) {
+      min-width: 306px;
+      padding: 0px 8px;
+    }
+  }
+
+  .noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently */
+  }
+
+  html, body {
     padding: 0;
     margin: 0;
+    min-height: 100% !important;
+    height: 100%;
+  }
+
+  h1,h2,h3,h4,h5 {
+    margin: 0px;
+  }
+
+  h2 {
+    letter-spacing: -.06em;
+    line-height: 62px;
+    font-size: 62px;
+    font-weight: 700px;
+  }
+
+  h4 {
+    line-height: 22px;
+    font-size: 18px;
+    font-weight: 600;
   }
 
   a {
@@ -155,16 +90,29 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  button {
+    border-radius: 5px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
   * {
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Proxima Nova", sans-serif;
+    color: #333;
   }
+
 
 `;
 
 const theme = {
   colors: {
     primary: '#8A199C',
+    black: '#333',
   },
 };
 
