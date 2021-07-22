@@ -1,3 +1,4 @@
+import '@components/Carousel/styles.css';
 import { ThemeProvider } from 'styled-components';
 
 import type { AppProps } from 'next/app';
