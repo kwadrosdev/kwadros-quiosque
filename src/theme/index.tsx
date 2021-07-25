@@ -61,6 +61,17 @@ export const GlobalStyle = createGlobalStyle`
     user-select: none; /* Non-prefixed version, currently */
   }
 
+  .player-wrapper {
+    position: relative;
+    padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
+  }
+
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
   html, body {
     padding: 0;
     margin: 0;

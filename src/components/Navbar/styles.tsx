@@ -1,24 +1,24 @@
 import styled from 'styled-components';
-import Link from 'next/link';
 
 export const Container = styled.nav`
   width: 100%;
   height: 90px;
-  border: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 50px;
+  overflow: hidden;
 `;
 
 export const Logo = styled.div`
   display: flex;
   align-items: center;
-  flex: 3;
+  padding-left: 50px;
+  flex-grow: 3;
 `;
 
 export const ImgContainer = styled.div`
   cursor: pointer;
-  margin-left: 36px;
   position: relative;
   width: 150px;
   height: 50px;
@@ -28,7 +28,8 @@ export const Menu = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  flex: 1;
+  flex-grow: 1;
+  
 `;
 
 export const MenuItem = styled.a`
@@ -36,20 +37,17 @@ export const MenuItem = styled.a`
   color: #000;
   text-decoration: none;
   cursor: pointer;
-
-  &:hover {
-    font-weight: bold;
-  }
+  font-weight: 600;
 `;
 
 export const MenuButton = styled.button`
   background-color: #fff;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
-  border-radius: 4px;
+  border: 2px solid ${({ theme }) => theme.colors.primary};
   border-radius: 5px;
   color: ${({ theme }) => theme.colors.primary};
-  font-size: 14px;
-  min-width: 120px;
+  font-size: 17px;
+  font-weight: 600;
+  min-width: 150px;
   display: flex;
   align-items: center;
   justify-content: center;

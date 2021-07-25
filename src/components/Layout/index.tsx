@@ -1,13 +1,13 @@
 import React from 'react';
-import { Container } from './styles';
+import { Container, Content } from './styles';
 
 import Navbar from '../Navbar';
 
-const Layout: React.FC = ({children}) => {
+const Layout: React.FC = ({ children }) => {
   return (
     <Container>
       <Navbar />
-      {children}
+      <Content>{children}</Content>
     </Container>
   );
 };
