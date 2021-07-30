@@ -3,6 +3,12 @@
     "target": "es5",
     "baseUrl": "./",
     "paths": {
+      "@hooks": [
+        "src/store/hooks.ts"
+      ],
+      "@modules/*": [
+        "src/store/modules/*"
+      ],
       "@components/*": [
         "src/components/*"
       ]

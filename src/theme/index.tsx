@@ -42,11 +42,15 @@ export const GlobalStyle = createGlobalStyle`
     font-display: swap;
   }
 
+  .slider {
+    left: 50%
+  }
+  
   .slide {
     min-width: 359px;
     padding: 0px 12px;
 
-    @media screen and (max-width: 464px) {
+    @media screen and (max-width: 959px) {
       min-width: 306px;
       padding: 0px 8px;
     }
