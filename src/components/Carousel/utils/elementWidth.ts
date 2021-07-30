@@ -1,4 +1,4 @@
-import { ResponsiveType, CarouselProps } from "../types";
+import { ResponsiveType, CarouselProps } from '../types';
 
 let hasWarnAboutTypo = false;
 
@@ -11,37 +11,31 @@ function getPartialVisibilityGutter(
   let gutter: number | undefined = 0;
   const deviceType = clientSideDeviceType || serverSideDeviceType;
   if (partialVisible && deviceType) {
-    if (
-      !hasWarnAboutTypo &&
-      process.env.NODE_ENV !== "production" &&
-      responsive[deviceType].paritialVisibilityGutter
-    ) {
+    if (!hasWarnAboutTypo && process.env.NODE_ENV !== 'production' && responsive[deviceType].paritialVisibilityGutter) {
       hasWarnAboutTypo = true;
       console.warn(
-        "You appear to be using paritialVisibilityGutter instead of partialVisibilityGutter which will be moved to partialVisibilityGutter in the future completely"
+        'You appear to be using paritialVisibilityGutter instead of partialVisibilityGutter which will be moved to partialVisibilityGutter in the future completely'
       );
     }
-    gutter =
-      responsive[deviceType].partialVisibilityGutter ||
-      responsive[deviceType].paritialVisibilityGutter;
+    gutter = responsive[deviceType].partialVisibilityGutter || responsive[deviceType].paritialVisibilityGutter;
     // back-ward compatible, because previously there has been a typo
     // remove in the future
   }
   return gutter;
 }
 
-function getWidthFromDeviceType(
-  deviceType: string,
-  responsive: ResponsiveType
-): number | string | undefined {
+function getWidthFromDeviceType(deviceType: string, responsive: ResponsiveType, isResponsive: boolean): number | string | undefined {
   let itemWidth;
   if (responsive[deviceType]) {
     const { items } = responsive[deviceType];
-    itemWidth = 359;
+    itemWidth = isResponsive ? 306 : 359;
   }
   return itemWidth;
 }
 
+// function getItemClientSideWidth(props: CarouselProps): number {
+//   return props.isResponsive ? 306 : 359;
+// }
 function getItemClientSideWidth(
   props: CarouselProps,
   slidesToShow: number,
@@ -52,8 +46,4 @@ function getItemClientSideWidth(
   );
 }
 
-export {
-  getWidthFromDeviceType,
-  getPartialVisibilityGutter,
-  getItemClientSideWidth
-};
+export { getWidthFromDeviceType, getPartialVisibilityGutter, getItemClientSideWidth };

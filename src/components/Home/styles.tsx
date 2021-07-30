@@ -19,11 +19,15 @@ const fadeInUp = keyframes`
 `;
 
 export const MainSection = styled.section`
+  @media screen and (min-width: 960px) {
+    flex-direction: row;
+    margin: 50px 0px;
+    max-width: 1524px;
+    overflow: hidden;
+  }
   display: flex;
-  margin: 50px 0px;
+  flex-direction: column;
   width: 100%;
-  max-width: 1524px;
-  overflow: hidden;
 `;
 
 export const TextSection = styled.section`
@@ -48,9 +52,17 @@ export const TextSection = styled.section`
   animation-name: ${fadeInUp};
 `;
 
+export const ResponsiveImage = styled.div`
+  width: calc(86vw);
+  height: calc(86vw);
+  margin: 0px 7%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+`;
+
 export const ImagesSection = styled.section`
   @media screen and (min-width: 960px) {
-    min-height: 570px;
     width: 50%;
     padding-right: 35px;
     display: flex;
@@ -131,12 +143,17 @@ export const MainText = styled.h2`
     margin-bottom: -10px;
   }
 
-  font-style: normal;
-  font-weight: 700;
-  font-size: 42px;
-  line-height: 45px;
+  @media screen and (min-width: 460px) {
+    font-size: 42px;
+    line-height: 45px;
+  }
+
+  font-size: 30px;
+  line-height: 34px;
   margin: 20px 0;
   letter-spacing: -0.06em;
+  font-style: normal;
+  font-weight: 700;
 `;
 
 export const SubText = styled.h4`
@@ -169,18 +186,20 @@ export const ShippingInfo = styled.div`
     align-items: center;
     overflow: hidden;
     min-height: 27px;
-
     padding: 30px 0;
     font-size: 18px;
     line-height: 22px;
     font-weight: 600;
   }
 
+  & span {
+    margin-left: 16px;
+  }
+
   color: ${({ theme }) => theme.colors.black};
 `;
 
 export const ShippingIcon = styled(LocalShippingOutlined)<{ width: string; height: string }>`
-  margin-right: 16px;
   width: ${({ width }) => width} !important;
   height: ${({ height }) => height} !important;
 `;
@@ -194,11 +213,24 @@ export function WarrantyIcon() {
 }
 
 export const InfoSection = styled.section`
-  display: flex;
-  justify-content: space-around;
-  margin: 50px 0px;
-  max-width: 1524px;
-  width: 100%;
+  @media screen and (min-width: 960px) {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    margin: 50px 0px;
+    max-width: 1524px;
+    width: 100%;
+  }
+  @media screen and (max-width: 959px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & > * {
+      padding-top: 70px;
+    }
+  }
 `;
 
 export const InfoCardContainer = styled.div`
@@ -224,43 +256,74 @@ export const InfoCardContainer = styled.div`
   }
 `;
 
-export const Divider = styled.div`
+export const Divider = styled('div')<{ margin: string; responsive: boolean }>`
   width: 100%;
-  height: 1px;
+  height: ${({ responsive }) => (responsive ? '0px' : '1px')};
   background-color: #f7f7f7;
+  margin: ${({ margin }) => `${margin} 0px`};
 `;
 
+Divider.defaultProps = {
+  responsive: false,
+  margin: '0px',
+};
+
 export const GifSection = styled.section`
-  width: 100%;
-  padding: 40px 0px;
-  border-radius: 4px;
+  margin: 30px;
+  width: calc(100% - 60px);
   background-color: #e9deea;
   display: flex;
-  justify-content: center;
-
+  flex-direction: column;
   align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+
+  @media screen and (min-width: 960px) {
+    padding: 40px 0px;
+    justify-content: center;
+    flex-direction: row;
+  }
 `;
 
 export const GifSectionText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: #4c3f4e;
+  padding: 35px;
 
   & > h3 {
-    font-size: 44px;
-    line-height: 46px;
+    font-size: 24px;
+    line-height: 25px;
     white-space: pre-wrap;
     letter-spacing: -0.04em;
     max-width: 440px;
-    color: #4c3f4e;
   }
 
   & > span {
-    padding-top: 18px;
-    font-size: 18px;
+    padding-top: 8px;
+    font-size: 16px;
     white-space: pre-wrap;
-    font-weight: 600;
-    color: #4c3f4e;
+    font-weight: 500;
+  }
+
+  @media screen and (min-width: 960px) {
+    padding: 0px;
+
+    & > h3 {
+      font-size: 44px;
+      line-height: 46px;
+      white-space: pre-wrap;
+      letter-spacing: -0.04em;
+      max-width: 440px;
+    }
+
+    & > span {
+      padding-top: 18px;
+      font-size: 18px;
+      white-space: pre-wrap;
+      font-weight: 600;
+    }
   }
 `;
 
@@ -271,14 +334,19 @@ export const GifExtraPadding = styled.div`
 export const GifImg = styled.div`
   position: relative;
   overflow: hidden;
-  
+
+  @media screen and (max-width: 959px) {
+    width: 100%;
+    height: calc(100vw - 90px);
+  }
+
   @media screen and (min-width: 960px) {
     min-width: 300px;
     min-height: 300px;
-  }
 
-  & img {
-    border-radius: 8px;
+    & img {
+      border-radius: 8px;
+    }
   }
 `;
 
@@ -289,18 +357,30 @@ export const FeedbackSection = styled.section`
   flex-direction: column;
   align-items: center;
   margin: 50px 0px;
-
+  
   & > h4 {
+    font-size: 24px;
+    line-height: 24px;
     font-weight: 700;
-    font-size: 30px;
     padding-bottom: 13px;
+    text-align: center;
   }
-
+  
   & > span {
-    margin-top: 5px;
+    text-align: center;
     line-height: 18px;
     font-size: 18px;
-    font-weight: 600;
+  }
+
+  @media screen and (min-width: 960px) {
+    & > h4 {
+      font-size: 30px;
+      line-height: 30px;
+    }
+    & > span {
+      margin-top: 5px;
+      font-weight: 600;
+    }
   }
 `;
 

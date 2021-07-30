@@ -21,13 +21,13 @@ function getInitialState(
 } {
   const { domLoaded, slidesToShow, containerWidth, itemWidth } = state;
   // old wrongly spelt partialVisbile prop kept to not make changes breaking
-  const { deviceType, responsive, ssr, partialVisbile, partialVisible } = props;
+  const { deviceType, responsive, ssr, partialVisbile, partialVisible , isResponsive} = props;
   let flexBisis: number | string | undefined;
   const domFullyLoaded = Boolean(
     domLoaded && slidesToShow && containerWidth && itemWidth
   );
   if (ssr && deviceType && !domFullyLoaded) {
-    flexBisis = getWidthFromDeviceType(deviceType, responsive);
+    flexBisis = getWidthFromDeviceType(deviceType, responsive, isResponsive);
   }
   const shouldRenderOnSSR = Boolean(
     ssr && deviceType && !domFullyLoaded && flexBisis

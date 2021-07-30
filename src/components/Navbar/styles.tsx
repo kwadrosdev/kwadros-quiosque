@@ -1,27 +1,40 @@
 import styled from 'styled-components';
+import { IconButton as CustomIconBtn } from '@material-ui/core';
 
 export const Container = styled.nav`
-  width: 100%;
-  height: 90px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 50px;
-  overflow: hidden;
+  height: 60px;
+  padding: 0px 16px 0px 32px;
+
+  @media screen and (min-width: 960px) {
+    width: 100%;
+    height: 90px;
+    padding: 0px 50px;
+    overflow: hidden;
+  }
 `;
 
 export const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 50px;
-  flex-grow: 3;
+  @media screen and (min-width: 960px) {
+    display: flex;
+    align-items: center;
+    padding-left: 50px;
+    flex-grow: 3;
+  }
 `;
 
 export const ImgContainer = styled.div`
   cursor: pointer;
   position: relative;
-  width: 150px;
-  height: 50px;
+  width: 120px;
+  height: 40px;
+
+  @media screen and (min-width: 960px) {
+    width: 150px;
+    height: 50px;
+  }
 `;
 
 export const Menu = styled.div`
@@ -29,7 +42,6 @@ export const Menu = styled.div`
   justify-content: space-around;
   align-items: center;
   flex-grow: 1;
-  
 `;
 
 export const MenuItem = styled.a`
@@ -58,5 +70,55 @@ export const MenuButton = styled.button`
 
   &:hover {
     background-color: ${({ theme }) => `${theme.colors.primary}19`};
+  }
+`;
+
+export const TitleSpace = styled.div`
+  position: relative;
+  height: 80px;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  font-size: 18px;
+  color: ${({ theme }) => theme.colors.primary};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+
+  & button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+`;
+
+export const ListContainer = styled.div`
+  width: 280px;
+
+  & svg {
+    fill: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+export const ListItemIcon = styled.div`
+  min-width: 40px;
+  height: 24px;
+`;
+
+export const ListItemText = styled.span`
+  font-size: 16px;
+  font-weight: 700;
+`;
+
+export const IconButton = styled(CustomIconBtn)`
+  padding: 0px;
+  height: 36px;
+  width: 36px;
+
+  & svg {
+    width: 20px;
+    height: 20px;
+    fill: ${({ theme }) => theme.colors.primary};
   }
 `;

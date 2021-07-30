@@ -34,6 +34,7 @@ const defaultTransition = "transform 400ms ease-in-out";
 class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
   public static defaultProps = {
     slidesToSlide: 1,
+    isResponsive: true,
     infinite: false,
     draggable: true,
     swipeable: true,
@@ -72,7 +73,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     this.containerRef = React.createRef();
     this.listRef = React.createRef();
     this.state = {
-      itemWidth: 359,
+      itemWidth: props.isResponsive ? 306 : 359,
       slidesToShow: 0,
       currentSlide: 0,
       totalItems: React.Children.count(props.children),
@@ -226,7 +227,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
   ): void {
     if (this.containerRef && this.containerRef.current) {
       const containerWidth = this.containerRef.current.offsetWidth;
-      const itemWidth: number = 359;
+      const itemWidth: number = this.props.isResponsive ? 306 : 359;
       this.setState(
         {
           containerWidth,

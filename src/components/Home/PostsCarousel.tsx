@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MobileDetect from 'mobile-detect';
+import { useSelector } from '@hooks';
 
 import { IconButton } from '@material-ui/core';
 import { ArrowBack, ArrowForward } from '@material-ui/icons';
@@ -8,7 +9,7 @@ import { ArrowBack, ArrowForward } from '@material-ui/icons';
 import Card from './CarouselCard';
 
 import Carousel from '../Carousel';
-import { ButtonGroupProps } from '../Carousel/types';
+import { ButtonGroupProps, DotProps } from '../Carousel/types';
 
 import img1 from 'public/images/hero_image_1@2x.jpg';
 import img2 from 'public/images/hero_image_2@2x.jpg';
@@ -34,12 +35,15 @@ const Container = styled.div`
 `;
 
 const BtnContainer = styled.div`
-  width: 100%;
-  max-width: 100%;
-  position: absolute;
-  display: flex;
-  top: 50%;
-  transform: translateY(-50%);
+  display: none;
+  @media screen and (min-width: 960px) {
+    width: 100%;
+    max-width: 100%;
+    position: absolute;
+    display: flex;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 `;
 
 const LeftBtnContainer = styled.div`
@@ -102,6 +106,10 @@ const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {
   );
 };
 
+const DotsGroup = ({}: DotProps) => {
+  return <></>;
+};
+
 const breakpoints = {
   desktop: {
     breakpoint: {
@@ -142,6 +150,7 @@ const breakpoints = {
 
 function Home() {
   const [deviceType, setDeviceType] = useState('mobile');
+  const { responsive } = useSelector((state) => state.platform);
 
   useEffect(() => {
     const userAgent = navigator.userAgent;
@@ -160,13 +169,17 @@ function Home() {
     <Container>
       <Carousel
         ssr
+        centerMode={true}
+        isResponsive={responsive}
         arrows={false}
         itemClass="slide"
+        sliderClass="slider"
         draggable
         infinite
-        minimumTouchDrag={120}
+        minimumTouchDrag={80}
         renderButtonGroupOutside={true}
         customButtonGroup={<ButtonGroup />}
+        customDot={<DotsGroup />}
         deviceType={deviceType}
         slidesToSlide={1}
         swipeable

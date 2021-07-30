@@ -15,6 +15,7 @@ export function isMouseMoveEvent(
   return "clientX" && "clientY" in e;
 }
 export interface CarouselProps {
+  isResponsive: boolean;
   responsive: ResponsiveType;
   deviceType?: string;
   ssr?: boolean;

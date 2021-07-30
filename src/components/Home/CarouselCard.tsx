@@ -15,9 +15,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (max-width: 464px) {
+  @media screen and (max-width: 959px) {
       min-width: 290px;
       width: 290px;
+      height: 415px;
     }
 `;
 
@@ -26,6 +27,10 @@ const ImgContainer = styled.div`
   height: 335px;
   position: relative;
   overflow: hidden;
+  
+  @media screen and (max-width: 959px) {
+    height: 290px;
+  }
 `;
 
 const TextContainer = styled.div`
