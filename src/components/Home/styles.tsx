@@ -173,6 +173,7 @@ export const MainBtn = styled.button`
   font-weight: 800;
   height: 60px;
   width: 290px;
+  transition: box-shadow 0.3s ease 0s, background-color 0.3s ease 0s;
 
   &:hover {
     box-shadow: 0 3px 12px ${({ theme }) => `${theme.colors.primary}4C`};
@@ -357,7 +358,7 @@ export const FeedbackSection = styled.section`
   flex-direction: column;
   align-items: center;
   margin: 50px 0px;
-  
+
   & > h4 {
     font-size: 24px;
     line-height: 24px;
@@ -365,7 +366,7 @@ export const FeedbackSection = styled.section`
     padding-bottom: 13px;
     text-align: center;
   }
-  
+
   & > span {
     text-align: center;
     line-height: 18px;
@@ -390,22 +391,47 @@ export const VideoSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 50px 0px;
+  margin: 30px 0px;
 
   & > h4 {
     font-weight: 700;
-    font-size: 30px;
+    font-size: 15px;
+    text-align: center;
     padding-bottom: 13px;
 
     & > span {
       color: ${({ theme }) => theme.colors.primary};
     }
   }
+
+  @media screen and (min-width: 400px) {
+    & > h4 {
+      font-size: 17px;
+    }
+  }
+
+  @media screen and (min-width: 600px) {
+    margin: 40px 0px;
+
+    & > h4 {
+      font-size: 22px;
+    }
+  }
+
+  @media screen and (min-width: 960px) {
+    margin: 50px 0px;
+
+    & > h4 {
+      font-size: 30px;
+    }
+  }
 `;
 
 export const VideoContainer = styled.div`
+  width: 100%;
   max-width: 1280px;
   max-height: 720px;
-  width: 100%;
-  margin-top: 30px;
+  @media screen and (min-width: 960px) {
+    margin-top: 30px;
+  }
 `;

@@ -89,6 +89,20 @@ const CustomIconBtn = styled(IconButton)`
   }
 `;
 
+const DotItem = styled('div')<{ active: boolean }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0px 6px;
+  cursor: pointer;
+  background-color: ${({ active, theme }) => (active ? theme.colors.primary : '#ccc')};
+  transition: box-shadow 0.3s ease 0s, background-color 0.3s ease 0s;
+
+  &:hover {
+    box-shadow: 0 3px 12px ${({ theme }) => `${theme.colors.primary}4C`};
+  }
+`;
+
 const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {
   return (
     <BtnContainer>
@@ -106,42 +120,21 @@ const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {
   );
 };
 
-const DotsGroup = ({}: DotProps) => {
-  return <></>;
+const DotsGroup = ({ onClick, active }: DotProps) => {
+  return (
+    <DotItem
+      active={active!}
+      onClick={(e) => {
+        onClick!();
+        e.preventDefault();
+      }}></DotItem>
+  );
 };
 
 const breakpoints = {
-  desktop: {
-    breakpoint: {
-      max: 3000,
-      min: 1440,
-    },
-    items: 5,
-  },
-  laptopL: {
-    breakpoint: {
-      max: 1440,
-      min: 1024,
-    },
-    items: 5,
-  },
-  laptop: {
-    breakpoint: {
-      max: 1024,
-      min: 768,
-    },
-    items: 5,
-  },
-  tablet: {
-    breakpoint: {
-      max: 768,
-      min: 464,
-    },
-    items: 5,
-  },
   mobile: {
     breakpoint: {
-      max: 464,
+      max: 9999,
       min: 0,
     },
     items: 5,
@@ -149,21 +142,7 @@ const breakpoints = {
 };
 
 function Home() {
-  const [deviceType, setDeviceType] = useState('mobile');
   const { responsive } = useSelector((state) => state.platform);
-
-  useEffect(() => {
-    const userAgent = navigator.userAgent;
-
-    const md = new MobileDetect(userAgent);
-    if (md.tablet()) {
-      setDeviceType('tablet');
-    } else if (md.mobile()) {
-      setDeviceType('mobile');
-    } else {
-      setDeviceType('desktop');
-    }
-  }, []);
 
   return (
     <Container>
@@ -172,17 +151,19 @@ function Home() {
         centerMode={true}
         isResponsive={responsive}
         arrows={false}
-        itemClass="slide"
-        sliderClass="slider"
-        draggable
+        showDots={responsive}
+        itemClass="rc-slide"
+        sliderClass="rc-slider"
+        dotListClass="rc-dotlist"
+        swipeable
         infinite
         minimumTouchDrag={80}
         renderButtonGroupOutside={true}
+        renderDotsOutside={true}
         customButtonGroup={<ButtonGroup />}
         customDot={<DotsGroup />}
-        deviceType={deviceType}
+        deviceType={'mobile'}
         slidesToSlide={1}
-        swipeable
         responsive={breakpoints}>
         <Card imgSrc={img1} />
         <Card imgSrc={imgalt} />

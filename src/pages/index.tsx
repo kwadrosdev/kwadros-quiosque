@@ -82,6 +82,16 @@ function Home() {
           <span>Quem comprou ou presenteou, recomenda</span>
           <PostsCarousel />
         </FeedbackSection>
+        <VideoSection>
+          <h4>
+            Todo ano, milhares de pessoas compram <span>kwadros</span>
+          </h4>
+          <VideoContainer>
+            <div className="player-wrapper">
+              <Player url="https://www.youtube.com/watch?v=XXYlFuWEuKI" className="react-player" width="100%" height="100%" />
+            </div>
+          </VideoContainer>
+        </VideoSection>
         <StickyButton />
       </>
     );

@@ -42,11 +42,15 @@ export const GlobalStyle = createGlobalStyle`
     font-display: swap;
   }
 
-  .slider {
+  .rc-dotlist {
+    bottom: -30px;
+  }
+
+  .rc-slider {
     left: 50%
   }
   
-  .slide {
+  .rc-slide {
     min-width: 359px;
     padding: 0px 12px;
 
