@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import MobileDetect from 'mobile-detect';
 import { useSelector } from '@hooks';
 
 import { IconButton } from '@material-ui/core';

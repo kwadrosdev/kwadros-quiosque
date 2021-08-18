@@ -111,7 +111,7 @@ export const ListItemText = styled.span`
   font-weight: 700;
 `;
 
-export const IconButton = styled(CustomIconBtn)`
+export const IconButton = styled(CustomIconBtn)<{ isblack: string }>`
   padding: 0px;
   height: 36px;
   width: 36px;
@@ -119,6 +119,6 @@ export const IconButton = styled(CustomIconBtn)`
   & svg {
     width: 20px;
     height: 20px;
-    fill: ${({ theme }) => theme.colors.primary};
+    fill: ${({ theme, isblack }) => (isblack === "true" ? '#222' : theme.colors.primary)};
   }
 `;

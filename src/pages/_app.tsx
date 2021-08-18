@@ -1,11 +1,12 @@
 import '@components/Carousel/styles.css';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
-import { initStore } from '../store';
+import { initStore, persistor } from '../store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import type { AppProps } from 'next/app';
 
-import Layout from '@components/Layout/index';
 import ResizeListener from '../utils/resizeListener';
 
 import theme, { GlobalStyle } from 'src/theme';
@@ -15,12 +16,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <GlobalStyle />
       <Provider store={initStore}>
-        <ThemeProvider theme={theme}>
-          <Layout>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeProvider theme={theme}>
             <Component {...pageProps} />
             <ResizeListener />
-          </Layout>
-        </ThemeProvider>
+          </ThemeProvider>
+        </PersistGate>
       </Provider>
     </>
   );
