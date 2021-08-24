@@ -1,22 +1,27 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent } from 'react';
+import { useSelector, useDispatch } from '@hooks';
+
 import Head from 'next/head';
-import { useRouter } from'next/router';
+import { setName, setEmail, setStep } from '@modules/user/actions';
+import { useRouter } from 'next/router';
 import { IconButton } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
 
 import { Container, Box, CardBox, MainBtn, FormInput, StepsHeader, Transition1, Transition2 } from '../components/GetStarted/styles';
 
 function GetStarted() {
+  const dispatch = useDispatch();
   const router = useRouter();
 
-  const [step, setStep] = useState(0);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const name = useSelector((state) => state.user.name);
+  const email = useSelector((state) => state.user.email);
+  const step = useSelector((state) => state.user.step);
 
   function handleBack() {
     if (step) {
-      setStep(step - 1);
+      return dispatch(setStep({ payload: step - 1 }));
     }
+    return router.push('/');
   }
 
   function handleSubmit(e: FormEvent) {
@@ -24,7 +29,7 @@ function GetStarted() {
     if (step === 1) {
       return router.push('/review');
     }
-    return setStep(step + 1);
+    return dispatch(setStep({ payload: step + 1 }));
   }
 
   return (
@@ -51,7 +56,7 @@ function GetStarted() {
                     required
                     type="name"
                     value={name}
-                    onChange={({ target }) => setName(target.value)}
+                    onChange={({ target }) => dispatch(setName({ payload: target.value }))}
                     placeholder={'Qual é o seu nome?'}
                     maxLength={20}
                   />
@@ -64,7 +69,7 @@ function GetStarted() {
                     required
                     type="email"
                     value={email}
-                    onChange={({ target }) => setEmail(target.value)}
+                    onChange={({ target }) => dispatch(setEmail({ payload: target.value }))}
                     placeholder={'Qual é o seu email?'}
                     maxLength={80}
                   />
