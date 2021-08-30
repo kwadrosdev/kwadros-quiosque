@@ -123,10 +123,7 @@ const DotsGroup = ({ onClick, active }: DotProps) => {
   return (
     <DotItem
       active={active!}
-      onClick={(e) => {
-        onClick!();
-        e.preventDefault();
-      }}></DotItem>
+      onClick={onClick}></DotItem>
   );
 };
 

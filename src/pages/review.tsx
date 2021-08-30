@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from '@hooks';
+
+import { closeCropModal } from '@modules/review/actions';
 
 import { ArrowBack } from '@material-ui/icons';
 import { Container, Navbar, IconButton, Content } from '@components/Review/styles';
 import SwipeableMenu from '@components/Navbar/swipeable';
 import FramePicker from '@components/FramePicker';
 import SelectionSection from '@components/SelectionSection';
+import CropModal from '@components/TileImages/CropModal';
 
 function Review() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { open } = useSelector((state) => state.review.cropModal);
+
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  useEffect(() => {
+    dispatch(closeCropModal());
+  }, []);
 
   return (
     <>
@@ -30,9 +42,8 @@ function Review() {
         <Content>
           <SelectionSection />
           <FramePicker />
-
-          
         </Content>
+        {open && <CropModal />}
       </Container>
     </>
   );

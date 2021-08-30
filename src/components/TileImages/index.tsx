@@ -1,9 +1,10 @@
-import React from 'react';
-import { useDispatch, useSelector } from '@hooks';
+import React, { useState } from 'react';
+import { useDispatch } from '@hooks';
 
 import {
   Container,
   AddImages,
+  AddWrapper,
   AddIcon,
   CameraIcon,
   FacebookIcon,
@@ -11,6 +12,8 @@ import {
   AddOption,
   FullOptionInputMask,
   FullOptionInput,
+  ResponsiveButtons,
+  ResponsiveBtn,
 } from './styles';
 
 import TileImg from './TileImg';
@@ -23,13 +26,15 @@ interface HTMLInputEvent extends React.ChangeEvent {
 function TileImages({ selectedImages }: { selectedImages: any[] }) {
   const dispatch = useDispatch();
 
+  const [open, setOpen] = useState(false);
+
   const onFileChange = async (e: HTMLInputEvent) => {
     const _imgFiles = [];
 
     if (e?.target?.files && e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i++) {
         let fileData: any = await readFile(e.target.files[i]);
-        _imgFiles.push(fileData);
+        _imgFiles.push({ src: fileData, dimensions: { x: 0, y: 0, zoom: 1 } });
       }
       dispatch(setImgFiles({ payload: _imgFiles }));
     }
@@ -38,10 +43,21 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
   return (
     <Container>
       <AddImages className="add_responsive">
-        <AddIcon className="add_icon" />
+        <AddWrapper className="add_icon" onClick={() => setOpen(true)}>
+          <AddIcon />
+        </AddWrapper>
         <AddOption className="add_option">
           <FullOptionInputMask tabIndex={0}>
-            <FullOptionInput type="file" onChange={onFileChange} multiple accept="image/*" tabIndex={-1} />
+            <FullOptionInput
+              type="file"
+              onChange={(e) => {
+                setOpen(false);
+                onFileChange(e);
+              }}
+              multiple
+              accept="image/*"
+              tabIndex={-1}
+            />
           </FullOptionInputMask>
           <CameraIcon />
           <span>Carregar fotos</span>
@@ -56,26 +72,60 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
         </AddOption>
       </AddImages>
       {selectedImages.map((image, index) => (
-        <TileImg key={`tile-${index}`} image={image} />
+        <TileImg key={`tile-${index}`} index={index} image={image} />
       ))}
-      <AddImages>
-        <AddIcon className="add_icon" />
-        <AddOption className="add_option">
+      {selectedImages.length < 9 && (
+        <AddImages>
+          <AddWrapper className="add_icon" onClick={() => setOpen(true)}>
+            <AddIcon />
+          </AddWrapper>
+          <AddOption
+            onLoad={(e) => {
+              e.preventDefault();
+            }}
+            className="add_option">
+            <FullOptionInputMask tabIndex={0}>
+              <FullOptionInput type="file" onChange={onFileChange} multiple accept="image/*" tabIndex={-1} />
+            </FullOptionInputMask>
+            <CameraIcon />
+            <span>Carregar fotos</span>
+          </AddOption>
+          <AddOption className="add_option">
+            <FacebookIcon />
+            <span>Importar do Facebook</span>
+          </AddOption>
+          <AddOption className="add_option">
+            <InstagramIcon />
+            <span>Importar do Instagram</span>
+          </AddOption>
+        </AddImages>
+      )}
+      <ResponsiveButtons onClose={() => setOpen(false)} open={open}>
+        <ResponsiveBtn>
           <FullOptionInputMask tabIndex={0}>
-            <FullOptionInput type="file" onChange={onFileChange} multiple accept="image/*" tabIndex={-1} />
+            <FullOptionInput
+              type="file"
+              onChange={(e) => {
+                setOpen(false);
+                onFileChange(e);
+              }}
+              multiple
+              accept="image/*"
+              tabIndex={-1}
+            />
           </FullOptionInputMask>
           <CameraIcon />
           <span>Carregar fotos</span>
-        </AddOption>
-        <AddOption className="add_option">
+        </ResponsiveBtn>
+        <ResponsiveBtn>
           <FacebookIcon />
           <span>Importar do Facebook</span>
-        </AddOption>
-        <AddOption className="add_option">
+        </ResponsiveBtn>
+        <ResponsiveBtn>
           <InstagramIcon />
           <span>Importar do Instagram</span>
-        </AddOption>
-      </AddImages>
+        </ResponsiveBtn>
+      </ResponsiveButtons>
     </Container>
   );
 }

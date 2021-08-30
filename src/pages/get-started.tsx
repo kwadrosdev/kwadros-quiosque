@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { useSelector, useDispatch } from '@hooks';
 
 import Head from 'next/head';
@@ -15,6 +15,10 @@ function GetStarted() {
 
   const name = useSelector((state) => state.user.name);
   const email = useSelector((state) => state.user.email);
+
+  const [_name, _setName] = useState(name);
+  const [_email, _setEmail] = useState(email);
+
   const step = useSelector((state) => state.user.step);
 
   function handleBack() {
@@ -26,9 +30,13 @@ function GetStarted() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    
     if (step === 1) {
+      dispatch(setEmail({ payload: _email }));
       return router.push('/review');
     }
+
+    dispatch(setName({ payload: _name }));
     return dispatch(setStep({ payload: step + 1 }));
   }
 
@@ -55,8 +63,8 @@ function GetStarted() {
                   <FormInput
                     required
                     type="name"
-                    value={name}
-                    onChange={({ target }) => dispatch(setName({ payload: target.value }))}
+                    value={_name}
+                    onChange={({ target }) => _setName(target.value)}
                     placeholder={'Qual é o seu nome?'}
                     maxLength={20}
                   />
@@ -68,8 +76,8 @@ function GetStarted() {
                   <FormInput
                     required
                     type="email"
-                    value={email}
-                    onChange={({ target }) => dispatch(setEmail({ payload: target.value }))}
+                    value={_email}
+                    onChange={({ target }) => _setEmail(target.value)}
                     placeholder={'Qual é o seu email?'}
                     maxLength={80}
                   />

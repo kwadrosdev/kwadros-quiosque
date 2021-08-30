@@ -125,7 +125,7 @@ function Home() {
         <TextSection>
           <MainText>{'Seu cantinho decorado\n com recordações e \nbons sentimentos'}</MainText>
           <SubText>{'Acessíveis, de qualidade única e que não\n danificam a parede'}</SubText>
-          <Link href="/get-started">
+          <Link passHref href="/get-started">
             <MainBtn>Selecionar Fotos</MainBtn>
           </Link>
           <ShippingInfo>
