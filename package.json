@@ -15,6 +15,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@types/nprogress": "^0.2.0",
     "@types/react-redux": "^7.1.18",
     "@types/redux": "^3.6.0",
     "@types/redux-persist": "^4.3.1",
@@ -22,6 +23,7 @@
     "mobile-detect": "^1.4.5",
     "next": "11.0.1",
     "node-vibrant": "^3.2.1-alpha.1",
+    "nprogress": "^0.2.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-easy-crop": "^3.5.2",

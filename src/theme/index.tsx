@@ -1,4 +1,14 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, keyframes } from 'styled-components';
+
+const nprogress_spinner = keyframes`
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+
+`;
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -80,6 +90,10 @@ export const GlobalStyle = createGlobalStyle`
     left: 0;
   }
 
+  .ymp-buy-button-holder {
+    display: none !important;
+  }
+
   html, body {
     padding: 0;
     margin: 0;
@@ -125,6 +139,70 @@ export const GlobalStyle = createGlobalStyle`
     color: #333;
   }
 
+  #nprogress {
+  pointer-events: none;
+  z-index: 4000;
+}
+
+#nprogress .bar {
+  background: #8A199C;
+
+  position: fixed;
+  z-index: 4000;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #8A199C, 0 0 5px #8A199C;
+  opacity: 1;
+
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* Remove these to get rid of the spinner */
+#nprogress .spinner {
+  display: none;
+  position: fixed;
+  z-index: 4000;
+  top: 15px;
+  right: 15px;
+}
+
+#nprogress .spinner-icon {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+
+  border: solid 2px transparent;
+  border-top-color: #8A199C;
+  border-left-color: #8A199C;
+  border-radius: 50%;
+
+  -webkit-animation: ${nprogress_spinner} 400ms linear infinite;
+  animation: ${nprogress_spinner} 400ms linear infinite;
+}
+
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+.nprogress-custom-parent #nprogress .spinner,
+.nprogress-custom-parent #nprogress .bar {
+  position: absolute;
+}
 
 `;
 

@@ -8,8 +8,16 @@ import { PersistGate } from 'redux-persist/integration/react';
 import type { AppProps } from 'next/app';
 
 import ResizeListener from '../utils/resizeListener';
+import Yampi from '../utils/yampi';
 
 import theme, { GlobalStyle } from 'src/theme';
+
+import Router from 'next/router';
+import NProgress from 'nprogress';
+
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,6 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <PersistGate loading={null} persistor={persistor}>
           <ThemeProvider theme={theme}>
             <Component {...pageProps} />
+            <Yampi />
             <ResizeListener />
           </ThemeProvider>
         </PersistGate>

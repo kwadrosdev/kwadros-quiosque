@@ -130,3 +130,49 @@ export const PopularTag = styled('div')<{ img: any }>`
     border-radius: 2px;
   }
 `;
+
+export const BtnContainer = styled.div`
+  display: block;
+  width: 100%;
+  padding: 15px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 0 18px rgb(0 0 0 / 9%);
+  z-index: 2;
+  transition: all 0.5s;
+
+  @media screen and (min-width: 1024px) {
+    width: 85%;
+    border-radius: 5px;
+    box-shadow: unset;
+    box-sizing: border-box;
+    position: relative;
+    padding: 15px 0px;
+  }
+`;
+
+export const CheckoutBtn = styled.div`
+  position: relative;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: box-shadow 0.3s, background-color 0.3s;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &:hover {
+    box-shadow: 0 3px 12px ${({ theme }) => `${theme.colors.primary}4C`};
+  }
+`;
