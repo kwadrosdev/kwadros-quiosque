@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from '@hooks';
 
 import { closeCropModal } from '@modules/review/actions';
+import { setFbToken } from '@modules/user/actions';
 
 import { ArrowBack } from '@material-ui/icons';
 import { Container, Navbar, IconButton, Content } from '@components/Review/styles';
@@ -11,18 +12,48 @@ import SwipeableMenu from '@components/Navbar/swipeable';
 import FramePicker from '@components/FramePicker';
 import SelectionSection from '@components/SelectionSection';
 import CropModal from '@components/TileImages/CropModal';
+import InstagramModal from '@components/InstagramModal';
+import Loading from '@components/Loading';
+
+import api from 'src/services/api';
 
 function Review() {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const { open } = useSelector((state) => state.review.cropModal);
+  const openInstagram = useSelector((state) => state.review.instagramModal.open);
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
+  async function handleFbCode() {
+    try {
+      const bodyFormData = new FormData();
+
+      bodyFormData.append('client_id', '228315275914683');
+      bodyFormData.append('client_secret', 'fbfba588c2111ab96e1a8203d11d3656');
+      bodyFormData.append('grant_type', 'authorization_code');
+      bodyFormData.append('redirect_uri', 'https://kwadros.vercel.app/review/');
+      bodyFormData.append('code', String(router.query.code));
+
+      const { data } = await api.post('https://api.instagram.com/oauth/access_token', bodyFormData);
+
+      dispatch(setFbToken({ payload: data }));
+    } catch (error) {}
+  }
+
   useEffect(() => {
     dispatch(closeCropModal());
+    //eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (router.query?.code) {
+      handleFbCode();
+    }
+
+    //eslint-disable-next-line
+  }, [router?.query]);
 
   return (
     <>
@@ -44,6 +75,8 @@ function Review() {
           <FramePicker />
         </Content>
         {open && <CropModal />}
+        {openInstagram && <InstagramModal />}
+        <Loading />
       </Container>
     </>
   );

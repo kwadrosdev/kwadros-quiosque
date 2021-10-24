@@ -17,7 +17,7 @@ function getRadianAngle(degreeValue: number) {
  * @param {Object} pixelCrop - pixelCrop Object provided by react-easy-crop
  * @param {number} rotation - optional rotation parameter
  */
- async function getCroppedImg(imageSrc: any, pixelCrop: any, rotation = 0) {
+async function getCroppedImg(imageSrc: any, pixelCrop: any, rotation = 0) {
   const image: any = await createImage(imageSrc);
   const canvas = document.createElement('canvas');
   const res = canvas.getContext('2d');
@@ -55,7 +55,7 @@ function getRadianAngle(degreeValue: number) {
   );
 
   // As Base64 string
-  return canvas.toDataURL('image/jpeg');
+  return canvas.toDataURL('image/png');
 
   // As a blob
   // return new Promise<any>((resolve) => {

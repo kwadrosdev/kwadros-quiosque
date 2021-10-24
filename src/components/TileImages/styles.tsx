@@ -72,7 +72,9 @@ export const ResponsiveButtons = styled(Dialog)`
 `;
 
 export const ResponsiveBtn = styled.div`
+  background-color: #fff;
   position: relative;
+  cursor: pointer;
   width: 100%;
   height: 48px;
   padding: 0px 12px;
@@ -82,6 +84,10 @@ export const ResponsiveBtn = styled.div`
   & > span {
     margin-left: 16px;
     font-weight: 600;
+  }
+
+  &:hover {
+    background-color: #efefef;
   }
 `;
 
@@ -217,15 +223,25 @@ export const AddImages = styled.div`
   animation: ${appear} 0.6s;
   overflow: hidden;
 
+  &:hover {
+    border: 4px dashed ${({ theme }) => theme.colors.primary};
+  }
+
   @media screen and (min-width: 900px) {
     border: unset;
     border-radius: 4px;
-    background: hsla(0, 0%, 100%, 0.9);
+    background: #fff;
     box-shadow: 0 4px 7px hsl(0deg 0% 50% / 17%);
+
+    &:hover {
+      border: 4px solid ${({ theme }) => theme.colors.primary};
+    }
   }
 
   @media screen and (min-width: 1024px) {
     &:hover {
+      border: none;
+
       .add_icon {
         display: none;
       }
@@ -277,6 +293,7 @@ export const InstagramIcon = styled(Instagram)`
 `;
 
 export const AddOption = styled.div`
+  cursor: pointer;
   position: relative;
   flex: 1;
   width: 100%;

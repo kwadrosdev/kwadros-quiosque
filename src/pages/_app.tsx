@@ -9,6 +9,7 @@ import type { AppProps } from 'next/app';
 
 import ResizeListener from '../utils/resizeListener';
 import Yampi from '../utils/yampi';
+import FB from '../utils/graphFB';
 
 import theme, { GlobalStyle } from 'src/theme';
 
@@ -28,6 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ThemeProvider theme={theme}>
             <Component {...pageProps} />
             <Yampi />
+            <FB />
             <ResizeListener />
           </ThemeProvider>
         </PersistGate>

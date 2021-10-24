@@ -58,6 +58,8 @@ function CropModal() {
 
   const handleCrop = useCallback(async () => {
     try {
+      const croppedImage = await getCroppedImg(image.src, croppedAreaPixels, 0);
+
       dispatch(
         updateTile({
           payload: {
@@ -68,11 +70,13 @@ function CropModal() {
                 y: imgPadding ? crop.y * (262 / 212.5) : crop.y,
                 zoom,
               },
+              cropped: croppedImage,
             },
             index: index,
           },
         })
       );
+
       dispatch(closeCropModal());
     } catch (e) {
       console.error(e);

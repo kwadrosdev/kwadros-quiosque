@@ -18,3 +18,17 @@ export function setStep({ payload }: { payload: number }) {
     payload,
   };
 }
+
+// export function setFbCode({ payload }: { payload: string }) {
+//   return {
+//     type: '@user/SET_FB_CODE',
+//     payload,
+//   };
+// }
+
+export function setFbToken({ payload }: { payload: { access_token: string; user_id: string } }) {
+  return {
+    type: '@user/SET_FB_TOKEN',
+    payload,
+  };
+}

@@ -55,3 +55,58 @@ export function setYampiProducts({ payload }: { payload: Array<YampiProduct> }) 
     payload,
   };
 }
+
+export function setInstagramModalOpen({ payload }: { payload: boolean }) {
+  return {
+    type: '@review/SET_INSTAGRAM_MODAL_OPEN',
+    payload,
+  };
+}
+
+export function setInstagramLoading({ payload }: { payload: boolean }) {
+  return {
+    type: '@review/SET_INSTAGRAM_LOADING',
+    payload,
+  };
+}
+
+export function setInstagramImages({ payload }: { payload: Array<{ id: string; url: string }> }) {
+  return {
+    type: '@review/SET_INSTAGRAM_IMAGES',
+    payload,
+  };
+}
+
+export function setInstagramNextPage({ payload }: { payload: string }) {
+  return {
+    type: '@review/SET_INSTAGRAM_NEXTPAGE',
+    payload,
+  };
+}
+
+export function setInstagramSelected({ payload }: { payload: { id: string; url: string } }) {
+  return {
+    type: '@review/SET_INSTAGRAM_SELECTED',
+    payload,
+  };
+}
+
+export function removeInstagramSelected({ payload }: { payload: string }) {
+  return {
+    type: '@review/REMOVE_INSTAGRAM_SELECTED',
+    payload,
+  };
+}
+
+export function clearInstagramSelected() {
+  return {
+    type: '@review/REMOVE_INSTAGRAM_SELECTED',
+  };
+}
+
+export function setCheckoutLoading({ payload }: { payload: boolean }) {
+  return {
+    type: '@review/SET_CHECKOUT_LOADING',
+    payload
+  };
+}

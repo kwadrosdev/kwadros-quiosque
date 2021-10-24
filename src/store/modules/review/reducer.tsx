@@ -2,12 +2,14 @@ import { AnyAction } from 'redux';
 
 const INITIAL_STATE = {
   currentFrame: 'ever',
+  loadingCheckout: false,
   yampiProducts: [] as any,
   cropModal: {
     open: false,
     index: 0,
     img: {
       src: '',
+      cropped: '',
       dimensions: {
         x: 0,
         y: 0,
@@ -15,7 +17,14 @@ const INITIAL_STATE = {
       },
     },
   },
-  files: [] as any,
+  instagramModal: {
+    open: false,
+    loading: false,
+    nextPage: '',
+    images: [] as any[],
+    selected: [] as any[],
+  },
+  files: [] as any[],
 };
 
 function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
@@ -79,6 +88,89 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
       state = {
         ...state,
         yampiProducts: payload,
+      };
+      break;
+
+    case '@review/SET_INSTAGRAM_MODAL_OPEN':
+      state = {
+        ...state,
+        instagramModal: {
+          ...state.instagramModal,
+          open: payload,
+        },
+      };
+      break;
+
+    case '@review/SET_INSTAGRAM_IMAGES':
+      state = {
+        ...state,
+        instagramModal: {
+          ...state.instagramModal,
+          images: [...state.instagramModal.images, ...payload],
+        },
+      };
+      break;
+
+    case '@review/SET_INSTAGRAM_LOADING':
+      state = {
+        ...state,
+        instagramModal: {
+          ...state.instagramModal,
+          loading: payload,
+        },
+      };
+      break;
+
+    case '@review/SET_INSTAGRAM_NEXTPAGE':
+      state = {
+        ...state,
+        instagramModal: {
+          ...state.instagramModal,
+          nextPage: payload,
+        },
+      };
+      break;
+
+    case '@review/SET_INSTAGRAM_SELECTED':
+      state = {
+        ...state,
+        instagramModal: {
+          ...state.instagramModal,
+          selected: [...state.instagramModal.selected, payload],
+        },
+      };
+      break;
+
+    case '@review/REMOVE_INSTAGRAM_SELECTED':
+      const selected = [...state.instagramModal.selected];
+      const index = selected.findIndex((img) => img.id === payload);
+
+      if (index !== -1) {
+        selected.splice(index, 1);
+      }
+
+      state = {
+        ...state,
+        instagramModal: {
+          ...state.instagramModal,
+          selected,
+        },
+      };
+
+    case '@review/CLEAR_INSTAGRAM_SELECTED':
+      state = {
+        ...state,
+        instagramModal: {
+          ...state.instagramModal,
+          selected: [],
+        },
+      };
+      break;
+
+    case '@review/SET_CHECKOUT_LOADING':
+      state = {
+        ...state,
+        loadingCheckout: payload,
       };
       break;
 

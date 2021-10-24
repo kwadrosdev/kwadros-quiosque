@@ -28,7 +28,6 @@ export const FrameList = styled.div`
   width: fit-content;
   max-width: 100%;
   display: flex;
-  align-items: center;
   padding: 16px 8px;
   overflow-x: auto;
 
@@ -41,7 +40,7 @@ export const FrameList = styled.div`
 `;
 
 export const Frame = styled('div')<{ selected: boolean }>`
-  min-width: 80px;
+  min-width: 100px;
   display: flex;
   cursor: pointer;
   border-radius: 5px;
@@ -84,18 +83,21 @@ export const FrameName = styled.div`
   justify-content: center;
   align-items: center;
   margin: 8px 0px 0px 0px;
+  padding: 0px 4px;
+  max-width: 100px;
 
   & span {
+    text-align: center;
     font-size: 14px;
     line-height: 14px;
     letter-spacing: 0.5px;
     font-weight: 600;
-    text-transform: capitalize;
   }
 
   @media screen and (min-width: 1024px) {
     margin: 0px 0px 0px 20px;
     align-items: flex-start;
+    max-width: unset;
   }
 `;
 

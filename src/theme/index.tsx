@@ -70,6 +70,32 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: transparent #ddd; 
+  }
+
+  .thin-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: #ccc; 
+  }
+
+  .thin-scrollbar::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
   .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
