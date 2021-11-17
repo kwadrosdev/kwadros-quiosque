@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { useSelector, useDispatch } from '@hooks';
 
 import Head from 'next/head';
@@ -8,6 +8,8 @@ import { IconButton } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
 
 import { Container, Box, CardBox, MainBtn, FormInput, StepsHeader, Transition1, Transition2 } from '../components/GetStarted/styles';
+
+import Loading from '@components/Loading/animation';
 
 function GetStarted() {
   const dispatch = useDispatch();
@@ -30,15 +32,21 @@ function GetStarted() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    
+
     if (step === 1) {
       dispatch(setEmail({ payload: _email }));
-      return router.push('/review');
+      return dispatch(setStep({ payload: step + 1 }));
     }
 
     dispatch(setName({ payload: _name }));
     return dispatch(setStep({ payload: step + 1 }));
   }
+
+  useEffect(() => {
+    if (step === 2) {
+      router.push('/review');
+    }
+  }, [step]);
 
   return (
     <>
@@ -84,7 +92,7 @@ function GetStarted() {
                   <MainBtn type="submit">Escolher Fotos</MainBtn>
                 </Transition2>
               ) : (
-                ''
+                <Loading fill />
               )}
             </CardBox>
           </Box>

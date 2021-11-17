@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { styles } from './materialStyles';
 
 import { setImgFiles, setInstagramImages, setInstagramModalOpen, setInstagramLoading, setInstagramNextPage } from '@modules/review/actions';
-import { checkImgQuality } from 'src/utils/common_functions'
+import { checkImgQuality } from 'src/utils/common_functions';
 
 import api from 'src/services/api';
 
@@ -112,6 +112,14 @@ function SelectionSection() {
       dispatch(setInstagramImages({ payload: [] }));
     }
   }
+
+  useEffect(() => {
+    if (router.query?.code && fb_token) {
+      handleInstagram();
+    }
+
+    //eslint-disable-next-line
+  }, [router?.query, fb_token]);
 
   return (
     <Container>

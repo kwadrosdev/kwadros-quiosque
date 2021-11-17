@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from '@hooks';
 
 import { closeCropModal } from '@modules/review/actions';
-import { setFbToken } from '@modules/user/actions';
+import { setFbToken, setStep } from '@modules/user/actions';
 
 import { ArrowBack } from '@material-ui/icons';
 import { Container, Navbar, IconButton, Content } from '@components/Review/styles';
@@ -22,6 +22,7 @@ function Review() {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const { name, email } = useSelector((state) => state.user);
   const { open } = useSelector((state) => state.review.cropModal);
   const openInstagram = useSelector((state) => state.review.instagramModal.open);
 
@@ -45,6 +46,11 @@ function Review() {
 
   useEffect(() => {
     dispatch(closeCropModal());
+
+    if (!name || !email) {
+      dispatch(setStep({ payload: 0 }));
+      router.push('/get-started');
+    }
     //eslint-disable-next-line
   }, []);
 

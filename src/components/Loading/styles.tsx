@@ -15,9 +15,10 @@ export const Container = styled.div`
   backdrop-filter: blur(8px);
 `;
 
-export const AnimationContainer = styled.div`
+export const AnimationContainer = styled('div')<{ fill?: boolean }>`
   width: 100%;
-  height: 600px;
+  height: ${({ fill }) => (!fill && '600px')};
+  flex: ${({ fill }) => (fill && 1)};
   display: flex;
   flex-direction: column;
   justify-content: center;

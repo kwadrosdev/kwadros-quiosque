@@ -50,6 +50,7 @@ export const Box = styled.div`
 `;
 
 export const CardBox = styled.form`
+  display: flex;
   width: 100%;
   max-width: 800px;
   min-height: 360px;
