@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './modules/index';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import storage from './storage'; // defaults to localStorage for web
 
 const persistConfig = {
   key: 'root',
@@ -20,5 +20,4 @@ export const initStore = createStore(
 export const persistor = persistStore(initStore);
 
 export type RootState = ReturnType<typeof initStore.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof initStore.dispatch;
