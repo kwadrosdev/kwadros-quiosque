@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { styles } from './materialStyles';
 
 import { setImgFiles, setInstagramImages, setInstagramModalOpen, setInstagramLoading, setInstagramNextPage } from '@modules/review/actions';
+import { checkImgQuality } from 'src/utils/common_functions'
 
 import api from 'src/services/api';
 
@@ -38,12 +39,21 @@ function SelectionSection() {
   const fb_token = useSelector((state) => state.user.fb.access_token);
 
   const onFileChange = async (e: HTMLInputEvent) => {
-    const _imgFiles = [];
+    const _imgFiles: any[] = [];
 
     if (e?.target?.files && e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i++) {
-        let fileData: any = await readFile(e.target.files[i]);
-        _imgFiles.push({ src: fileData, cropped: fileData, dimensions: { x: 0, y: 0, zoom: 1 } });
+        const fileData: any = await readFile(e.target.files[i]);
+        const objectURL = URL.createObjectURL(e.target.files[i]);
+
+        const isSmall = await checkImgQuality(objectURL);
+
+        _imgFiles.push({
+          src: fileData,
+          cropped: fileData,
+          small: isSmall,
+          dimensions: { x: 0, y: 0, zoom: 1 },
+        });
       }
       dispatch(setImgFiles({ payload: _imgFiles }));
     }

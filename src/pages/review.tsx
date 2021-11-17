@@ -13,6 +13,7 @@ import FramePicker from '@components/FramePicker';
 import SelectionSection from '@components/SelectionSection';
 import CropModal from '@components/TileImages/CropModal';
 import InstagramModal from '@components/InstagramModal';
+import LowQualityModal from '@components/LowQualityModal';
 import Loading from '@components/Loading';
 
 import api from 'src/services/api';
@@ -76,6 +77,7 @@ function Review() {
         </Content>
         {open && <CropModal />}
         {openInstagram && <InstagramModal />}
+        <LowQualityModal />
         <Loading />
       </Container>
     </>

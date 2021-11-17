@@ -14,6 +14,13 @@ import popularBadge from 'public/images/popular.svg';
 
 import { createOrder, uploadFile, updateFileOrder } from 'src/services/api';
 
+const pacotes = {
+  clean: 'branco',
+  ever: 'branco-com-borda',
+  bold: 'preto',
+  classic: 'preto-com-borda',
+};
+
 function b64toBlob(dataURI: any) {
   var byteString = atob(dataURI.split(',')[1]);
   var ab = new ArrayBuffer(byteString.length);
@@ -39,7 +46,7 @@ function FramePicker() {
 
       dispatch(setCheckoutLoading({ payload: true }));
       const { url } = yampiProducts.find(
-        (product: { id: 'string'; url: 'string' }) => product.id === `${currentFrame}-pacote-${selectedTiles.length}`
+        (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-${selectedTiles.length}`
       );
 
       const orderBody = {

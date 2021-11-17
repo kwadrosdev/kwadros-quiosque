@@ -1,7 +1,9 @@
 import { AnyAction } from 'redux';
 
+type currentFrame = 'ever' | 'classic' | 'bold' | 'clean';
+
 const INITIAL_STATE = {
-  currentFrame: 'ever',
+  currentFrame: 'ever' as currentFrame,
   loadingCheckout: false,
   yampiProducts: [] as any,
   cropModal: {
@@ -61,6 +63,16 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
           ...state.cropModal,
           open: false,
         },
+      };
+      break;
+
+    case '@review/KEEP_TILE':
+      const _newFiles = [...state.files];
+      _newFiles[payload].small = false;
+
+      state = {
+        ...state,
+        files: _newFiles,
       };
       break;
 

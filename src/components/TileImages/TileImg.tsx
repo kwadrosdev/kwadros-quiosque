@@ -9,7 +9,6 @@ import whiteFrame from 'public/images/frames/tile/white.svg';
 
 import { TileContainer, TileFrame, ImgContainer, TileBase, TileBtnsContainer, TileBtn, ResponsiveBtn, ResponsiveButtons } from './styles';
 import { DeleteOutline, Crop } from '@material-ui/icons';
-import image from 'next/image';
 
 function TileImg({ image, index }: { image: any; index: number }) {
   const dispatch = useDispatch();

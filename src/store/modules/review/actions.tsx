@@ -42,6 +42,13 @@ export function handleDeleteTile({ payload }: { payload: number }) {
   };
 }
 
+export function keepImgTile({ payload }: { payload: number }) {
+  return {
+    type: '@review/KEEP_TILE',
+    payload,
+  };
+}
+
 export function updateTile({ payload }: { payload: UpdateTilePayload }) {
   return {
     type: '@review/UPDATE_TILE',

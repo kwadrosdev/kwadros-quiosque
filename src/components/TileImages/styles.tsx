@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { AddRounded, CameraAlt, Facebook, Instagram, DeleteOutline, Crop } from '@material-ui/icons';
+import { AddRounded, CameraAlt, Facebook, Instagram } from '@material-ui/icons';
 import { IconButton, Dialog } from '@material-ui/core';
 
 const appear = keyframes`
@@ -616,5 +616,37 @@ export const CropperText = styled('div')<{ responsive: boolean }>`
   }
   @media screen and (min-width: 501px) {
     display: ${({ responsive }) => (responsive ? 'none' : 'block')};
+  }
+`;
+
+export const CircleAddBtn = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  position: fixed;
+  bottom: 104px;
+  right: 16px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: #fff;
+  border-radius: 50%;
+
+  z-index: 2;
+  transition: all 0.5s;
+
+  & svg {
+    width: 36px;
+    height: 36px;
+    fill: #fff !important;
+  }
+
+  &:hover {
+    box-shadow: 0 3px 12px ${({ theme }) => `${theme.colors.primary}4C`};
+  }
+
+  @media screen and (min-width: 1024px) {
+    display: none;
   }
 `;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from '@hooks';
+import { AddRounded } from '@material-ui/icons';
 
 import {
   Container,
@@ -7,25 +8,25 @@ import {
   AddWrapper,
   AddIcon,
   CameraIcon,
-  FacebookIcon,
   InstagramIcon,
   AddOption,
   FullOptionInputMask,
   FullOptionInput,
   ResponsiveButtons,
   ResponsiveBtn,
+  CircleAddBtn,
 } from './styles';
 
 import TileImg from './TileImg';
 
 import { setImgFiles, setInstagramImages, setInstagramModalOpen, setInstagramLoading, setInstagramNextPage } from '@modules/review/actions';
+import { checkImgQuality } from 'src/utils/common_functions'
 
 import api from 'src/services/api';
 
 interface HTMLInputEvent extends React.ChangeEvent {
   target: HTMLInputElement & EventTarget;
 }
-
 
 function TileImages({ selectedImages }: { selectedImages: any[] }) {
   const dispatch = useDispatch();
@@ -36,12 +37,21 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
   const fb_token = useSelector((state) => state.user.fb.access_token);
 
   const onFileChange = async (e: HTMLInputEvent) => {
-    const _imgFiles = [];
+    const _imgFiles: any[] = [];
 
     if (e?.target?.files && e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i++) {
-        let fileData: any = await readFile(e.target.files[i]);
-        _imgFiles.push({ src: fileData, cropped: fileData, dimensions: { x: 0, y: 0, zoom: 1 } });
+        const fileData: any = await readFile(e.target.files[i]);
+        const objectURL = URL.createObjectURL(e.target.files[i]);
+
+        const isSmall = await checkImgQuality(objectURL);
+
+        _imgFiles.push({
+          src: fileData,
+          cropped: fileData,
+          small: isSmall,
+          dimensions: { x: 0, y: 0, zoom: 1 },
+        });
       }
       dispatch(setImgFiles({ payload: _imgFiles }));
     }
@@ -96,80 +106,62 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
   }
 
   return (
-    <Container className="thin-scrollbar">
-      <AddImages className="add_responsive">
-        <AddWrapper className="add_icon" onClick={() => setOpen(true)}>
-          <AddIcon />
-        </AddWrapper>
-        <AddOption className="add_option">
-          <FullOptionInputMask tabIndex={0}>
-            <FullOptionInput
-              type="file"
-              onChange={(e) => {
-                setOpen(false);
-                onFileChange(e);
+    <>
+      <Container className="thin-scrollbar">
+        {selectedImages.map((image, index) => (
+          <TileImg key={`tile-${index}`} index={index} image={image} />
+        ))}
+        {selectedImages.length < 9 && (
+          <AddImages>
+            <AddWrapper className="add_icon" onClick={() => setOpen(true)}>
+              <AddIcon />
+            </AddWrapper>
+            <AddOption
+              onLoad={(e) => {
+                e.preventDefault();
               }}
-              multiple
-              accept="image/*"
-              tabIndex={-1}
-            />
-          </FullOptionInputMask>
-          <CameraIcon />
-          <span>Carregar fotos</span>
-        </AddOption>
-        <AddOption className="add_option" onClick={handleInstagram}>
-          <InstagramIcon />
-          <span>Importar do Instagram</span>
-        </AddOption>
-      </AddImages>
-      {selectedImages.map((image, index) => (
-        <TileImg key={`tile-${index}`} index={index} image={image} />
-      ))}
-      {selectedImages.length < 9 && (
-        <AddImages>
-          <AddWrapper className="add_icon" onClick={() => setOpen(true)}>
-            <AddIcon />
-          </AddWrapper>
-          <AddOption
-            onLoad={(e) => {
-              e.preventDefault();
-            }}
-            className="add_option">
+              className="add_option">
+              <FullOptionInputMask tabIndex={0}>
+                <FullOptionInput type="file" onChange={onFileChange} multiple accept="image/*" tabIndex={-1} />
+              </FullOptionInputMask>
+              <CameraIcon />
+              <span>Carregar fotos</span>
+            </AddOption>
+            <AddOption className="add_option" onClick={handleInstagram}>
+              <InstagramIcon />
+              <span>Importar do Instagram</span>
+            </AddOption>
+          </AddImages>
+        )}
+        <ResponsiveButtons onClose={() => setOpen(false)} open={open}>
+          <ResponsiveBtn>
             <FullOptionInputMask tabIndex={0}>
-              <FullOptionInput type="file" onChange={onFileChange} multiple accept="image/*" tabIndex={-1} />
+              <FullOptionInput
+                type="file"
+                onChange={(e) => {
+                  setOpen(false);
+                  onFileChange(e);
+                }}
+                multiple
+                accept="image/*"
+                tabIndex={-1}
+              />
             </FullOptionInputMask>
             <CameraIcon />
             <span>Carregar fotos</span>
-          </AddOption>
-          <AddOption className="add_option" onClick={handleInstagram}>
+          </ResponsiveBtn>
+          <ResponsiveBtn onClick={handleInstagram}>
             <InstagramIcon />
             <span>Importar do Instagram</span>
-          </AddOption>
-        </AddImages>
+          </ResponsiveBtn>
+        </ResponsiveButtons>
+      </Container>
+      {selectedImages.length < 9 && (
+        <CircleAddBtn onClick={() => setOpen(true)}>
+          <AddRounded />
+        </CircleAddBtn>
       )}
-      <ResponsiveButtons onClose={() => setOpen(false)} open={open}>
-        <ResponsiveBtn>
-          <FullOptionInputMask tabIndex={0}>
-            <FullOptionInput
-              type="file"
-              onChange={(e) => {
-                setOpen(false);
-                onFileChange(e);
-              }}
-              multiple
-              accept="image/*"
-              tabIndex={-1}
-            />
-          </FullOptionInputMask>
-          <CameraIcon />
-          <span>Carregar fotos</span>
-        </ResponsiveBtn>
-        <ResponsiveBtn onClick={handleInstagram}>
-          <InstagramIcon />
-          <span>Importar do Instagram</span>
-        </ResponsiveBtn>
-      </ResponsiveButtons>
-    </Container>
+    </>
   );
 }
 

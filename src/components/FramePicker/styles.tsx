@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import popularBadge from '/public/images/popular.svg';
-
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
