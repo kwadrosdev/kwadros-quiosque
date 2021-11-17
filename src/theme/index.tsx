@@ -10,6 +10,15 @@ const nprogress_spinner = keyframes`
 
 `;
 
+const fade_in_up = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 export const GlobalStyle = createGlobalStyle`
 
   @font-face {
@@ -228,6 +237,43 @@ export const GlobalStyle = createGlobalStyle`
 .nprogress-custom-parent #nprogress .spinner,
 .nprogress-custom-parent #nprogress .bar {
   position: absolute;
+}
+
+.appear-container {
+  animation: ${fade_in_up} 0.6s;
+}
+
+.pdf-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+  padding: 64px 16px;
+
+  & h1 {
+    font-size: 32px;
+    color: #1c0220;
+  }
+  
+  & h3 {
+    font-size: 20px;
+    color: #1c0220;
+  }
+  
+  & h4 {
+    margin-top: 16px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  & h5 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  & p {
+    font-size: 16px;
+  }
 }
 
 `;
