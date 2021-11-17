@@ -39,9 +39,14 @@ function Review() {
       bodyFormData.append('code', String(router.query.code));
 
       const { data } = await api.post('https://api.instagram.com/oauth/access_token', bodyFormData);
+      const { data: tokenData } = await api.get(
+        `https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=fbfba588c2111ab96e1a8203d11d3656&access_token=${data.access_token}`
+      );
 
-      dispatch(setFbToken({ payload: data }));
-    } catch (error) {}
+      dispatch(setFbToken({ payload: tokenData }));
+    } catch (error) {
+      dispatch(setFbToken({ payload: { access_token: '' } }));
+    }
   }
 
   useEffect(() => {

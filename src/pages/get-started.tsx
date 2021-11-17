@@ -15,13 +15,12 @@ function GetStarted() {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const step = useSelector((state) => state.user.step);
   const name = useSelector((state) => state.user.name);
   const email = useSelector((state) => state.user.email);
 
   const [_name, _setName] = useState(name);
   const [_email, _setEmail] = useState(email);
-
-  const step = useSelector((state) => state.user.step);
 
   function handleBack() {
     if (step) {

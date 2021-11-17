@@ -5,9 +5,7 @@ const INITIAL_STATE = {
   email: '',
   step: 0,
   fb: {
-    // code: '',
     access_token: '',
-    user_id: '',
   },
 };
 
@@ -33,16 +31,6 @@ function userReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
         step: payload,
       };
       break;
-
-    // case '@user/SET_FB_CODE':
-    //   state = {
-    //     ...state,
-    //     fb: {
-    //       ...state.fb,
-    //       code: payload,
-    //     },
-    //   };
-    //   break;
 
     case '@user/SET_FB_TOKEN':
       state = {

@@ -113,7 +113,7 @@ function FramePicker() {
         </Frame>
       </FrameList>
       <BtnContainer>
-        <CheckoutBtn onClick={() => handleCheckoutClick()}>Checkout</CheckoutBtn>
+        <CheckoutBtn onClick={() => handleCheckoutClick()}>Finalizar Compra</CheckoutBtn>
       </BtnContainer>
     </Container>
   );
