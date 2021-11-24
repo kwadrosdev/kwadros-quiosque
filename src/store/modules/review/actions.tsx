@@ -8,6 +8,13 @@ interface YampiProduct {
   url: string;
 }
 
+export function setOpenCheckoutPreview({ payload }: { payload: { open: boolean, url: string; price: number | null; } }) {
+  return {
+    type: '@review/SET_CHECKOUT_PREVIEW',
+    payload,
+  };
+}
+
 export function setCurrentFrame({ payload }: { payload: string }) {
   return {
     type: '@review/SET_CURRENT_FRAME',
@@ -114,6 +121,6 @@ export function clearInstagramSelected() {
 export function setCheckoutLoading({ payload }: { payload: boolean }) {
   return {
     type: '@review/SET_CHECKOUT_LOADING',
-    payload
+    payload,
   };
 }

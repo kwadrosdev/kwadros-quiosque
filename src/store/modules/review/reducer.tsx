@@ -1,17 +1,32 @@
 import { AnyAction } from 'redux';
 
 type currentFrame = 'ever' | 'classic' | 'bold' | 'clean';
+type imgFiles = Array<{
+  src: string | null;
+  cropped: string | null;
+  dimensions: {
+    x: number;
+    y: number;
+    zoom: number;
+  };
+  small?: boolean;
+}>;
 
 const INITIAL_STATE = {
   currentFrame: 'ever' as currentFrame,
   loadingCheckout: false,
   yampiProducts: [] as any,
+  checkoutPreview: {
+    open: false,
+    url: '',
+    price: null as number | null,
+  },
   cropModal: {
     open: false,
     index: 0,
     img: {
-      src: '',
-      cropped: '',
+      src: '' as string | null,
+      cropped: '' as string | null,
       dimensions: {
         x: 0,
         y: 0,
@@ -23,10 +38,10 @@ const INITIAL_STATE = {
     open: false,
     loading: false,
     nextPage: '',
-    images: [] as any[],
-    selected: [] as any[],
+    images: [] as Array<{ id: string; url: string }>,
+    selected: [] as Array<{ id: string; url: string }>,
   },
-  files: [] as any[],
+  files: [] as imgFiles,
 };
 
 function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
@@ -183,6 +198,13 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
       state = {
         ...state,
         loadingCheckout: payload,
+      };
+      break;
+
+    case '@review/SET_CHECKOUT_PREVIEW':
+      state = {
+        ...state,
+        checkoutPreview: payload,
       };
       break;
 

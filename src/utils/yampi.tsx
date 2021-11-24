@@ -12,7 +12,7 @@ function Yampi() {
       const _yampi = (window as any).yampiProduct;
 
       const yampiProducts = _yampi?.resource?.data?.skus.map((sku: any) => {
-        return { id: sku?.variations.length && sku?.variations[0].value, url: sku.purchase_url };
+        return { id: sku?.variations.length && sku?.variations[0].value, url: sku.purchase_url, price: sku.price_sale };
       });
 
       dispatch(setYampiProducts({ payload: yampiProducts }));

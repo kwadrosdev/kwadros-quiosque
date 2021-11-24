@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setResponsive } from '@modules/platform/actions';
+import { setResponsive, setDesktop } from '@modules/platform/actions';
 
 function ResizeListener() {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ function ResizeListener() {
         const width = window.innerWidth;
 
         dispatch(setResponsive({ payload: width < 960 }));
+        dispatch(setDesktop({ payload: width >= 1024 }));
       }, 250);
     }
     updateSize();

@@ -4,3 +4,10 @@ export function setResponsive({ payload }: { payload: boolean }) {
     payload,
   };
 }
+
+export function setDesktop({ payload }: { payload: boolean }) {
+  return {
+    type: '@platform/SET_DESKTOP',
+    payload,
+  };
+}

@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from '@hooks';
 
-import { closeCropModal } from '@modules/review/actions';
+import { closeCropModal, setOpenCheckoutPreview  } from '@modules/review/actions';
 import { setFbToken, setStep } from '@modules/user/actions';
 
 import { ArrowBack } from '@material-ui/icons';
@@ -51,6 +51,7 @@ function Review() {
 
   useEffect(() => {
     dispatch(closeCropModal());
+    dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null } }));
 
     if (!name || !email) {
       dispatch(setStep({ payload: 0 }));

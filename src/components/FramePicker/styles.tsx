@@ -1,4 +1,57 @@
 import styled from 'styled-components';
+import { SwipeableDrawer } from '@material-ui/core';
+
+export const Drawer = styled(SwipeableDrawer)`
+  background: transparent !important;
+
+  & .MuiPaper-root {
+    background: transparent !important;
+  }
+`;
+
+export const PreviewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  height: 100vh;
+  background-color: #fff;
+  z-index: 5;
+  padding: 32px 24px;
+
+  @media screen and (max-width: 1023px) {
+    width: 100%;
+    max-height: 280px;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+  }
+
+  & > .divider {
+    width: 100%;
+    height: 1px;
+    background: #eee;
+    margin: 24px 0px;
+  }
+
+  & > .price-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+
+    & > .price {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      line-height: 28px;
+    }
+  }
+`;
+
+export const PreviewTitle = styled.h3`
+  font-weight: bold;
+  font-size: 30px;
+  align-items: center;
+`;
 
 export const Container = styled.div`
   display: flex;

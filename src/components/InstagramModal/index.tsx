@@ -22,12 +22,17 @@ async function getBase64FromUrl(url: string) {
   const data = await fetch(url);
   const blob = await data.blob();
 
-  return new Promise((resolve) => {
+  return new Promise<string | null>((resolve) => {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
     reader.onloadend = () => {
       const base64data = reader.result;
-      resolve(base64data);
+
+      if (typeof base64data === 'string') {
+        resolve(base64data);
+      }
+
+      resolve(null);
     };
   });
 }

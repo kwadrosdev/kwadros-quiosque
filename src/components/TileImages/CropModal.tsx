@@ -119,7 +119,7 @@ function CropModal() {
           <CropperText responsive={false}>Arraste para posicionar</CropperText>
 
           <Cropper
-            image={image.src}
+            image={image.src ?? undefined}
             crop={crop}
             zoom={zoom}
             minZoom={1}

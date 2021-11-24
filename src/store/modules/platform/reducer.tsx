@@ -2,6 +2,8 @@ import { AnyAction } from 'redux';
 
 const INITIAL_STATE = {
   responsive: true,
+  desktop: false,
+
 };
 
 function platformReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
@@ -10,6 +12,13 @@ function platformReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
       state = {
         ...state,
         responsive: payload,
+      };
+      break;
+   
+    case '@platform/SET_DESKTOP':
+      state = {
+        ...state,
+        desktop: payload,
       };
       break;
 
