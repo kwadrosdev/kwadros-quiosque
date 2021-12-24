@@ -20,6 +20,8 @@ const INITIAL_STATE = {
     open: false,
     url: '',
     price: null as number | null,
+    availableTiles: null as number | null,
+    availableTilesPrice: null as number | null,
   },
   cropModal: {
     open: false,

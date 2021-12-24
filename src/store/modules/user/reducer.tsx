@@ -39,6 +39,13 @@ function userReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
       };
       break;
 
+    case '@user/CLEAR_FB_TOKEN':
+      state = {
+        ...state,
+        fb: INITIAL_STATE.fb,
+      };
+      break;
+
     default:
       return state;
   }

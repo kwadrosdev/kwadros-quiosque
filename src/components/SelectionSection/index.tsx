@@ -63,7 +63,7 @@ function SelectionSection() {
     try {
       if (!fb_token) {
         return router.push(
-          'https://www.instagram.com/oauth/authorize?client_id=228315275914683&redirect_uri=https://kwadros.vercel.app/review/&scope=user_profile,user_media&response_type=code'
+          `https://www.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_FB_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APP_BASE_URL}/review/&scope=user_profile,user_media&response_type=code`
         );
       } else {
         dispatch(setInstagramModalOpen({ payload: true }));

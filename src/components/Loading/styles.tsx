@@ -4,6 +4,7 @@ import { CircularProgress } from '@material-ui/core';
 export const Container = styled.div`
   position: fixed;
   display: flex;
+  flex-direction: column;
   top: 0;
   left: 0;
   width: 100vw;
@@ -28,6 +29,14 @@ export const AnimationContainer = styled('div')<{ fill?: boolean }>`
     margin-top: 24px;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.5);
+  }
+  
+  & h3 {
+    margin-top: 24px;
+    color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    padding: 0px 16px;
+
   }
 `;
 

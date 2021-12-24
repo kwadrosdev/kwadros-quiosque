@@ -12,7 +12,7 @@ import { pacotes } from 'src/utils/constants';
 function CheckoutPreview() {
   const dispatch = useDispatch();
 
-  const { open, price, url } = useSelector((state) => state.review.checkoutPreview);
+  const { open, price, availableTiles, availableTilesPrice, url } = useSelector((state) => state.review.checkoutPreview);
   const { desktop } = useSelector((state) => state.platform);
   const selectedTiles = useSelector((state) => state.review.files);
 
@@ -22,8 +22,8 @@ function CheckoutPreview() {
   async function handleCheckoutClick() {
     try {
       dispatch(setCheckoutLoading({ payload: true }));
-      dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null } }));
-      
+      dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, availableTiles: null, availableTilesPrice: null } }));
+
       const { url } = yampiProducts.find(
         (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-${selectedTiles.length}`
       );
@@ -66,8 +66,12 @@ function CheckoutPreview() {
       <Drawer
         anchor={desktop ? 'right' : 'bottom'}
         open={open}
-        onClose={() => dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null } }))}
-        onOpen={() => dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price } }))}>
+        onClose={() =>
+          dispatch(
+            setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, availableTiles: null, availableTilesPrice: null } })
+          )
+        }
+        onOpen={() => dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price, availableTiles, availableTilesPrice } }))}>
         <PreviewContainer>
           <PreviewTitle>Checkout</PreviewTitle>
           <div className="divider" />
@@ -77,6 +81,12 @@ function CheckoutPreview() {
               <span>{selectedTiles.length} kwadros por</span>
               <span>{formatPrice(price)}</span>
             </div>
+            {availableTiles && availableTilesPrice && (
+              <div className="extraprice">
+                <span>{`(escolha mais ${availableTiles} kwadros por apenas`}</span>
+                <span>{`${formatPrice(availableTilesPrice)})`}</span>
+              </div>
+            )}
             <div className="price">
               <span>Frete</span>
               <span>

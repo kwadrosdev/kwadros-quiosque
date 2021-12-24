@@ -25,15 +25,25 @@ function FramePicker() {
     try {
       if (selectedTiles.length < 3) {
         return window.alert('Ops... Você deve selecionar pelo menos 3 kwadros para continuar.');
+      } else if (selectedTiles.length > 9) {
+        return window.alert('Ops... Você deve selecionar no máximo 9 kwadros para continuar.');
       }
 
       const { url, price } = yampiProducts.find(
         (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-${selectedTiles.length}`
       );
 
-      dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price } }));
+      const availableTiles = 9 - selectedTiles.length >= 3 ? 3 : 9 - selectedTiles.length;
+
+      const { price: moreTilesPrice } = yampiProducts.find(
+        (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-${selectedTiles.length + availableTiles}`
+      );
+
+      const availableTilesPrice = moreTilesPrice - price;
+
+      dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price, availableTiles, availableTilesPrice } }));
     } catch (error) {
-      dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null } }));
+      dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, availableTiles: null, availableTilesPrice: null } }));
       window.alert('Ocorreu um erro ao processar a sua compra, por favor, tente novamente!');
     }
   }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from '@hooks';
 import { AddRounded } from '@material-ui/icons';
+import { useRouter } from 'next/router';
 
 import {
   Container,
@@ -20,7 +21,7 @@ import {
 import TileImg from './TileImg';
 
 import { setImgFiles, setInstagramImages, setInstagramModalOpen, setInstagramLoading, setInstagramNextPage } from '@modules/review/actions';
-import { checkImgQuality } from 'src/utils/common_functions'
+import { checkImgQuality } from 'src/utils/common_functions';
 
 import api from 'src/services/api';
 
@@ -29,6 +30,7 @@ interface HTMLInputEvent extends React.ChangeEvent {
 }
 
 function TileImages({ selectedImages }: { selectedImages: any[] }) {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -59,45 +61,51 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
 
   async function handleInstagram() {
     try {
-      dispatch(setInstagramModalOpen({ payload: true }));
-
-      if (instaImages.length) {
-        return;
-      }
-
-      dispatch(setInstagramLoading({ payload: true }));
-
-      const { data } = await api.get(`https://graph.instagram.com/me?fields=id,username,media&access_token=${fb_token}`);
-
-      dispatch(setInstagramNextPage({ payload: data.media?.paging?.next ?? '' }));
-
-      const mediaList = data.media.data.map(({ id }: { id: string }) => id);
-      const images = [];
-
-      for (const media of mediaList) {
-        const { data: mediaData } = await api.get(
-          `https://graph.instagram.com/${media}?fields=id,media_type,media_url,username,timestamp&access_token=${fb_token}`
+      if (!fb_token) {
+        return router.push(
+          `https://www.instagram.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_FB_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_APP_BASE_URL}/review/&scope=user_profile,user_media&response_type=code`
         );
+      } else {
+        dispatch(setInstagramModalOpen({ payload: true }));
 
-        if (mediaData.media_type === 'CAROUSEL_ALBUM') {
-          const { data: childrenData } = await api.get(
-            `https://graph.instagram.com/${media}/children?fields=id,media_type,media_url,username,timestamp&access_token=${fb_token}`
+        if (instaImages.length) {
+          return;
+        }
+
+        dispatch(setInstagramLoading({ payload: true }));
+
+        const { data } = await api.get(`https://graph.instagram.com/me?fields=id,username,media&access_token=${fb_token}`);
+
+        dispatch(setInstagramNextPage({ payload: data.media?.paging?.next ?? '' }));
+
+        const mediaList = data.media.data.map(({ id }: { id: string }) => id);
+        const images = [];
+
+        for (const media of mediaList) {
+          const { data: mediaData } = await api.get(
+            `https://graph.instagram.com/${media}?fields=id,media_type,media_url,username,timestamp&access_token=${fb_token}`
           );
 
-          for (const child of childrenData.data) {
-            if (child.media_type === 'IMAGE') {
-              images.push({ id: child.id, url: child.media_url });
+          if (mediaData.media_type === 'CAROUSEL_ALBUM') {
+            const { data: childrenData } = await api.get(
+              `https://graph.instagram.com/${media}/children?fields=id,media_type,media_url,username,timestamp&access_token=${fb_token}`
+            );
+
+            for (const child of childrenData.data) {
+              if (child.media_type === 'IMAGE') {
+                images.push({ id: child.id, url: child.media_url });
+              }
+            }
+          } else {
+            if (mediaData.media_type === 'IMAGE') {
+              images.push({ id: mediaData.id, url: mediaData.media_url });
             }
           }
-        } else {
-          if (mediaData.media_type === 'IMAGE') {
-            images.push({ id: mediaData.id, url: mediaData.media_url });
-          }
         }
-      }
 
-      dispatch(setInstagramImages({ payload: images }));
-      dispatch(setInstagramLoading({ payload: false }));
+        dispatch(setInstagramImages({ payload: images }));
+        dispatch(setInstagramLoading({ payload: false }));
+      }
     } catch (error) {
       dispatch(setInstagramLoading({ payload: false }));
       dispatch(setInstagramModalOpen({ payload: false }));

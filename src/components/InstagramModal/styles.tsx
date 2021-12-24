@@ -100,6 +100,17 @@ export const CloseBtn = styled(IconButton)`
   }
 `;
 
+export const LogoutBtn = styled(IconButton)`
+  position: absolute !important;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  & svg {
+    fill: rgba(0, 0, 0, 0.4);
+  }
+`;
+
 export const Footer = styled.footer`
   width: 100%;
   min-height: 72px;

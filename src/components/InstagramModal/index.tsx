@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from '@hooks';
-import { Instagram, Close } from '@material-ui/icons';
+import { Instagram, Close, ExitToApp } from '@material-ui/icons';
+import { Tooltip } from '@material-ui/core';
 
-import { CustomDialog, Content, Wrapper, ImagesContainer, CloseBtn, TitleContainer, Title, Footer, ModalBtn, LoadMoreBtn } from './styles';
+import {
+  CustomDialog,
+  Content,
+  Wrapper,
+  ImagesContainer,
+  CloseBtn,
+  LogoutBtn,
+  TitleContainer,
+  Title,
+  Footer,
+  ModalBtn,
+  LoadMoreBtn,
+} from './styles';
 
 import api from 'src/services/api';
 
@@ -17,6 +30,8 @@ import {
   setImgFiles,
   clearInstagramSelected,
 } from '@modules/review/actions';
+
+import { clearFbToken } from '@modules/user/actions';
 
 async function getBase64FromUrl(url: string) {
   const data = await fetch(url);
@@ -49,6 +64,13 @@ function InstagramModal() {
     dispatch(setInstagramModalOpen({ payload: false }));
     dispatch(setInstagramLoading({ payload: false }));
     dispatch(clearInstagramSelected());
+  }
+
+  function handleInstagramLogout() {
+    dispatch(setInstagramModalOpen({ payload: false }));
+    dispatch(setInstagramLoading({ payload: false }));
+    dispatch(clearInstagramSelected());
+    dispatch(clearFbToken());
   }
 
   async function handleLoadMore() {
@@ -107,13 +129,19 @@ function InstagramModal() {
       dispatch(setInstagramModalOpen({ payload: false }));
       dispatch(clearInstagramSelected());
     } catch (error) {
-      console.log(error);
+      window.alert('Ops...! Ocorreu algum erro ao carregar as imagens selecionadas!');
     }
   }
 
   return (
     <CustomDialog open={true}>
       <TitleContainer>
+        <Tooltip title="Desconectar conta do Instagram">
+          <LogoutBtn onClick={() => handleInstagramLogout()}>
+            <ExitToApp />
+          </LogoutBtn>
+        </Tooltip>
+
         <Title>
           <Instagram />
           <span>Selecione do Instagram</span>

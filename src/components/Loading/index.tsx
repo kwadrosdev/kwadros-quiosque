@@ -11,7 +11,7 @@ export default function LoadingPage() {
 
   return (
     <Container>
-      <LoadingAnimation />
+      <LoadingAnimation checkout />
     </Container>
   );
 }

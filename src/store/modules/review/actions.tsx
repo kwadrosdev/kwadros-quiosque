@@ -8,7 +8,11 @@ interface YampiProduct {
   url: string;
 }
 
-export function setOpenCheckoutPreview({ payload }: { payload: { open: boolean, url: string; price: number | null; } }) {
+export function setOpenCheckoutPreview({
+  payload,
+}: {
+  payload: { open: boolean; url: string; price: number | null; availableTiles: number | null, availableTilesPrice: number | null };
+}) {
   return {
     type: '@review/SET_CHECKOUT_PREVIEW',
     payload,

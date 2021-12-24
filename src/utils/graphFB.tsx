@@ -9,7 +9,7 @@ export default function graphFB() {
         dangerouslySetInnerHTML={{
           __html: `window.fbAsyncInit = function() {
                   FB.init({
-                    appId      : '340829074298399',
+                    appId      : ${process.env.NEXT_PUBLIC_FB_APP_ID},
                     xfbml      : true,
                     version    : 'v11.0'
                   });

@@ -43,6 +43,19 @@ export const PreviewContainer = styled.div`
       display: flex;
       justify-content: space-between;
       line-height: 28px;
+
+      &:last-child {
+        margin-top: 16px;
+      }
+    }
+
+    & > .extraprice {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      line-height: 28px;
+      font-size: 13px;
+      color: rgba(0, 0, 0, 0.6);
     }
   }
 `;

@@ -45,6 +45,8 @@ function GetStarted() {
     if (step === 2) {
       router.push('/review');
     }
+
+    //eslint-disable-next-line
   }, [step]);
 
   return (

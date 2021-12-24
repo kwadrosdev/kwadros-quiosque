@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from '@hooks';
 
-import { closeCropModal, setOpenCheckoutPreview  } from '@modules/review/actions';
+import { closeCropModal, setOpenCheckoutPreview } from '@modules/review/actions';
 import { setFbToken, setStep } from '@modules/user/actions';
 
 import { ArrowBack } from '@material-ui/icons';
@@ -32,15 +32,15 @@ function Review() {
     try {
       const bodyFormData = new FormData();
 
-      bodyFormData.append('client_id', '228315275914683');
-      bodyFormData.append('client_secret', 'fbfba588c2111ab96e1a8203d11d3656');
       bodyFormData.append('grant_type', 'authorization_code');
-      bodyFormData.append('redirect_uri', 'https://kwadros.vercel.app/review/');
+      bodyFormData.append('client_id', process.env.NEXT_PUBLIC_FB_CLIENT_ID ?? '');
+      bodyFormData.append('client_secret', process.env.NEXT_PUBLIC_FB_CLIENT_SECRET ?? '');
+      bodyFormData.append('redirect_uri', `${process.env.NEXT_PUBLIC_APP_BASE_URL}/review/`);
       bodyFormData.append('code', String(router.query.code));
 
       const { data } = await api.post('https://api.instagram.com/oauth/access_token', bodyFormData);
       const { data: tokenData } = await api.get(
-        `https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=fbfba588c2111ab96e1a8203d11d3656&access_token=${data.access_token}`
+        `https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=${process.env.NEXT_PUBLIC_FB_CLIENT_SECRET}&access_token=${data.access_token}`
       );
 
       dispatch(setFbToken({ payload: tokenData }));
@@ -51,7 +51,7 @@ function Review() {
 
   useEffect(() => {
     dispatch(closeCropModal());
-    dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null } }));
+    dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, availableTiles: null, availableTilesPrice: null } }));
 
     if (!name || !email) {
       dispatch(setStep({ payload: 0 }));
