@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from '@hooks';
+import axios from 'axios';
 
-import { closeCropModal, setOpenCheckoutPreview } from '@modules/review/actions';
+import { closeCropModal, setOpenCheckoutPreview, setFbTokenLoading } from '@modules/review/actions';
 import { setFbToken, setStep } from '@modules/user/actions';
 
 import { ArrowBack } from '@material-ui/icons';
@@ -30,6 +31,7 @@ function Review() {
 
   async function handleFbCode() {
     try {
+      dispatch(setFbTokenLoading({ payload: true }));
       const bodyFormData = new FormData();
 
       bodyFormData.append('grant_type', 'authorization_code');
@@ -44,8 +46,14 @@ function Review() {
       );
 
       dispatch(setFbToken({ payload: tokenData }));
-    } catch (error) {
-      dispatch(setFbToken({ payload: { access_token: '' } }));
+      dispatch(setFbTokenLoading({ payload: false }));
+    } catch (error: any) {
+      if (axios.isAxiosError(error) && error?.request?.status !== 400) {
+        dispatch(setFbToken({ payload: { access_token: '' } }));
+      } else {
+        dispatch(setFbToken({ payload: { access_token: '' } }));
+      }
+      dispatch(setFbTokenLoading({ payload: false }));
     }
   }
 
@@ -62,6 +70,7 @@ function Review() {
 
   useEffect(() => {
     if (router.query?.code) {
+      console.log('review.tsx');
       handleFbCode();
     }
 
@@ -91,6 +100,7 @@ function Review() {
         {openInstagram && <InstagramModal />}
         <LowQualityModal />
         <Loading />
+        <Loading fb_token={true} />
       </Container>
     </>
   );

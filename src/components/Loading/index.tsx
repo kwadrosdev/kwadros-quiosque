@@ -4,14 +4,14 @@ import { useSelector } from '@hooks';
 
 import LoadingAnimation from './animation';
 
-export default function LoadingPage() {
-  const loading = useSelector((state) => state.review.loadingCheckout);
+export default function LoadingPage({ fb_token = false }) {
+  const loading = useSelector((state) => (fb_token ? state.review.loadingFbToken : state.review.loadingCheckout));
 
   if (!loading) return <></>;
 
   return (
     <Container>
-      <LoadingAnimation checkout />
+      <LoadingAnimation checkout={!fb_token} />
     </Container>
   );
 }

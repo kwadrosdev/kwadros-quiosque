@@ -15,6 +15,7 @@ type imgFiles = Array<{
 const INITIAL_STATE = {
   currentFrame: 'ever' as currentFrame,
   loadingCheckout: false,
+  loadingFbToken: false,
   yampiProducts: [] as any,
   checkoutPreview: {
     open: false,
@@ -210,6 +211,13 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
       };
       break;
 
+    case '@review/SET_FB_TOKEN_LOADING':
+      state = {
+        ...state,
+        loadingFbToken: payload,
+      };
+      break;
+      
     default:
       return state;
   }

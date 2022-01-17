@@ -19,7 +19,7 @@ export function setStep({ payload }: { payload: number }) {
   };
 }
 
-export function setFbToken({ payload }: { payload: { access_token: string } }) {
+export function setFbToken({ payload }: { payload: { access_token: string | null } }) {
   return {
     type: '@user/SET_FB_TOKEN',
     payload,

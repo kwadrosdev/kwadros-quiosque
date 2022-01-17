@@ -81,6 +81,13 @@ export function setInstagramModalOpen({ payload }: { payload: boolean }) {
   };
 }
 
+export function setFbTokenLoading({ payload }: { payload: boolean }) {
+  return {
+    type: '@review/SET_FB_TOKEN_LOADING',
+    payload,
+  };
+}
+
 export function setInstagramLoading({ payload }: { payload: boolean }) {
   return {
     type: '@review/SET_INSTAGRAM_LOADING',

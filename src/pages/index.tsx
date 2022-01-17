@@ -2,14 +2,14 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import Player from 'react-player';
+import Player from 'react-player/youtube';
 
 import { useSelector } from '@hooks';
 
-import img1 from 'public/images/hero_image_1@2x.jpg';
-import img2 from 'public/images/hero_image_2@2x.jpg';
-import img3 from 'public/images/hero_image_3@2x.jpg';
-import kidImg from 'public/images/kid_kwadros.jpg';
+import img1 from 'public/images/hero_image_1.jpg';
+import img2 from 'public/images/hero_image_2.jpg';
+import img3 from 'public/images/hero_image_3.jpg';
+import img_3by129 from 'public/images/3_por_129.jpg';
 
 import {
   MainSection,
@@ -71,7 +71,7 @@ function Home() {
         <Divider responsive margin={'15px'} />
         <GifSection>
           <GifImg>
-            <Image src={kidImg} alt="gif_img" layout="fill" objectFit="cover" quality={100} />
+            <Image src={img_3by129} alt="gif_img" layout="fill" objectFit="cover" quality={100} />
           </GifImg>
           <GifSectionText>
             <h3>{'Três "Kwadros" por R$129,00'}</h3>
@@ -90,7 +90,7 @@ function Home() {
           </h4>
           <VideoContainer>
             <div className="player-wrapper">
-              <Player url="https://www.youtube.com/watch?v=XXYlFuWEuKI" className="react-player" width="100%" height="100%" />
+              <Player url="https://youtu.be/EulEQhV2eHo" className="react-player" width="100%" height="100%" />
             </div>
           </VideoContainer>
         </VideoSection>
@@ -143,11 +143,11 @@ function Home() {
       <GifSection>
         <GifSectionText>
           <h3>{'Três "Kwadros" por R$129,00'}</h3>
-          <span>{'Peça adicional: R$29,90'}</span>
+          <span>{'Kwadro adicional: R$24,90'}</span>
           <span>{'Frete grátis para todo Brasil'}</span>
         </GifSectionText>
         <GifImg>
-          <Image src={kidImg} alt="gif_img" layout="fill" objectFit="cover" quality={100} />
+          <Image src={img_3by129} alt="gif_img" layout="fill" objectFit="cover" quality={100} />
         </GifImg>
       </GifSection>
       <FeedbackSection>
@@ -161,7 +161,7 @@ function Home() {
         </h4>
         <VideoContainer>
           <div className="player-wrapper">
-            <Player url="https://www.youtube.com/watch?v=XXYlFuWEuKI" className="react-player" width="100%" height="100%" />
+            <Player controls={false} loop url="https://youtu.be/EulEQhV2eHo" className="react-player" width="100%" height="100%" />
           </div>
         </VideoContainer>
       </VideoSection>

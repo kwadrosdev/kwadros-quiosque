@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   email: '',
   step: 0,
   fb: {
-    access_token: '',
+    access_token: null,
   },
 };
 

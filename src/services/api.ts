@@ -3,7 +3,7 @@ import axios from 'axios';
 const api = axios.create({});
 
 export const mainApi = axios.create({
-  baseURL: 'https://api-kwadros.herokuapp.com/api',
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
 export async function createOrder(body: any) {

@@ -10,10 +10,11 @@ import Card from './CarouselCard';
 import Carousel from '../Carousel';
 import { ButtonGroupProps, DotProps } from '../Carousel/types';
 
-import img1 from 'public/images/hero_image_1@2x.jpg';
-import img2 from 'public/images/hero_image_2@2x.jpg';
-import img3 from 'public/images/hero_image_3@2x.jpg';
-import imgalt from 'public/images/kid_kwadros.jpg';
+import img1 from 'public/images/carousel_1.jpg';
+import img2 from 'public/images/carousel_2.jpg';
+import img3 from 'public/images/carousel_3.jpg';
+import img4 from 'public/images/carousel_4.jpg';
+import img5 from 'public/images/carousel_5.jpg';
 
 const Container = styled.div`
   margin-top: 36px;
@@ -162,14 +163,11 @@ function Home() {
         slidesToSlide={1}
         responsive={breakpoints}>
         <Card imgSrc={img1} />
-        <Card imgSrc={imgalt} />
-        <Card imgSrc={imgalt} />
-        <Card imgSrc={imgalt} />
         <Card imgSrc={img2} />
-        <Card imgSrc={imgalt} />
-        <Card imgSrc={imgalt} />
-        <Card imgSrc={imgalt} />
         <Card imgSrc={img3} />
+        <Card imgSrc={img4} />
+        <Card imgSrc={img5} />
+      
       </Carousel>
     </Container>
   );

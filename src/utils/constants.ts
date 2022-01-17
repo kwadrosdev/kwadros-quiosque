@@ -4,3 +4,8 @@ export const pacotes = {
   bold: 'preto',
   classic: 'preto-com-borda',
 };
+
+export const whatsapp = {
+  number: '5511912632498',
+  msg: 'Olá, tenho dúvidas sobre os kwadros e preciso de ajuda',
+};

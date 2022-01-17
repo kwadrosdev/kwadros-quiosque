@@ -5,12 +5,14 @@ import {
   Menu as MenuIcon,
   HelpOutlineOutlined as HelpIcon,
   PlayCircleOutlineOutlined as PlayIcon,
+  WhatsApp as WhatsAppIcon,
   Close as CloseIcon,
 } from '@material-ui/icons';
 
 import { SwipeableDrawer, List, ListItem, Divider, makeStyles } from '@material-ui/core';
 import { TitleSpace, ListContainer, ListItemText, ListItemIcon, IconButton } from './styles';
 
+import { whatsapp } from 'src/utils/constants';
 interface SwipeableProps {
   isblack: boolean;
   openDrawer: boolean;
@@ -54,6 +56,17 @@ function Swipeable({ isblack = false, openDrawer, setOpenDrawer }: SwipeableProp
               <ListItemText>Selecionar Fotos</ListItemText>
             </ListItem>
           </Link>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`https://api.whatsapp.com/send?phone=${encodeURIComponent(whatsapp.number)}&text=${encodeURIComponent(whatsapp.msg)}`}>
+            <ListItem className={classes.listItem} button key={'whatsapp'}>
+              <ListItemIcon>
+                <WhatsAppIcon />
+              </ListItemIcon>
+              <ListItemText>Whatsapp</ListItemText>
+            </ListItem>
+          </a>
         </List>
       </ListContainer>
     );

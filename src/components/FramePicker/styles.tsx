@@ -20,7 +20,7 @@ export const PreviewContainer = styled.div`
 
   @media screen and (max-width: 1023px) {
     width: 100%;
-    max-height: 280px;
+    max-height: 324px;
     border-top-right-radius: 16px;
     border-top-left-radius: 16px;
   }
@@ -228,7 +228,7 @@ export const CheckoutBtn = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 50px;
+  min-height: 50px;
   border-radius: 10px;
   font-size: 20px;
   font-weight: 800;

@@ -15,7 +15,6 @@ const fadeInUp = keyframes`
       transform: translate3d(0, 0, 0);
       opacity: 1;
     }
-  }
 `;
 
 export const MainSection = styled.section`
@@ -25,6 +24,7 @@ export const MainSection = styled.section`
     max-width: 1524px;
     overflow: hidden;
   }
+  
   display: flex;
   flex-direction: column;
   width: 100%;

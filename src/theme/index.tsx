@@ -250,7 +250,17 @@ export const GlobalStyle = createGlobalStyle`
   max-width: 900px;
   padding: 64px 16px;
 
+  & ul {
+    padding: 0px;
+    margin-bottom: 28px;
+
+    & > li {
+      margin-bottom: 32px;
+    }
+  }
+
   & h1 {
+    margin-bottom: 40px;
     font-size: 32px;
     color: #1c0220;
   }

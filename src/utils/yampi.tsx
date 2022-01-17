@@ -17,6 +17,7 @@ function Yampi() {
 
       dispatch(setYampiProducts({ payload: yampiProducts }));
     }
+    //eslint-disable-next-line
   }, [loaded]);
 
   return (
@@ -24,7 +25,7 @@ function Yampi() {
       <Script
         className="ymp-script"
         strategy="lazyOnload"
-        src="https://api.dooki.com.br/v2/teste2/public/buy-button/QP1RVLKW82/js"
+        src={process.env.NEXT_PUBLIC_YAMPI_BASE_URL}
         onLoad={() => setLoaded(true)}
       />
     </>

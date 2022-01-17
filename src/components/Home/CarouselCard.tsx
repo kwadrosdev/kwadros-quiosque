@@ -3,23 +3,23 @@ import styled from 'styled-components';
 
 import Image from 'next/image';
 
-import img1 from 'public/images/hero_image_1@2x.jpg';
+import img1 from 'public/images/hero_image_1.jpg';
 
 const Container = styled.div`
   overflow: hidden;
   min-width: 335px;
   width: 335px;
-  height: 460px;
+  height: 335px;
   border-radius: 8px;
   border: 1px solid #eee;
   display: flex;
   flex-direction: column;
 
   @media screen and (max-width: 959px) {
-      min-width: 290px;
-      width: 290px;
-      height: 415px;
-    }
+    min-width: 290px;
+    width: 290px;
+    height: 290px;
+  }
 `;
 
 const ImgContainer = styled.div`
@@ -27,7 +27,7 @@ const ImgContainer = styled.div`
   height: 335px;
   position: relative;
   overflow: hidden;
-  
+
   @media screen and (max-width: 959px) {
     height: 290px;
   }
@@ -71,16 +71,16 @@ function Home({ imgSrc = img1 }: { imgSrc: any }) {
       <ImgContainer>
         <Image draggable={false} src={imgSrc} alt="gif_img" layout="fill" objectFit="cover" quality={100} />
       </ImgContainer>
-      <TextContainer>
+      {/* <TextContainer>
         <Subtitle>
           Mussum Ipsum, cacilds vidis litro abertis. Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Si u mundo
           tá muito paradis? Toma um mé que o mundo vai girarzis! Admodum accumsan disputationi eu sit. Vide electram sadipscing et per.
           Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.
         </Subtitle>
         <UserNickname>@fulana_de_tal</UserNickname>
-      </TextContainer>
+      </TextContainer> */}
     </Container>
   );
-};
+}
 
 export default Home;
