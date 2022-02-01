@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Script from 'next/script';
 import { useDispatch } from '@hooks';
-import { setYampiProducts } from '@modules/review/actions';
+import { setYampiProducts, setMaxKwadros } from '@modules/review/actions';
 
 function Yampi() {
   const dispatch = useDispatch();
@@ -15,6 +15,9 @@ function Yampi() {
         return { id: sku?.variations.length && sku?.variations[0].value, url: sku.purchase_url, price: sku.price_sale };
       });
 
+      const maxKwadros = Math.floor(yampiProducts.length / 4 + 2);
+
+      dispatch(setMaxKwadros({ payload: maxKwadros }));
       dispatch(setYampiProducts({ payload: yampiProducts }));
     }
     //eslint-disable-next-line
@@ -22,12 +25,7 @@ function Yampi() {
 
   return (
     <>
-      <Script
-        className="ymp-script"
-        strategy="lazyOnload"
-        src={process.env.NEXT_PUBLIC_YAMPI_BASE_URL}
-        onLoad={() => setLoaded(true)}
-      />
+      <Script className="ymp-script" strategy="lazyOnload" src={process.env.NEXT_PUBLIC_YAMPI_BASE_URL} onLoad={() => setLoaded(true)} />
     </>
   );
 }

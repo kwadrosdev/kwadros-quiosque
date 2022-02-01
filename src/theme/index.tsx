@@ -251,7 +251,7 @@ export const GlobalStyle = createGlobalStyle`
   padding: 64px 16px;
 
   & ul {
-    padding: 0px;
+    padding: 24px;
     margin-bottom: 28px;
 
     & > li {

@@ -10,6 +10,7 @@ import type { AppProps } from 'next/app';
 import ResizeListener from '../utils/resizeListener';
 import Yampi from '../utils/yampi';
 import FB from '../utils/graphFB';
+import WhatsAppBtn from '@components/WhatsAppBtn';
 
 import theme, { GlobalStyle } from 'src/theme';
 
@@ -31,6 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Yampi />
             <FB />
             <ResizeListener />
+            <WhatsAppBtn />
           </ThemeProvider>
         </PersistGate>
       </Provider>

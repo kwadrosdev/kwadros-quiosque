@@ -11,7 +11,7 @@ interface YampiProduct {
 export function setOpenCheckoutPreview({
   payload,
 }: {
-  payload: { open: boolean; url: string; price: number | null; availableTiles: number | null, availableTilesPrice: number | null };
+  payload: { open: boolean; url: string; price: number | null; extraPrice: number | null, extraKwadros: number | null };
 }) {
   return {
     type: '@review/SET_CHECKOUT_PREVIEW',
@@ -132,6 +132,13 @@ export function clearInstagramSelected() {
 export function setCheckoutLoading({ payload }: { payload: boolean }) {
   return {
     type: '@review/SET_CHECKOUT_LOADING',
+    payload,
+  };
+}
+
+export function setMaxKwadros({ payload }: { payload: number }) {
+  return {
+    type: '@review/SET_MAX_KWADROS',
     payload,
   };
 }

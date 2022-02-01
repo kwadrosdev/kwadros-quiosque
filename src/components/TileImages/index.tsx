@@ -36,6 +36,7 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
   const [open, setOpen] = useState(false);
 
   const instaImages = useSelector((state) => state.review.instagramModal.images);
+  const max_kwadros = useSelector((state) => state.review.max_kwadros);
   const fb_token = useSelector((state) => state.user.fb.access_token);
 
   const onFileChange = async (e: HTMLInputEvent) => {
@@ -119,7 +120,7 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
         {selectedImages.map((image, index) => (
           <TileImg key={`tile-${index}`} index={index} image={image} />
         ))}
-        {selectedImages.length < 9 && (
+        {selectedImages.length < max_kwadros && (
           <AddImages>
             <AddWrapper className="add_icon" onClick={() => setOpen(true)}>
               <AddIcon />
@@ -164,7 +165,7 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
           </ResponsiveBtn>
         </ResponsiveButtons>
       </Container>
-      {selectedImages.length < 9 && (
+      {selectedImages.length < max_kwadros && (
         <CircleAddBtn onClick={() => setOpen(true)}>
           <AddRounded />
         </CircleAddBtn>

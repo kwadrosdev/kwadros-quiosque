@@ -13,6 +13,7 @@ type imgFiles = Array<{
 }>;
 
 const INITIAL_STATE = {
+  max_kwadros: 9,
   currentFrame: 'ever' as currentFrame,
   loadingCheckout: false,
   loadingFbToken: false,
@@ -21,8 +22,8 @@ const INITIAL_STATE = {
     open: false,
     url: '',
     price: null as number | null,
-    availableTiles: null as number | null,
-    availableTilesPrice: null as number | null,
+    extraPrice: null as number | null,
+    extraKwadros: null as number | null,
   },
   cropModal: {
     open: false,
@@ -217,7 +218,13 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
         loadingFbToken: payload,
       };
       break;
-      
+    case '@review/SET_MAX_KWADROS':
+      state = {
+        ...state,
+        max_kwadros: payload,
+      };
+      break;
+
     default:
       return state;
   }

@@ -45,6 +45,8 @@ function Review() {
         `https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=${process.env.NEXT_PUBLIC_FB_CLIENT_SECRET}&access_token=${data.access_token}`
       );
 
+      history.pushState('', '', `${location.origin}${location.pathname}`);
+
       dispatch(setFbToken({ payload: tokenData }));
       dispatch(setFbTokenLoading({ payload: false }));
     } catch (error: any) {
@@ -59,7 +61,7 @@ function Review() {
 
   useEffect(() => {
     dispatch(closeCropModal());
-    dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, availableTiles: null, availableTilesPrice: null } }));
+    dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, extraPrice: null, extraKwadros: null } }));
 
     if (!name || !email) {
       dispatch(setStep({ payload: 0 }));
@@ -70,7 +72,6 @@ function Review() {
 
   useEffect(() => {
     if (router.query?.code) {
-      console.log('review.tsx');
       handleFbCode();
     }
 

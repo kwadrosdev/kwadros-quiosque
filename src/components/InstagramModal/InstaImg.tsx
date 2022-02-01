@@ -12,14 +12,15 @@ function InstaImg({ url, alt, id }: { url: string; alt: string; id: string }) {
   const dispatch = useDispatch();
   const { selected } = useSelector((state) => state.review.instagramModal);
   const selectedCount = useSelector((state) => state.review.files.length);
+  const max_kwadros = useSelector((state) => state.review.max_kwadros);
 
   function handleSelected() {
     if (isSelected) {
       return dispatch(removeInstagramSelected({ payload: id }));
     }
 
-    if (selectedCount + selected.length + 1 > 9) {
-      return window.alert('O máximo de quadros é 9');
+    if (selectedCount + selected.length + 1 > max_kwadros) {
+      return window.alert(`O máximo de quadros é ${max_kwadros}`);
     }
 
     return dispatch(setInstagramSelected({ payload: { id, url } }));

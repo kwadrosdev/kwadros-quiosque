@@ -18,32 +18,35 @@ import { pacotes } from 'src/utils/constants';
 
 function FramePicker() {
   const dispatch = useDispatch();
-  const { currentFrame, yampiProducts } = useSelector((state) => state.review);
+  const { currentFrame, yampiProducts, max_kwadros } = useSelector((state) => state.review);
   const selectedTiles = useSelector((state) => state.review.files);
 
   async function handleCheckoutPreview() {
     try {
       if (selectedTiles.length < 3) {
         return window.alert('Ops... Você deve selecionar pelo menos 3 kwadros para continuar.');
-      } else if (selectedTiles.length > 9) {
-        return window.alert('Ops... Você deve selecionar no máximo 9 kwadros para continuar.');
+      } else if (selectedTiles.length > max_kwadros) {
+        return window.alert(`Ops... Você deve selecionar no máximo ${max_kwadros} kwadros para continuar.`);
       }
 
+      const { price: minPrice } = yampiProducts.find(
+        (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-3`
+      );
       const { url, price } = yampiProducts.find(
         (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-${selectedTiles.length}`
       );
 
-      const availableTiles = 9 - selectedTiles.length >= 3 ? 3 : 9 - selectedTiles.length;
+      let extraPrice = 0;
+      let extraKwadros = 0;
 
-      const { price: moreTilesPrice } = yampiProducts.find(
-        (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-${selectedTiles.length + availableTiles}`
-      );
+      if (selectedTiles.length !== 3) {
+        extraPrice = price - minPrice;
+        extraKwadros = selectedTiles.length - 3;
+      }
 
-      const availableTilesPrice = moreTilesPrice - price;
-
-      dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price, availableTiles, availableTilesPrice } }));
+      dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price: minPrice, extraPrice, extraKwadros } }));
     } catch (error) {
-      dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, availableTiles: null, availableTilesPrice: null } }));
+      dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, extraPrice: null, extraKwadros: null } }));
       window.alert('Ocorreu um erro ao processar a sua compra, por favor, tente novamente!');
     }
   }

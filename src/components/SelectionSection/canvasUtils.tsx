@@ -60,7 +60,9 @@ export async function getCroppedImg(imageSrc: any, pixelCrop: any, rotation = 0)
   // As a blob
   return new Promise<any>((resolve) => {
     canvas.toBlob((file) => {
-      resolve(URL.createObjectURL(file));
+      if (file !== null) {
+        resolve(URL.createObjectURL(file));
+      }
     }, 'image/png');
   });
 }
@@ -89,7 +91,9 @@ export async function getRotatedImage(imageSrc: any, rotation = 0) {
 
   return new Promise<any>((resolve) => {
     canvas.toBlob((file) => {
-      resolve(URL.createObjectURL(file));
+      if (file !== null) {
+        resolve(URL.createObjectURL(file));
+      }
     }, 'image/png');
   });
 }

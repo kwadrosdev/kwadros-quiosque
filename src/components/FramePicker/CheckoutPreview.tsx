@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from '@hooks';
 
-import { Drawer, PreviewContainer, PreviewTitle, BtnContainer, CheckoutBtn } from './styles';
+import { Drawer, PreviewContainer, PreviewTitle, CheckoutBtn } from './styles';
 
 import { setCheckoutLoading, setOpenCheckoutPreview } from '@modules/review/actions';
 import { createOrder, uploadFile, updateFileOrder } from 'src/services/api';
@@ -12,7 +12,7 @@ import { pacotes } from 'src/utils/constants';
 function CheckoutPreview() {
   const dispatch = useDispatch();
 
-  const { open, price, availableTiles, availableTilesPrice, url } = useSelector((state) => state.review.checkoutPreview);
+  const { open, price, extraPrice, extraKwadros, url } = useSelector((state) => state.review.checkoutPreview);
   const { desktop } = useSelector((state) => state.platform);
   const selectedTiles = useSelector((state) => state.review.files);
 
@@ -22,7 +22,7 @@ function CheckoutPreview() {
   async function handleCheckoutClick() {
     try {
       dispatch(setCheckoutLoading({ payload: true }));
-      dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, availableTiles: null, availableTilesPrice: null } }));
+      dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, extraPrice: null, extraKwadros: null } }));
 
       const { url } = yampiProducts.find(
         (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-${selectedTiles.length}`
@@ -47,8 +47,13 @@ function CheckoutPreview() {
         bodyFormData.append('file', imgFile);
 
         const uploadData = await uploadFile(bodyFormData);
-        if (uploadData) {
-          await updateFileOrder(uploadData.id, order.id);
+        if (!uploadData) {
+          throw new Error('Falha ao salvar arquivo');
+        }
+
+        const uploadedImg = await updateFileOrder(uploadData.id, order.id);
+        if (!uploadedImg) {
+          throw new Error('Falha ao atualizar order no arquivo');
         }
       }
 
@@ -67,30 +72,38 @@ function CheckoutPreview() {
         anchor={desktop ? 'right' : 'bottom'}
         open={open}
         onClose={() =>
-          dispatch(
-            setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, availableTiles: null, availableTilesPrice: null } })
-          )
+          dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, extraPrice: null, extraKwadros: null } }))
         }
-        onOpen={() => dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price, availableTiles, availableTilesPrice } }))}>
+        onOpen={() => dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price, extraPrice, extraKwadros } }))}>
         <PreviewContainer>
           <PreviewTitle>Checkout</PreviewTitle>
           <div className="divider" />
 
           <div className="price-container">
             <div className="price">
-              <span>{selectedTiles.length} kwadros por</span>
+              <span>3 kwadros por</span>
               <span>{formatPrice(price)}</span>
             </div>
-            {availableTiles && availableTilesPrice && (
-              <div className="extraprice">
-                <span>{`(escolha mais ${availableTiles} kwadros por apenas`}</span>
-                <span>{`${formatPrice(availableTilesPrice)})`}</span>
-              </div>
+            {extraKwadros && extraPrice ? (
+              <>
+                <div className="price">
+                  <span>{`${extraKwadros} ${extraKwadros > 1 ? 'kwadros adicionais' : 'kwadro adicional'}`}</span>
+                  <span>{`${formatPrice(extraPrice)}`}</span>
+                </div>
+              </>
+            ) : (
+              ''
             )}
             <div className="price">
               <span>Frete</span>
+              <span>Grátis</span>
+            </div>
+            <div className="price" style={{ marginTop: '8px' }}>
               <span>
-                <b>Grátis</b>
+                <b>Total</b>
+              </span>
+              <span>
+                <b>{formatPrice(Number(price) + Number(extraPrice))}</b>
               </span>
             </div>
           </div>
