@@ -8,4 +8,7 @@ module.exports = {
   images: {
     domains: ['scontent.cdninstagram.com'],
   },
+  compiler: {
+    styledComponents: true,
+  },
 };

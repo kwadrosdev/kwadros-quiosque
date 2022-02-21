@@ -5,7 +5,7 @@ const api = axios.create({});
 export const mainApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
-    Authorization: process.env.NEXT_PUBLIC_API_TOKEN,
+    Authorization: process.env.NEXT_PUBLIC_API_TOKEN ?? '',
   },
 });
 
