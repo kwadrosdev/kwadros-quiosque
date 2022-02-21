@@ -1,5 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
-import { LocalShippingOutlined } from '@material-ui/icons';
+import { Cached, LocalShippingOutlined } from '@material-ui/icons';
 import nailsvg from 'public/icons/nail_icon.svg';
 import warrantysvg from 'public/icons/warranty_icon.svg';
 
@@ -24,7 +24,7 @@ export const MainSection = styled.section`
     max-width: 1524px;
     overflow: hidden;
   }
-  
+
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -105,7 +105,7 @@ export const Col = styled('div')<{ dir: string }>`
       @media screen and (min-width: 1440px) {
         & .row {
           max-width: 257px;
-          max-height: 257px;
+          max-height: 357px;
         }
       }
     `}
@@ -136,7 +136,23 @@ export const Col = styled('div')<{ dir: string }>`
 
 export const Row = styled.div``;
 
-export const MainText = styled.h2`
+export const FilledImg = styled.div`
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 220px;
+
+  @media screen and (min-width: 960px) {
+    min-width: 200px;
+    min-height: 400px;
+
+    & img {
+      border-radius: 8px;
+    }
+  }
+`;
+
+export const MainText = styled.h1`
   @media screen and (min-width: 960px) {
     font-size: 62px;
     line-height: 62px;
@@ -156,13 +172,11 @@ export const MainText = styled.h2`
   font-weight: 700;
 `;
 
-export const SubText = styled.h4`
-  @media screen and (min-width: 960px) {
-    padding: 30px 0;
-    font-size: 18px;
-    line-height: 22px;
-    font-weight: 600;
-  }
+export const SubText = styled.h2`
+  padding: 30px 0;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 600;
 `;
 
 export const MainBtn = styled.button`
@@ -200,11 +214,15 @@ export const ShippingInfo = styled.div`
   color: ${({ theme }) => theme.colors.black};
 `;
 
-export const ShippingIcon = styled(LocalShippingOutlined)<{ width: string; height: string }>`
+export const ChangeIcon = styled(Cached)<{ width: string; height: string }>`
   width: ${({ width }) => width} !important;
   height: ${({ height }) => height} !important;
 `;
 
+export const ShippingIcon = styled(LocalShippingOutlined)<{ width: string; height: string }>`
+  width: ${({ width }) => width} !important;
+  height: ${({ height }) => height} !important;
+`;
 export function NailIcon() {
   return <Image src={nailsvg} alt="nail_icon" width={48} height={48} />;
 }
@@ -241,7 +259,7 @@ export const InfoCardContainer = styled.div`
   align-items: center;
   width: 290px;
 
-  & > h5 {
+  & > .mainText {
     font-size: 18px;
     font-weight: 700;
     padding: 5px 0px;
@@ -306,6 +324,12 @@ export const GifSectionText = styled.div`
     font-size: 16px;
     white-space: pre-wrap;
     font-weight: 500;
+  }
+
+  & .subscript {
+    padding-top: 4px;
+    font-size: 11px;
+    line-height: 13px;
   }
 
   @media screen and (min-width: 960px) {

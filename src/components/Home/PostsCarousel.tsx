@@ -15,6 +15,9 @@ import img2 from 'public/images/carousel_2.jpg';
 import img3 from 'public/images/carousel_3.jpg';
 import img4 from 'public/images/carousel_4.jpg';
 import img5 from 'public/images/carousel_5.jpg';
+import img6 from 'public/images/carousel_6.jpg';
+import img7 from 'public/images/carousel_7.jpg';
+import img8 from 'public/images/carousel_8.jpg';
 
 const Container = styled.div`
   margin-top: 36px;
@@ -121,11 +124,7 @@ const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {
 };
 
 const DotsGroup = ({ onClick, active }: DotProps) => {
-  return (
-    <DotItem
-      active={active!}
-      onClick={onClick}></DotItem>
-  );
+  return <DotItem active={active!} onClick={onClick}></DotItem>;
 };
 
 const breakpoints = {
@@ -162,12 +161,14 @@ function Home() {
         deviceType={'mobile'}
         slidesToSlide={1}
         responsive={breakpoints}>
-        <Card imgSrc={img1} />
         <Card imgSrc={img2} />
         <Card imgSrc={img3} />
         <Card imgSrc={img4} />
         <Card imgSrc={img5} />
-      
+        <Card imgSrc={img6} />
+        <Card imgSrc={img7} />
+        <Card imgSrc={img8} />
+        <Card imgSrc={img1} />
       </Carousel>
     </Container>
   );

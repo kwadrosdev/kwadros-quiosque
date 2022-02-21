@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from '@hooks';
 import { Close, Remove, Add } from '@material-ui/icons';
 
 import { closeCropModal, updateTile } from '@modules/review/actions';
-import getCroppedImg from './cropImage';
+import getCroppedImg from 'src/utils/cropImage';
 
 import blackFrame from 'public/images/frames/tile/black.svg';
 import whiteFrame from 'public/images/frames/tile/white.svg';
@@ -42,7 +42,7 @@ function CropModal() {
 
   const selectedFrame = useSelector((state) => state.review.currentFrame);
 
-  const { open, img: image, index } = useSelector((state) => state.review.cropModal);
+  const { img: image, index } = useSelector((state) => state.review.cropModal);
 
   const [imgFrame, setImageFrame] = useState('white');
   const [imgPadding, setImagePadding] = useState(false);
@@ -105,7 +105,7 @@ function CropModal() {
   }, [selectedFrame]);
 
   return (
-    <CustomDialog open={open}>
+    <CustomDialog open={true}>
       <CropModalContainer>
         <CropModalTitle>
           <CloseBtn onClick={() => dispatch(closeCropModal())}>

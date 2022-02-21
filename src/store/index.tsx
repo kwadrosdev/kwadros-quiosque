@@ -6,6 +6,7 @@ import storage from './storage'; // defaults to localStorage for web
 
 const persistConfig = {
   key: 'root',
+  blacklist: [],
   storage,
 };
 

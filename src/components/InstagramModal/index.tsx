@@ -95,12 +95,12 @@ function InstagramModal() {
 
           for (const child of childrenData.data) {
             if (child.media_type === 'IMAGE') {
-              _images.push({ id: child.id, url: child.media_url });
+              _images.push({ id: child.id, url: child.media_url.replace(/^[^.]*/, 'https://scontent') });
             }
           }
         } else {
           if (mediaData.media_type === 'IMAGE') {
-            _images.push({ id: mediaData.id, url: mediaData.media_url });
+            _images.push({ id: mediaData.id, url: mediaData.media_url.replace(/^[^.]*/, 'https://scontent') });
           }
         }
       }
@@ -129,7 +129,8 @@ function InstagramModal() {
       dispatch(setInstagramModalOpen({ payload: false }));
       dispatch(clearInstagramSelected());
     } catch (error) {
-      window.alert('Ops...! Ocorreu algum erro ao carregar as imagens selecionadas!');
+      window.alert('Ops...! Ocorreu algum erro ao carregar as imagens do instagram, conecte-se novamente!');
+      handleInstagramLogout();
     }
   }
 

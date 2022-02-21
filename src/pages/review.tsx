@@ -24,7 +24,7 @@ function Review() {
   const dispatch = useDispatch();
 
   const { name, email } = useSelector((state) => state.user);
-  const { open } = useSelector((state) => state.review.cropModal);
+  const { open: openCropModal } = useSelector((state) => state.review.cropModal);
   const openInstagram = useSelector((state) => state.review.instagramModal.open);
 
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -97,7 +97,7 @@ function Review() {
           <SelectionSection />
           <FramePicker />
         </Content>
-        {open && <CropModal />}
+        {openCropModal && <CropModal />}
         {openInstagram && <InstagramModal />}
         <LowQualityModal />
         <Loading />

@@ -10,7 +10,7 @@ function InfoCard({ icon, mainText, subText }: InfoCardInterface) {
   return (
     <InfoCardContainer>
       {icon}
-      <h5>{mainText}</h5>
+      <span className="mainText">{mainText}</span>
       <span>{subText}</span>
     </InfoCardContainer>
   );

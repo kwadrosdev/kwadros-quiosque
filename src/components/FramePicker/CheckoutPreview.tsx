@@ -6,7 +6,7 @@ import { Drawer, PreviewContainer, PreviewTitle, CheckoutBtn } from './styles';
 import { setCheckoutLoading, setOpenCheckoutPreview } from '@modules/review/actions';
 import { createOrder, uploadFile, updateFileOrder } from 'src/services/api';
 
-import { formatPrice, b64toBlob } from 'src/utils/common_functions';
+import { formatPrice } from 'src/utils/common_functions';
 import { pacotes } from 'src/utils/constants';
 
 function CheckoutPreview() {
@@ -41,12 +41,12 @@ function CheckoutPreview() {
       }
 
       for (let i = 0; i < selectedTiles.length; i++) {
-        const bodyFormData = new FormData();
+        const body = {
+          name: `file-${i + 1}`,
+          file: selectedTiles[i].cropped,
+        };
 
-        const imgFile = b64toBlob(selectedTiles[i].cropped);
-        bodyFormData.append('file', imgFile);
-
-        const uploadData = await uploadFile(bodyFormData);
+        const uploadData = await uploadFile(body);
         if (!uploadData) {
           throw new Error('Falha ao salvar arquivo');
         }

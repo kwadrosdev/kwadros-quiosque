@@ -4,6 +4,9 @@ const api = axios.create({});
 
 export const mainApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  headers: {
+    Authorization: process.env.NEXT_PUBLIC_API_TOKEN,
+  },
 });
 
 export async function createOrder(body: any) {
@@ -15,7 +18,7 @@ export async function createOrder(body: any) {
   }
 }
 
-export async function uploadFile(body: FormData) {
+export async function uploadFile(body: { name: string; file: any }) {
   try {
     const { data } = await mainApi.post('/order/file_upload/', body);
     return data;

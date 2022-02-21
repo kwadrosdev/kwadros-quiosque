@@ -94,12 +94,12 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
 
             for (const child of childrenData.data) {
               if (child.media_type === 'IMAGE') {
-                images.push({ id: child.id, url: child.media_url });
+                images.push({ id: child.id, url: child.media_url.replace(/^[^.]*/, 'https://scontent') });
               }
             }
           } else {
             if (mediaData.media_type === 'IMAGE') {
-              images.push({ id: mediaData.id, url: mediaData.media_url });
+              images.push({ id: mediaData.id, url: mediaData.media_url.replace(/^[^.]*/, 'https://scontent') });
             }
           }
         }
