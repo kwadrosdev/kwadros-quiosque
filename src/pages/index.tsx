@@ -57,7 +57,7 @@ function Home() {
             <MainText>{'Seu cantinho decorado\n com recordações e \nbons sentimentos'}</MainText>
           </TextSection>
           <ResponsiveImage>
-            <Image src={img_mobile} alt="logoImg" layout="fill" objectFit="cover" quality={100} />
+            <Image src={img_mobile} priority alt="logoImg" layout="fill" objectFit="cover" quality={100} />
           </ResponsiveImage>
         </MainSection>
         <InfoSection>

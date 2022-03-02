@@ -2,8 +2,7 @@ import '@components/Carousel/styles.css';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
-import { initStore, persistor } from '../store';
-import { PersistGate } from 'redux-persist/integration/react';
+import { initStore } from '../store';
 
 import type { AppProps } from 'next/app';
 
@@ -31,9 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Provider store={initStore}>
         <ThemeProvider theme={theme}>
           <DefaultSeo {...SEO} />
-          <PersistGate loading={null} persistor={persistor}>
-            <Component {...pageProps} />
-          </PersistGate>
+          <Component {...pageProps} />
           <Yampi />
           <FB />
           <ResizeListener />
