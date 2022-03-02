@@ -10,6 +10,7 @@ import { Close, Remove, Add } from '@material-ui/icons';
 
 import { closeCropModal, updateTile } from '@modules/review/actions';
 import getCroppedImg from 'src/utils/cropImage';
+import { db } from 'src/db';
 
 import blackFrame from 'public/images/frames/tile/black.svg';
 import whiteFrame from 'public/images/frames/tile/white.svg';
@@ -42,7 +43,7 @@ function CropModal() {
 
   const selectedFrame = useSelector((state) => state.review.currentFrame);
 
-  const { img: image, index } = useSelector((state) => state.review.cropModal);
+  const { img: image } = useSelector((state) => state.review.cropModal);
 
   const [imgFrame, setImageFrame] = useState('white');
   const [imgPadding, setImagePadding] = useState(false);
@@ -60,20 +61,22 @@ function CropModal() {
     try {
       const croppedImage = await getCroppedImg(image.src, croppedAreaPixels, 0);
 
+      const imgFile = {
+        id: image.id,
+        src: image.src,
+        dimensions: {
+          x: imgPadding ? crop.x * (262 / 212.5) : crop.x,
+          y: imgPadding ? crop.y * (262 / 212.5) : crop.y,
+          zoom,
+        },
+        cropped: croppedImage,
+        small: image.small ?? false,
+      };
+
+      await db.files.put({ id: imgFile.id, content: imgFile });
       dispatch(
         updateTile({
-          payload: {
-            img: {
-              src: image.src,
-              dimensions: {
-                x: imgPadding ? crop.x * (262 / 212.5) : crop.x,
-                y: imgPadding ? crop.y * (262 / 212.5) : crop.y,
-                zoom,
-              },
-              cropped: croppedImage,
-            },
-            index: index,
-          },
+          payload: imgFile,
         })
       );
 
@@ -126,8 +129,8 @@ function CropModal() {
             maxZoom={3}
             aspect={1 / 1}
             cropSize={{
-              width: imgPadding ? 212.25 : 262,
-              height: imgPadding ? 212.25 : 262,
+              width: imgPadding ? 212.5 : 262,
+              height: imgPadding ? 212.5 : 262,
             }}
             onMediaLoaded={({ naturalWidth, naturalHeight }) => {
               if (naturalWidth > naturalHeight) {

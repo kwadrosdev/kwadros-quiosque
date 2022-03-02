@@ -1,7 +1,9 @@
 import { AnyAction } from 'redux';
 
 type currentFrame = 'ever' | 'classic' | 'bold' | 'clean';
-type imgFiles = Array<{
+
+type ImgFile = {
+  id: string;
   src: string | null;
   cropped: string | null;
   dimensions: {
@@ -10,7 +12,7 @@ type imgFiles = Array<{
     zoom: number;
   };
   small?: boolean;
-}>;
+}
 
 const INITIAL_STATE = {
   max_kwadros: 9,
@@ -27,8 +29,8 @@ const INITIAL_STATE = {
   },
   cropModal: {
     open: false,
-    index: 0,
     img: {
+      id: '',
       src: '' as string | null,
       cropped: '' as string | null,
       dimensions: {
@@ -36,7 +38,7 @@ const INITIAL_STATE = {
         y: 0,
         zoom: 1,
       },
-    },
+    } as ImgFile,
   },
   instagramModal: {
     open: false,
@@ -45,7 +47,7 @@ const INITIAL_STATE = {
     images: [] as Array<{ id: string; url: string }>,
     selected: [] as Array<{ id: string; url: string }>,
   },
-  files: [] as imgFiles,
+  files: [] as Array<ImgFile>,
 };
 
 function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
@@ -68,8 +70,7 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
       state = {
         ...state,
         cropModal: {
-          index: payload,
-          img: state.files[payload],
+          img: payload,
           open: true,
         },
       };
@@ -87,7 +88,11 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
 
     case '@review/KEEP_TILE':
       const _newFiles = [...state.files];
-      _newFiles[payload].small = false;
+      const keepIdx = _newFiles.findIndex((file) => file.id === payload);
+
+      if (keepIdx !== -1) {
+        _newFiles[keepIdx].small = false;
+      }
 
       state = {
         ...state,
@@ -97,7 +102,11 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
 
     case '@review/DELETE_TILE':
       const _files = [...state.files];
-      _files.splice(payload, 1);
+      const index = _files.findIndex((file) => file.id === payload);
+
+      if (index !== -1) {
+        _files.splice(index, 1);
+      }
 
       state = {
         ...state,
@@ -107,7 +116,11 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
 
     case '@review/UPDATE_TILE':
       const _imgfiles = [...state.files];
-      _imgfiles.splice(payload.index, 1, payload.img);
+      const updateIdx = _imgfiles.findIndex((file) => file.id === payload.id);
+
+      if (updateIdx !== -1) {
+        _imgfiles.splice(updateIdx, 1, payload);
+      }
 
       state = {
         ...state,
@@ -174,10 +187,10 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
 
     case '@review/REMOVE_INSTAGRAM_SELECTED':
       const selected = [...state.instagramModal.selected];
-      const index = selected.findIndex((img) => img.id === payload);
+      const instaIdx = selected.findIndex((img) => img.id === payload);
 
-      if (index !== -1) {
-        selected.splice(index, 1);
+      if (instaIdx !== -1) {
+        selected.splice(instaIdx, 1);
       }
 
       state = {

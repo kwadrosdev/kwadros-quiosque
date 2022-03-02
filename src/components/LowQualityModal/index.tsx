@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from '@hooks';
 import { CustomDialog, LowQualityImgContainer, LowQualityImg, ButtonsContainer, BtnOption, appear } from './styles';
 
 import { handleDeleteTile, keepImgTile } from '@modules/review/actions';
+import { db } from 'src/db';
 
 function InstagramModal() {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function InstagramModal() {
   const [smallImages, setSmallImages] = useState<any[]>([]);
 
   useEffect(() => {
-    const _smallImages = images.map((img, index) => ({ ...img, index })).filter((img) => img.small);
+    const _smallImages = images.filter((img) => img.small);
 
     setSmallImages(_smallImages);
   }, [images]);
@@ -24,14 +25,15 @@ function InstagramModal() {
     setTimeout(() => elementContainer?.classList.remove('appear-container'), 600);
   }
 
-  function keepImage(idx: number) {
+  function keepImage(id: string) {
     animate();
-    dispatch(keepImgTile({ payload: idx }));
+    dispatch(keepImgTile({ payload: id }));
   }
 
-  function removeImage(idx: number) {
+  function removeImage(id: string) {
     animate();
-    dispatch(handleDeleteTile({ payload: idx }));
+    dispatch(handleDeleteTile({ payload: id }));
+    db.files.delete(id).then(() => {});
   }
 
   if (smallImages.length > 0) {
@@ -49,7 +51,7 @@ function InstagramModal() {
           <BtnOption highlighted onClick={() => keepImage(smallImages[0].index)}>
             Manter Mesmo Assim
           </BtnOption>
-          <BtnOption onClick={() => removeImage(smallImages[0].index)}>Remover Do Pedido</BtnOption>
+          <BtnOption onClick={() => removeImage(smallImages[0].id)}>Remover Do Pedido</BtnOption>
         </ButtonsContainer>
       </CustomDialog>
     );

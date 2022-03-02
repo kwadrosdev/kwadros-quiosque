@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import { useDispatch, useSelector } from '@hooks';
 import { AddRounded } from '@material-ui/icons';
 import { useRouter } from 'next/router';
@@ -24,6 +25,7 @@ import { setImgFiles, setInstagramImages, setInstagramModalOpen, setInstagramLoa
 import { checkImgQuality } from 'src/utils/common_functions';
 
 import api from 'src/services/api';
+import { db } from 'src/db';
 
 interface HTMLInputEvent extends React.ChangeEvent {
   target: HTMLInputElement & EventTarget;
@@ -49,12 +51,16 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
 
         const isSmall = await checkImgQuality(objectURL);
 
-        _imgFiles.push({
+        const imgFile = {
+          id: uuid(),
           src: fileData,
           cropped: fileData,
           small: isSmall,
           dimensions: { x: 0, y: 0, zoom: 1 },
-        });
+        };
+
+        _imgFiles.push(imgFile);
+        await db.files.put({ id: imgFile.id, content: imgFile });
       }
       dispatch(setImgFiles({ payload: _imgFiles }));
     }
@@ -118,7 +124,7 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
     <>
       <Container className="thin-scrollbar">
         {selectedImages.map((image, index) => (
-          <TileImg key={`tile-${index}`} index={index} image={image} />
+          <TileImg key={`tile-${index}`} image={image} />
         ))}
         {selectedImages.length < max_kwadros && (
           <AddImages>

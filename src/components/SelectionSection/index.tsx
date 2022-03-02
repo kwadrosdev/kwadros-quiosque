@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
+import { v4 as uuid } from 'uuid';
 
 import { useSelector, useDispatch } from '@hooks';
 
@@ -11,6 +12,7 @@ import { setImgFiles, setInstagramImages, setInstagramModalOpen, setInstagramLoa
 import { checkImgQuality } from 'src/utils/common_functions';
 
 import api from 'src/services/api';
+import { db } from 'src/db';
 
 import TileImages from '@components/TileImages';
 
@@ -48,12 +50,16 @@ function SelectionSection() {
 
         const isSmall = await checkImgQuality(objectURL);
 
-        _imgFiles.push({
+        const imgFile = {
+          id: uuid(),
           src: fileData,
           cropped: fileData,
           small: isSmall,
           dimensions: { x: 0, y: 0, zoom: 1 },
-        });
+        };
+
+        await db.files.put({ id: imgFile.id, content: imgFile });
+        _imgFiles.push(imgFile);
       }
       dispatch(setImgFiles({ payload: _imgFiles }));
     }

@@ -12,6 +12,7 @@ const INITIAL_STATE = {
 function userReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
   switch (type) {
     case '@user/SET_NAME':
+      localStorage.setItem('name', payload);
       state = {
         ...state,
         name: payload,
@@ -19,6 +20,7 @@ function userReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
       break;
 
     case '@user/SET_EMAIL':
+      localStorage.setItem('email', payload);
       state = {
         ...state,
         email: payload,
@@ -26,6 +28,7 @@ function userReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
       break;
 
     case '@user/SET_STEP':
+      localStorage.setItem('step', payload);
       state = {
         ...state,
         step: payload,

@@ -10,7 +10,9 @@ import whiteFrame from 'public/images/frames/tile/white.svg';
 import { TileContainer, TileFrame, ImgContainer, TileBase, TileBtnsContainer, TileBtn, ResponsiveBtn, ResponsiveButtons } from './styles';
 import { DeleteOutline, Crop } from '@material-ui/icons';
 
-function TileImg({ image, index }: { image: any; index: number }) {
+import { db } from 'src/db';
+
+function TileImg({ image }: { image: any }) {
   const dispatch = useDispatch();
 
   const selectedFrame = useSelector((state) => state.review.currentFrame);
@@ -46,15 +48,20 @@ function TileImg({ image, index }: { image: any; index: number }) {
     }
   }, [selectedFrame]);
 
+  function handleDelete(id: string) {
+    dispatch(handleDeleteTile({ payload: id }));
+    db.files.delete(id).then(() => {});
+  }
+
   return (
     <>
       <TileContainer>
         <TileBase className="tile_base" />
         <TileBtnsContainer className="tile_btns">
-          <TileBtn onClick={() => dispatch(openCropModal({ payload: index }))}>
+          <TileBtn onClick={() => dispatch(openCropModal({ payload: image }))}>
             <Crop />
           </TileBtn>
-          <TileBtn onClick={() => dispatch(handleDeleteTile({ payload: index }))}>
+          <TileBtn onClick={() => handleDelete(image.id)}>
             <DeleteOutline />
           </TileBtn>
         </TileBtnsContainer>
@@ -91,7 +98,7 @@ function TileImg({ image, index }: { image: any; index: number }) {
         <ResponsiveBtn
           onClick={() => {
             setOpen(false);
-            dispatch(openCropModal({ payload: index }));
+            dispatch(openCropModal({ payload: image }));
           }}>
           <Crop />
           <span>Ajustar Imagem</span>
@@ -99,7 +106,7 @@ function TileImg({ image, index }: { image: any; index: number }) {
         <ResponsiveBtn
           onClick={() => {
             setOpen(false);
-            dispatch(handleDeleteTile({ payload: index }));
+            handleDelete(image.id);
           }}>
           <DeleteOutline />
           <span>Remover Kwadro</span>

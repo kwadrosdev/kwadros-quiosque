@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from '@hooks';
 import { Instagram, Close, ExitToApp } from '@material-ui/icons';
 import { Tooltip } from '@material-ui/core';
+import { v4 as uuid } from 'uuid';
 
 import {
   CustomDialog,
@@ -17,6 +18,7 @@ import {
   LoadMoreBtn,
 } from './styles';
 
+import { db } from 'src/db';
 import api from 'src/services/api';
 
 import Loading from '@components/Loading/animation';
@@ -118,11 +120,15 @@ function InstagramModal() {
 
       for (const img of selected) {
         const img64 = await getBase64FromUrl(img.url);
-        selectedFiles.push({
+        const imgFile = {
+          id: uuid(),
           src: img64,
           cropped: img64,
           dimensions: { x: 0, y: 0, zoom: 1 },
-        });
+          small: false,
+        };
+        await db.files.put({ id: imgFile.id, content: imgFile });
+        selectedFiles.push(imgFile);
       }
 
       dispatch(setImgFiles({ payload: selectedFiles }));

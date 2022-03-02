@@ -1,11 +1,18 @@
-interface UpdateTilePayload {
-  index: number;
-  img: any;
-}
-
 interface YampiProduct {
   id: string;
   url: string;
+}
+
+interface ImgFile {
+  id: string;
+  src: string | null;
+  cropped: string | null;
+  dimensions: {
+    x: number;
+    y: number;
+    zoom: number;
+  };
+  small?: boolean;
 }
 
 export function setOpenCheckoutPreview({
@@ -26,14 +33,14 @@ export function setCurrentFrame({ payload }: { payload: string }) {
   };
 }
 
-export function setImgFiles({ payload }: { payload: any[] }) {
+export function setImgFiles({ payload }: { payload: Array<ImgFile> }) {
   return {
     type: '@review/SET_FILES',
     payload,
   };
 }
 
-export function openCropModal({ payload }: { payload: number }) {
+export function openCropModal({ payload }: { payload: ImgFile }) {
   return {
     type: '@review/OPEN_CROP_MODAL',
     payload,
@@ -46,21 +53,21 @@ export function closeCropModal() {
   };
 }
 
-export function handleDeleteTile({ payload }: { payload: number }) {
+export function handleDeleteTile({ payload }: { payload: string }) {
   return {
     type: '@review/DELETE_TILE',
     payload,
   };
 }
 
-export function keepImgTile({ payload }: { payload: number }) {
+export function keepImgTile({ payload }: { payload: string }) {
   return {
     type: '@review/KEEP_TILE',
     payload,
   };
 }
 
-export function updateTile({ payload }: { payload: UpdateTilePayload }) {
+export function updateTile({ payload }: { payload: ImgFile }) {
   return {
     type: '@review/UPDATE_TILE',
     payload,

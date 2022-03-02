@@ -23,7 +23,7 @@ function Review() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { name, email } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const { open: openCropModal } = useSelector((state) => state.review.cropModal);
   const openInstagram = useSelector((state) => state.review.instagramModal.open);
 
@@ -46,7 +46,8 @@ function Review() {
       );
 
       history.pushState('', '', `${location.origin}${location.pathname}`);
-
+      
+      localStorage.setItem('fb_token', tokenData.access_token);
       dispatch(setFbToken({ payload: tokenData }));
       dispatch(setFbTokenLoading({ payload: false }));
     } catch (error: any) {
@@ -63,6 +64,8 @@ function Review() {
     dispatch(closeCropModal());
     dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, extraPrice: null, extraKwadros: null } }));
 
+    const name = user.name || localStorage.getItem('name');
+    const email = user.email || localStorage.getItem('email');
     if (!name || !email) {
       dispatch(setStep({ payload: 0 }));
       router.push('/get-started');

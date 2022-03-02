@@ -14,9 +14,9 @@ function CheckoutPreview() {
 
   const { open, price, extraPrice, extraKwadros, url } = useSelector((state) => state.review.checkoutPreview);
   const { desktop } = useSelector((state) => state.platform);
-  const selectedTiles = useSelector((state) => state.review.files);
+  // const selectedTiles = useSelector((state) => state.review.files);
 
-  const { currentFrame, yampiProducts } = useSelector((state) => state.review);
+  // const { currentFrame, yampiProducts } = useSelector((state) => state.review);
   const { name, email } = useSelector((state) => state.user);
 
   async function handleCheckoutClick() {
@@ -24,38 +24,34 @@ function CheckoutPreview() {
       dispatch(setCheckoutLoading({ payload: true }));
       dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, extraPrice: null, extraKwadros: null } }));
 
-      const { url } = yampiProducts.find(
-        (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-${selectedTiles.length}`
-      );
+      // const orderBody = {
+      //   user_name: name,
+      //   user_email: email,
+      //   variant: currentFrame,
+      // };
 
-      const orderBody = {
-        user_name: name,
-        user_email: email,
-        variant: currentFrame,
-      };
+      // const order = await createOrder(orderBody);
 
-      const order = await createOrder(orderBody);
+      // if (!order) {
+      //   throw new Error('Erro ao criar pedido');
+      // }
 
-      if (!order) {
-        throw new Error('Erro ao criar pedido');
-      }
+      // for (let i = 0; i < selectedTiles.length; i++) {
+      //   const body = {
+      //     name: `file-${i + 1}`,
+      //     file: selectedTiles[i].cropped,
+      //   };
 
-      for (let i = 0; i < selectedTiles.length; i++) {
-        const body = {
-          name: `file-${i + 1}`,
-          file: selectedTiles[i].cropped,
-        };
+      //   const uploadData = await uploadFile(body);
+      //   if (!uploadData) {
+      //     throw new Error('Falha ao salvar arquivo');
+      //   }
 
-        const uploadData = await uploadFile(body);
-        if (!uploadData) {
-          throw new Error('Falha ao salvar arquivo');
-        }
-
-        const uploadedImg = await updateFileOrder(uploadData.id, order.id);
-        if (!uploadedImg) {
-          throw new Error('Falha ao atualizar order no arquivo');
-        }
-      }
+      //   const uploadedImg = await updateFileOrder(uploadData.id, order.id);
+      //   if (!uploadedImg) {
+      //     throw new Error('Falha ao atualizar order no arquivo');
+      //   }
+      // }
 
       dispatch(setCheckoutLoading({ payload: false }));
 

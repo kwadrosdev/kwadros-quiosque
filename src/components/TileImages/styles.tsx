@@ -472,8 +472,8 @@ export const CropModalContent = styled('div')<{ hasPadding: boolean; orientation
       left: -9999px !important;
       right: -9994px !important;
 
-      height: ${({ hasPadding, orientation }) => (orientation === 'portrait' ? 'unset' : hasPadding ? '212.25px' : '262px')};
-      width: ${({ hasPadding, orientation }) => (orientation === 'landscape' ? 'unset' : hasPadding ? '212.25px' : '262px')};
+      height: ${({ hasPadding, orientation }) => (orientation === 'portrait' ? 'unset' : hasPadding ? '212.5px' : '262px')};
+      width: ${({ hasPadding, orientation }) => (orientation === 'landscape' ? 'unset' : hasPadding ? '212.5px' : '262px')};
 
       max-width: unset !important;
       max-height: unset !important;
