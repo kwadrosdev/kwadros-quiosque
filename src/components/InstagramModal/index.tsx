@@ -78,23 +78,18 @@ function InstagramModal() {
   async function handleLoadMore() {
     try {
       setInnerLoading(true);
-      const { data } = await api.get(nextPage);
+      const { data: mediaList } = await api.get(nextPage);
 
-      dispatch(setInstagramNextPage({ payload: data?.paging?.next ?? '' }));
+      dispatch(setInstagramNextPage({ payload: mediaList?.paging?.next ?? '' }));
 
-      const mediaList = data?.data.map(({ id }: { id: string }) => id);
       const _images = [];
 
-      for (const media of mediaList) {
-        const { data: mediaData } = await api.get(
-          `https://graph.instagram.com/${media}?fields=id,media_type,media_url,username,timestamp&access_token=${fb_token}`
-        );
-
+      for (const mediaData of mediaList.data) {
         if (mediaData.media_type === 'CAROUSEL_ALBUM') {
           const { data: childrenData } = await api.get(
-            `https://graph.instagram.com/${media}/children?fields=id,media_type,media_url,username,timestamp&access_token=${fb_token}`
+            `https://graph.instagram.com/${mediaData.id}/children?fields=id,media_type,media_url&access_token=${fb_token}`
           );
-
+          
           for (const child of childrenData.data) {
             if (child.media_type === 'IMAGE') {
               _images.push({ id: child.id, url: child.media_url.replace(/^[^.]*/, 'https://scontent') });
@@ -141,43 +136,45 @@ function InstagramModal() {
   }
 
   return (
-    <CustomDialog open={true}>
-      <TitleContainer>
-        <Tooltip title="Desconectar conta do Instagram">
-          <LogoutBtn onClick={() => handleInstagramLogout()}>
-            <ExitToApp />
-          </LogoutBtn>
-        </Tooltip>
+    <>
+      <CustomDialog open={true}>
+        <TitleContainer>
+          <Tooltip title="Desconectar conta do Instagram">
+            <LogoutBtn onClick={() => handleInstagramLogout()}>
+              <ExitToApp />
+            </LogoutBtn>
+          </Tooltip>
 
-        <Title>
-          <Instagram />
-          <span>Selecione do Instagram</span>
-        </Title>
+          <Title>
+            <Instagram />
+            <span>Selecione do Instagram</span>
+          </Title>
 
-        <CloseBtn onClick={() => handleClose()}>
-          <Close />
-        </CloseBtn>
-      </TitleContainer>
-      <Wrapper>
-        <Content className="thin-scrollbar">
-          {loading ? (
-            <Loading instagram />
-          ) : (
-            <>
-              <ImagesContainer>
-                {images.length && images.map((img, index) => <InstaImg key={index} url={img.url} alt={`img-${index}`} id={img.id} />)}
-              </ImagesContainer>
-              {nextPage && !innerLoading && <LoadMoreBtn onClick={() => handleLoadMore()}>Carregar mais imagens</LoadMoreBtn>}
-              {innerLoading && <Loading />}
-            </>
-          )}
-        </Content>
-      </Wrapper>
-      <Footer>
-        <span>{`Fotos selecionadas: ${selected.length}`}</span>
-        <ModalBtn onClick={() => handleSelection()}>Concluir</ModalBtn>
-      </Footer>
-    </CustomDialog>
+          <CloseBtn onClick={() => handleClose()}>
+            <Close />
+          </CloseBtn>
+        </TitleContainer>
+        <Wrapper>
+          <Content className="thin-scrollbar">
+            {loading ? (
+              <Loading instagram />
+            ) : (
+              <>
+                <ImagesContainer>
+                  {images.length ? images.map((img, index) => <InstaImg key={index} url={img.url} alt={`img-${index}`} id={img.id} />) : ''}
+                </ImagesContainer>
+                {nextPage && !innerLoading && <LoadMoreBtn onClick={() => handleLoadMore()}>Carregar mais imagens</LoadMoreBtn>}
+                {innerLoading && <Loading />}
+              </>
+            )}
+          </Content>
+        </Wrapper>
+        <Footer>
+          <span>{`Fotos selecionadas: ${selected.length}`}</span>
+          <ModalBtn onClick={() => handleSelection()}>Concluir</ModalBtn>
+        </Footer>
+      </CustomDialog>
+    </>
   );
 }
 

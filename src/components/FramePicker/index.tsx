@@ -25,29 +25,8 @@ function FramePicker() {
   const { name, email } = useSelector((state) => state.user);
   const selectedTiles = useSelector((state) => state.review.files);
 
-  async function handleCheckoutPreview() {
+  async function handleOrder() {
     try {
-      if (selectedTiles.length < 3) {
-        return window.alert('Ops... Você deve selecionar pelo menos 3 kwadros para continuar.');
-      } else if (selectedTiles.length > max_kwadros) {
-        return window.alert(`Ops... Você deve selecionar no máximo ${max_kwadros} kwadros para continuar.`);
-      }
-
-      const { price: minPrice } = yampiProducts.find(
-        (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-3`
-      );
-      const { url, price } = yampiProducts.find(
-        (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-${selectedTiles.length}`
-      );
-
-      let extraPrice = 0;
-      let extraKwadros = 0;
-
-      if (selectedTiles.length !== 3) {
-        extraPrice = price - minPrice;
-        extraKwadros = selectedTiles.length - 3;
-      }
-
       const orderBody = {
         user_name: name,
         user_email: email,
@@ -55,12 +34,17 @@ function FramePicker() {
       };
 
       const order = await createOrder(orderBody);
+      if (!order) {
+        throw new Error('Erro ao criar Order');
+      }
+
       const transaction = await createTransaction(selectedTiles.length);
+      if (!transaction) {
+        throw new Error('Erro ao criar Transaction');
+      }
 
       await db.transactions.put({ id: 'transactionID', transaction });
       await db.orders.put({ id: 'orderID', order: order.id });
-
-      dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price: minPrice, extraPrice, extraKwadros } }));
 
       const uploadPromisses: Promise<any>[] = [];
       for (let i = 0; i < selectedTiles.length; i++) {
@@ -85,10 +69,41 @@ function FramePicker() {
           updateFilePromises.push(updateFileOrder(body));
         }
       }
-      const values = await Promise.all(updateFilePromises);
+      await Promise.all(updateFilePromises);
     } catch (error) {
+      console.log(error);
+      window.alert(`Ocorreu um erro ao processar a sua compra: ${error}`);
+    }
+  }
+
+  async function handleCheckoutPreview() {
+    try {
+      if (selectedTiles.length < 3) {
+        return window.alert('Ops... Você deve selecionar pelo menos 3 kwadros para continuar.');
+      } else if (selectedTiles.length > max_kwadros) {
+        return window.alert(`Ops... Você deve selecionar no máximo ${max_kwadros} kwadros para continuar.`);
+      }
+
+      const { price: minPrice } = yampiProducts.find(
+        (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-3`
+      );
+      const { url, price } = yampiProducts.find(
+        (product: { id: 'string'; url: 'string' }) => product.id === `${pacotes[currentFrame]}-${selectedTiles.length}`
+      );
+
+      let extraPrice = 0;
+      let extraKwadros = 0;
+
+      if (selectedTiles.length !== 3) {
+        extraPrice = price - minPrice;
+        extraKwadros = selectedTiles.length - 3;
+      }
+
+      dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price: minPrice, extraPrice, extraKwadros } }));
+      handleOrder();
+    } catch (error) {
+      window.alert('Error: ' + error);
       dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, extraPrice: null, extraKwadros: null } }));
-      window.alert('Ocorreu um erro ao processar a sua compra, por favor, tente novamente!');
     }
   }
 

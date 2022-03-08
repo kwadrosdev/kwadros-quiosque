@@ -158,9 +158,10 @@ export const InstaImgFrame = styled.div`
   left: 0;
   width: 160px;
   height: 160px;
+  transition: 0.3s;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.2);
   }
 `;
 
@@ -196,7 +197,7 @@ export const SelectedIcon = styled.div`
 `;
 
 export const LoadMoreBtn = styled.button`
-  margin-bottom: 24px;
+  margin-bottom: 60px;
   width: fit-content;
   padding: 0px 16px;
   min-height: 36px;

@@ -18,7 +18,7 @@ interface ImgFile {
 export function setOpenCheckoutPreview({
   payload,
 }: {
-  payload: { open: boolean; url: string; price: number | null; extraPrice: number | null, extraKwadros: number | null };
+  payload: { open: boolean; url: string; price: number | null; extraPrice: number | null; extraKwadros: number | null };
 }) {
   return {
     type: '@review/SET_CHECKOUT_PREVIEW',

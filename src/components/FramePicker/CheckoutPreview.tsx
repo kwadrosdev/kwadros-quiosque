@@ -4,19 +4,15 @@ import { useSelector, useDispatch } from '@hooks';
 import { Drawer, PreviewContainer, PreviewTitle, CheckoutBtn } from './styles';
 
 import { setCheckoutLoading, setOpenCheckoutPreview } from '@modules/review/actions';
-import { createOrder, uploadFile, updateFileOrder } from 'src/services/api';
 
 import { formatPrice } from 'src/utils/common_functions';
-import { pacotes } from 'src/utils/constants';
 
 function CheckoutPreview() {
   const dispatch = useDispatch();
 
   const { open, price, extraPrice, extraKwadros, url } = useSelector((state) => state.review.checkoutPreview);
   const { desktop } = useSelector((state) => state.platform);
-  // const selectedTiles = useSelector((state) => state.review.files);
 
-  // const { currentFrame, yampiProducts } = useSelector((state) => state.review);
   const { name, email } = useSelector((state) => state.user);
 
   async function handleCheckoutClick() {
@@ -24,38 +20,10 @@ function CheckoutPreview() {
       dispatch(setCheckoutLoading({ payload: true }));
       dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, extraPrice: null, extraKwadros: null } }));
 
-      // const orderBody = {
-      //   user_name: name,
-      //   user_email: email,
-      //   variant: currentFrame,
-      // };
-
-      // const order = await createOrder(orderBody);
-
-      // if (!order) {
-      //   throw new Error('Erro ao criar pedido');
-      // }
-
-      // for (let i = 0; i < selectedTiles.length; i++) {
-      //   const body = {
-      //     name: `file-${i + 1}`,
-      //     file: selectedTiles[i].cropped,
-      //   };
-
-      //   const uploadData = await uploadFile(body);
-      //   if (!uploadData) {
-      //     throw new Error('Falha ao salvar arquivo');
-      //   }
-
-      //   const uploadedImg = await updateFileOrder(uploadData.id, order.id);
-      //   if (!uploadedImg) {
-      //     throw new Error('Falha ao atualizar order no arquivo');
-      //   }
-      // }
-
-      dispatch(setCheckoutLoading({ payload: false }));
-
-      location.href = `${url}?utm_name=${name}&utm_email=${email}`;
+      setTimeout(() => {
+        dispatch(setCheckoutLoading({ payload: false }));
+        location.href = `${url}?utm_name=${name}&utm_email=${email}`;
+      }, 2000);
     } catch (error) {
       dispatch(setCheckoutLoading({ payload: false }));
       window.alert('Ocorreu um erro ao processar a sua compra, por favor, tente novamente!');
@@ -92,8 +60,11 @@ function CheckoutPreview() {
             )}
             <div className="price">
               <span>Frete</span>
-              <span>Grátis</span>
+              <span>Grátis*</span>
             </div>
+            <span className="subscript">
+              {'*Frete grátis para capitais e regiões metropolitanas, as demais regiões tem frete fixo de R$25'}
+            </span>
             <div className="price" style={{ marginTop: '8px' }}>
               <span>
                 <b>Total</b>

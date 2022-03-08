@@ -20,7 +20,8 @@ export const PreviewContainer = styled.div`
 
   @media screen and (max-width: 1023px) {
     width: 100%;
-    max-height: 324px;
+    height: fit-content;
+    max-height: 360px;
     border-top-right-radius: 16px;
     border-top-left-radius: 16px;
   }
@@ -37,6 +38,15 @@ export const PreviewContainer = styled.div`
     display: flex;
     flex-direction: column;
     margin-bottom: 24px;
+
+    & > .subscript {
+      margin-top: 8px;
+      width: 100%;
+      display: flex;
+      font-size: 13px;
+      line-height: 17px;
+      color: rgba(0, 0, 0, 0.5);
+    }
 
     & > .price {
       width: 100%;

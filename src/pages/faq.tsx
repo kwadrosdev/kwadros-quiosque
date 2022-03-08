@@ -73,7 +73,7 @@ function TermsOfUso() {
           </li>
           <li>
             <h3>Qual o valor do frete?</h3>
-            <span>Frete grátis para todo Brasil</span>
+            <span>Frete grátis para capitais e regiões metropolitanas, as demais regiões tem frete fixo de R$25</span>
           </li>
           <li>
             <h3>Quais são os tamanhos dos quadros?</h3>

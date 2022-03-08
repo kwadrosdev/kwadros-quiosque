@@ -80,21 +80,18 @@ function SelectionSection() {
 
         dispatch(setInstagramLoading({ payload: true }));
 
-        const { data } = await api.get(`https://graph.instagram.com/me?fields=id,username,media&access_token=${fb_token}`);
+        const { data: user } = await api.get(`https://graph.instagram.com/me?fields=id&access_token=${fb_token}`);
+        const { data: userMediaList } = await api.get(
+          `https://graph.instagram.com/${user.id}/media/?fields=id,media_type,media_url&access_token=${fb_token}&limit=15`
+        );
 
-        dispatch(setInstagramNextPage({ payload: data.media?.paging?.next ?? '' }));
-
-        const mediaList = data.media.data.map(({ id }: { id: string }) => id);
+        dispatch(setInstagramNextPage({ payload: userMediaList?.paging?.next ?? '' }));
         const images = [];
 
-        for (const media of mediaList) {
-          const { data: mediaData } = await api.get(
-            `https://graph.instagram.com/${media}?fields=id,media_type,media_url,username,timestamp&access_token=${fb_token}`
-          );
-
+        for (const mediaData of userMediaList.data) {
           if (mediaData.media_type === 'CAROUSEL_ALBUM') {
             const { data: childrenData } = await api.get(
-              `https://graph.instagram.com/${media}/children?fields=id,media_type,media_url,username,timestamp&access_token=${fb_token}`
+              `https://graph.instagram.com/${mediaData.id}/children?fields=id,media_type,media_url&access_token=${fb_token}`
             );
 
             for (const child of childrenData.data) {
@@ -143,7 +140,7 @@ function SelectionSection() {
               <span>Carregar fotos</span>
             </FullOption>
             <Divider>Ou</Divider>
-            <FullOption onClick={handleInstagram}>
+            <FullOption onClick={() => handleInstagram()}>
               <InstagramIcon />
               <span>Importar do Instagram</span>
             </FullOption>

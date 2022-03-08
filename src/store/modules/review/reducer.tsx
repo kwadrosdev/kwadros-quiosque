@@ -12,7 +12,7 @@ type ImgFile = {
     zoom: number;
   };
   small?: boolean;
-}
+};
 
 const INITIAL_STATE = {
   max_kwadros: 9,
