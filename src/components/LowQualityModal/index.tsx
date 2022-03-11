@@ -48,7 +48,7 @@ function InstagramModal() {
         </LowQualityImgContainer>
 
         <ButtonsContainer>
-          <BtnOption highlighted onClick={() => keepImage(smallImages[0].index)}>
+          <BtnOption highlighted onClick={() => keepImage(smallImages[0].id)}>
             Manter Mesmo Assim
           </BtnOption>
           <BtnOption onClick={() => removeImage(smallImages[0].id)}>Remover Do Pedido</BtnOption>
