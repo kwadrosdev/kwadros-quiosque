@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CameraAlt, Facebook, Instagram } from '@material-ui/icons';
+import { CameraAlt, Facebook, Instagram } from '@mui/icons-material';
 
 export const Container = styled.div`
   flex: 0 1 auto;

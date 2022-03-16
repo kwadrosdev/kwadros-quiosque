@@ -10,7 +10,6 @@ const fadeInUp = keyframes`
       transform: translate3d(0, 0, 0);
       opacity: 1;
     }
-  }
 `;
 
 export const Container = styled.div`

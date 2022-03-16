@@ -5,9 +5,6 @@ import { v4 as uuid } from 'uuid';
 
 import { useSelector, useDispatch } from '@hooks';
 
-import { withStyles } from '@material-ui/core/styles';
-import { styles } from './materialStyles';
-
 import { setImgFiles, setInstagramImages, setInstagramModalOpen, setInstagramLoading, setInstagramNextPage } from '@modules/review/actions';
 import { checkImgQuality } from 'src/utils/common_functions';
 
@@ -159,4 +156,4 @@ function readFile(file: File) {
   });
 }
 
-export default withStyles(styles)(SelectionSection);
+export default SelectionSection;

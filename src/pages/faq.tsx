@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 import styled from 'styled-components';
-import { OpenInNew } from '@material-ui/icons';
+import { OpenInNew } from '@mui/icons-material';
 
 import Layout from '@components/Layout/index';
 

@@ -6,7 +6,7 @@ import Cropper from 'react-easy-crop';
 import Slider from './Slider';
 
 import { useSelector, useDispatch } from '@hooks';
-import { Close, Remove, Add } from '@material-ui/icons';
+import { Close, Remove, Add } from '@mui/icons-material';
 
 import { closeCropModal, updateTile } from '@modules/review/actions';
 import getCroppedImg from 'src/utils/cropImage';

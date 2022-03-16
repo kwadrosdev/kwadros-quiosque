@@ -1,5 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
-import { Cached, LocalShippingOutlined } from '@material-ui/icons';
+import { Cached, LocalShippingOutlined } from '@mui/icons-material';
 import nailsvg from 'public/icons/nail_icon.svg';
 import warrantysvg from 'public/icons/warranty_icon.svg';
 

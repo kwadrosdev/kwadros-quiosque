@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Dialog, IconButton } from '@material-ui/core';
+import { Dialog, IconButton } from '@mui/material';
 
 export const CustomDialog = styled(Dialog)`
   & .MuiPaper-root {

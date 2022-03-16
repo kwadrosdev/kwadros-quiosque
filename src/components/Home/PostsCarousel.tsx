@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from '@hooks';
 
-import { IconButton } from '@material-ui/core';
-import { ArrowBack, ArrowForward } from '@material-ui/icons';
+import { IconButton } from '@mui/material';
+import { ArrowBack, ArrowForward } from '@mui/icons-material';
 
 import Card from './CarouselCard';
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IconButton as CustomIconBtn } from '@material-ui/core';
+import { IconButton as CustomIconBtn } from '@mui/material';
 
 export const Container = styled.nav`
   display: flex;

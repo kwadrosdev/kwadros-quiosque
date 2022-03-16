@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from '@hooks';
 import Head from 'next/head';
 import { setName, setEmail, setStep } from '@modules/user/actions';
 import { useRouter } from 'next/router';
-import { IconButton } from '@material-ui/core';
-import { ChevronLeft } from '@material-ui/icons';
+import { IconButton } from '@mui/material';
+import { ChevronLeft } from '@mui/icons-material';
 
 import { Container, Box, CardBox, MainBtn, FormInput, StepsHeader, Transition1, Transition2 } from '../components/GetStarted/styles';
 

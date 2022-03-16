@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { SwipeableDrawer } from '@material-ui/core';
+import { SwipeableDrawer } from '@mui/material';
 
 export const Drawer = styled(SwipeableDrawer)`
   background: transparent !important;

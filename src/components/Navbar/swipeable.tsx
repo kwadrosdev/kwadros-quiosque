@@ -7,9 +7,10 @@ import {
   PlayCircleOutlineOutlined as PlayIcon,
   WhatsApp as WhatsAppIcon,
   Close as CloseIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
-import { SwipeableDrawer, List, ListItem, Divider, makeStyles } from '@material-ui/core';
+import { SwipeableDrawer, List, ListItem, Divider } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { TitleSpace, ListContainer, ListItemText, ListItemIcon, IconButton } from './styles';
 
 import { whatsapp } from 'src/utils/constants';

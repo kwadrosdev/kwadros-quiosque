@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from '@hooks';
-import { Instagram, Close, ExitToApp } from '@material-ui/icons';
-import { Tooltip } from '@material-ui/core';
+import { Instagram, Close, ExitToApp } from '@mui/icons-material';
+import { Tooltip } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 
 import {

@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
-import { AddRounded, CameraAlt, Facebook, Instagram } from '@material-ui/icons';
-import { IconButton, Dialog } from '@material-ui/core';
+import { AddRounded, CameraAlt, Facebook, Instagram } from '@mui/icons-material';
+import { IconButton, Dialog } from '@mui/material';
 
 const appear = keyframes`
   0% {

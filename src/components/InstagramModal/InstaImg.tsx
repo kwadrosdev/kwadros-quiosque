@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from '@hooks';
 import Image from 'next/image';
 
 import { InstaImgContainer, SelectedBorder, SelectedIcon, InstaImgFrame } from './styles';
-import { Check } from '@material-ui/icons';
+import { Check } from '@mui/icons-material';
 
 import { setInstagramSelected, removeInstagramSelected } from '@modules/review/actions';
 

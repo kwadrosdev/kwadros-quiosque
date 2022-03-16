@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import { WhatsApp as WhatsAppIcon } from '@material-ui/icons';
+import { WhatsApp as WhatsAppIcon } from '@mui/icons-material';
 import { WppBtn } from './styles';
 
 import { whatsapp } from 'src/utils/constants';

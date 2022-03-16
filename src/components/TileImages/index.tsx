@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useDispatch, useSelector } from '@hooks';
-import { AddRounded } from '@material-ui/icons';
+import { AddRounded } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 
 import {

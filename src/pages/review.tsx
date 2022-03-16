@@ -7,7 +7,7 @@ import axios from 'axios';
 import { closeCropModal, setOpenCheckoutPreview, setFbTokenLoading } from '@modules/review/actions';
 import { setFbToken, setStep } from '@modules/user/actions';
 
-import { ArrowBack } from '@material-ui/icons';
+import { ArrowBack } from '@mui/icons-material';
 import { Container, Navbar, IconButton, Content } from '@components/Review/styles';
 import SwipeableMenu from '@components/Navbar/swipeable';
 import FramePicker from '@components/FramePicker';

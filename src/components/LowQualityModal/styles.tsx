@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { Dialog } from '@material-ui/core';
+import { Dialog } from '@mui/material';
 
 export const appear = keyframes`
   0% {

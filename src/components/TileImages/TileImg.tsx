@@ -8,7 +8,7 @@ import blackFrame from 'public/images/frames/tile/black.svg';
 import whiteFrame from 'public/images/frames/tile/white.svg';
 
 import { TileContainer, TileFrame, ImgContainer, TileBase, TileBtnsContainer, TileBtn, ResponsiveBtn, ResponsiveButtons } from './styles';
-import { DeleteOutline, Crop } from '@material-ui/icons';
+import { DeleteOutline, Crop } from '@mui/icons-material';
 
 import { db } from 'src/db';
 

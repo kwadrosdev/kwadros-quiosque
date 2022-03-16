@@ -1,4 +1,5 @@
-import { withStyles, Slider } from '@material-ui/core';
+import { Slider } from '@mui/material';
+import { withStyles } from '@mui/styles';
 
 const CustomSlider = withStyles({
   root: {
@@ -20,13 +21,11 @@ const CustomSlider = withStyles({
     width: '20px',
     backgroundColor: '#fff',
     boxShadow: '0 1px 3px 0 rgb(0 0 0 / 36%)',
-    marginTop: -8,
     boxSizing: 'border-box',
 
     '@media screen and (min-width: 960px)': {
       height: '24px',
       width: '24px',
-      marginTop: -10,
     },
   },
   track: {
