@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { db } from 'src/db';
 
 const api = axios.create({});
 

@@ -6,11 +6,14 @@ import { Drawer, PreviewContainer, PreviewTitle, CheckoutBtn } from './styles';
 import { setCheckoutLoading, setOpenCheckoutPreview } from '@modules/review/actions';
 
 import { formatPrice } from 'src/utils/common_functions';
+import { uploadFile, updateFileOrder, createTransaction, createOrder } from 'src/services/api';
+import { db } from 'src/db';
 
 function CheckoutPreview() {
   const dispatch = useDispatch();
 
   const { open, price, extraPrice, extraKwadros, url } = useSelector((state) => state.review.checkoutPreview);
+  const { currentFrame, files: selectedTiles } = useSelector((state) => state.review);
   const { desktop } = useSelector((state) => state.platform);
 
   const { name, email } = useSelector((state) => state.user);
@@ -20,10 +23,56 @@ function CheckoutPreview() {
       dispatch(setCheckoutLoading({ payload: true }));
       dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, extraPrice: null, extraKwadros: null } }));
 
-      setTimeout(() => {
-        dispatch(setCheckoutLoading({ payload: false }));
-        location.href = `${url}?utm_name=${name}&utm_email=${email}`;
-      }, 2000);
+      const orderBody = {
+        user_name: name,
+        user_email: email,
+        variant: currentFrame,
+      };
+
+      const order = await createOrder(orderBody);
+      if (!order) {
+        throw new Error('Erro ao criar Order');
+      }
+
+      const transaction = await createTransaction(selectedTiles.length);
+      if (!transaction) {
+        throw new Error('Erro ao criar Transaction');
+      }
+
+      await db.transactions.put({ id: 'transactionID', transaction });
+      await db.orders.put({ id: 'orderID', order: order.id });
+
+      const uploadPromisses: Promise<any>[] = [];
+      for (let i = 0; i < selectedTiles.length; i++) {
+        const body = {
+          name: selectedTiles[i].id,
+          file: selectedTiles[i].cropped,
+        };
+
+        uploadPromisses.push(uploadFile(body));
+      }
+      const uploadedFiles = await Promise.all(uploadPromisses);
+
+      const updateFilePromises: Promise<any>[] = [];
+      for (const file of uploadedFiles) {
+        if (file !== null) {
+          const body = {
+            secure_url: file.secure_url,
+            asset_id: file.asset_id,
+            transaction,
+            order: order.id,
+          };
+          updateFilePromises.push(updateFileOrder(body));
+        }
+      }
+      await Promise.all(updateFilePromises);
+
+      await db.transactions.clear();
+      await db.orders.clear();
+      await db.files.clear();
+
+      dispatch(setCheckoutLoading({ payload: false }));
+      location.href = `${url}?utm_name=${name}&utm_email=${email}`;
     } catch (error) {
       dispatch(setCheckoutLoading({ payload: false }));
       window.alert('Ocorreu um erro ao processar a sua compra, por favor, tente novamente!');

@@ -14,67 +14,12 @@ import popularBadge from 'public/images/popular.svg';
 
 import CheckoutPreview from './CheckoutPreview';
 
-import { uploadFile, updateFileOrder, createTransaction, createOrder } from 'src/services/api';
-import { db } from 'src/db';
-
 import { pacotes } from 'src/utils/constants';
 
 function FramePicker() {
   const dispatch = useDispatch();
   const { currentFrame, yampiProducts, max_kwadros } = useSelector((state) => state.review);
-  const { name, email } = useSelector((state) => state.user);
   const selectedTiles = useSelector((state) => state.review.files);
-
-  async function handleOrder() {
-    try {
-      const orderBody = {
-        user_name: name,
-        user_email: email,
-        variant: currentFrame,
-      };
-
-      const order = await createOrder(orderBody);
-      if (!order) {
-        throw new Error('Erro ao criar Order');
-      }
-
-      const transaction = await createTransaction(selectedTiles.length);
-      if (!transaction) {
-        throw new Error('Erro ao criar Transaction');
-      }
-
-      await db.transactions.put({ id: 'transactionID', transaction });
-      await db.orders.put({ id: 'orderID', order: order.id });
-
-      const uploadPromisses: Promise<any>[] = [];
-      for (let i = 0; i < selectedTiles.length; i++) {
-        const body = {
-          name: selectedTiles[i].id,
-          file: selectedTiles[i].cropped,
-        };
-
-        uploadPromisses.push(uploadFile(body));
-      }
-      const uploadedFiles = await Promise.all(uploadPromisses);
-
-      const updateFilePromises: Promise<any>[] = [];
-      for (const file of uploadedFiles) {
-        if (file !== null) {
-          const body = {
-            secure_url: file.secure_url,
-            asset_id: file.asset_id,
-            transaction,
-            order: order.id,
-          };
-          updateFilePromises.push(updateFileOrder(body));
-        }
-      }
-      await Promise.all(updateFilePromises);
-    } catch (error) {
-      console.log(error);
-      window.alert(`Ocorreu um erro ao processar a sua compra: ${error}`);
-    }
-  }
 
   async function handleCheckoutPreview() {
     try {
@@ -100,7 +45,6 @@ function FramePicker() {
       }
 
       dispatch(setOpenCheckoutPreview({ payload: { open: true, url, price: minPrice, extraPrice, extraKwadros } }));
-      handleOrder();
     } catch (error) {
       window.alert('Error: ' + error);
       dispatch(setOpenCheckoutPreview({ payload: { open: false, url: '', price: null, extraPrice: null, extraKwadros: null } }));
