@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from '@hooks';
 import { openCropModal, handleDeleteTile } from '@modules/review/actions';
 import Image from 'next/image';
@@ -9,10 +9,11 @@ import whiteFrame from 'public/images/frames/tile/white.svg';
 
 import { TileContainer, TileFrame, ImgContainer, TileBase, TileBtnsContainer, TileBtn, ResponsiveBtn, ResponsiveButtons } from './styles';
 import { DeleteOutline, Crop } from '@mui/icons-material';
+import { CircularProgress } from '@mui/material';
 
 import { db } from 'src/db';
 
-function TileImg({ image }: { image: any }) {
+function TileImg({ image, loading = false }: { image: any; loading?: boolean }) {
   const dispatch = useDispatch();
 
   const selectedFrame = useSelector((state) => state.review.currentFrame);
@@ -51,6 +52,21 @@ function TileImg({ image }: { image: any }) {
   function handleDelete(id: string) {
     dispatch(handleDeleteTile({ payload: id }));
     db.files.delete(id).then(() => {});
+  }
+
+  if (loading) {
+    return (
+      <TileContainer>
+        <TileBase className="tile_base" />
+        <TileFrame onClick={() => setOpen(true)}>
+          {imgFrame === 'black' && <Image alt="black_frame" draggable={false} src={blackFrame} layout="intrinsic" />}
+          {imgFrame === 'white' && <Image alt="white_frame" draggable={false} src={whiteFrame} layout="intrinsic" />}
+        </TileFrame>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <CircularProgress />
+        </div>
+      </TileContainer>
+    );
   }
 
   return (

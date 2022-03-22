@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useDispatch, useSelector } from '@hooks';
 import { AddRounded } from '@mui/icons-material';
@@ -21,8 +21,16 @@ import {
 
 import TileImg from './TileImg';
 
-import { setImgFiles, setInstagramImages, setInstagramModalOpen, setInstagramLoading, setInstagramNextPage } from '@modules/review/actions';
-import { checkImgQuality } from 'src/utils/common_functions';
+import {
+  setImgFiles,
+  setInstagramImages,
+  setInstagramModalOpen,
+  setInstagramLoading,
+  setInstagramNextPage,
+  setloadingTilesCountCount,
+} from '@modules/review/actions';
+import { checkImgQuality, readFile } from 'src/utils/common_functions';
+// import { resizeImage } from 'src/utils/resizeImage';
 
 import api from 'src/services/api';
 import { db } from 'src/db';
@@ -37,16 +45,21 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
 
   const [open, setOpen] = useState(false);
 
+  const loadingTilesCount = useSelector((state) => state.review.loadingTilesCount);
   const instaImages = useSelector((state) => state.review.instagramModal.images);
   const max_kwadros = useSelector((state) => state.review.max_kwadros);
   const fb_token = useSelector((state) => state.user.fb.access_token);
 
+  const [loadingTiles, setLoadingTiles] = useState<any>([]);
+
   const onFileChange = async (e: HTMLInputEvent) => {
     const _imgFiles: any[] = [];
 
+    dispatch(setloadingTilesCountCount({ payload: e?.target?.files ? e.target.files.length : 0 }));
     if (e?.target?.files && e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i++) {
-        const fileData: any = await readFile(e.target.files[i]);
+        // const fileData: any = await resizeImage(e.target.files[i]);
+        const fileData = await readFile(e.target.files[i]);
         const objectURL = URL.createObjectURL(e.target.files[i]);
 
         const isSmall = await checkImgQuality(objectURL);
@@ -64,6 +77,7 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
       }
       dispatch(setImgFiles({ payload: _imgFiles }));
     }
+    dispatch(setloadingTilesCountCount({ payload: 0 }));
   };
 
   async function handleInstagram() {
@@ -117,12 +131,22 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
     }
   }
 
+  useEffect(() => {
+    const items = [];
+    for (let i = 0; i < loadingTilesCount; i++) {
+      items.push(<TileImg key={`tile-${i}`} image={''} loading />);
+    }
+
+    setLoadingTiles(items);
+  }, [loadingTilesCount]);
+
   return (
     <>
       <Container className="thin-scrollbar">
         {selectedImages.map((image, index) => (
           <TileImg key={`tile-${index}`} image={image} />
         ))}
+        {loadingTiles}
         {selectedImages.length < max_kwadros && (
           <AddImages>
             <AddWrapper className="add_icon" onClick={() => setOpen(true)}>
@@ -175,14 +199,6 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
       )}
     </>
   );
-}
-
-function readFile(file: File) {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => resolve(reader.result), false);
-    reader.readAsDataURL(file);
-  });
 }
 
 export default TileImages;

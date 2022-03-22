@@ -25,3 +25,11 @@ export function b64toBlob(dataURI: any) {
   }
   return new Blob([ab], { type: 'image/png' });
 }
+
+export function readFile(file: File) {
+  return new Promise<string>((resolve) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => resolve(typeof reader.result === 'string' ? reader.result : ''), false);
+    reader.readAsDataURL(file);
+  });
+}

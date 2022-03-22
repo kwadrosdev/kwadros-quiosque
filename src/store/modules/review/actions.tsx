@@ -149,3 +149,10 @@ export function setMaxKwadros({ payload }: { payload: number }) {
     payload,
   };
 }
+
+export function setloadingTilesCountCount({ payload }: { payload: number }) {
+  return {
+    type: '@review/SET_LOADING_TILES',
+    payload,
+  };
+}

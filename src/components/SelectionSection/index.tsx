@@ -1,12 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import { v4 as uuid } from 'uuid';
 
 import { useSelector, useDispatch } from '@hooks';
 
-import { setImgFiles, setInstagramImages, setInstagramModalOpen, setInstagramLoading, setInstagramNextPage } from '@modules/review/actions';
-import { checkImgQuality } from 'src/utils/common_functions';
+import {
+  setImgFiles,
+  setInstagramImages,
+  setInstagramModalOpen,
+  setInstagramLoading,
+  setInstagramNextPage,
+  setloadingTilesCountCount,
+} from '@modules/review/actions';
+import { checkImgQuality , readFile } from 'src/utils/common_functions';
+// import { resizeImage } from 'src/utils/resizeImage';
 
 import api from 'src/services/api';
 import { db } from 'src/db';
@@ -33,16 +41,18 @@ function SelectionSection() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const imgFiles = useSelector((state) => state.review.files);
+  const { loadingTilesCount, files: imgFiles } = useSelector((state) => state.review);
   const instaImages = useSelector((state) => state.review.instagramModal.images);
   const fb_token = useSelector((state) => state.user.fb.access_token);
 
   const onFileChange = async (e: HTMLInputEvent) => {
     const _imgFiles: any[] = [];
 
+    dispatch(setloadingTilesCountCount({ payload: e?.target?.files ? e.target.files.length : 0 }));
     if (e?.target?.files && e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i++) {
-        const fileData: any = await readFile(e.target.files[i]);
+        // const fileData: any = await resizeImage(e.target.files[i]);
+        const fileData = await readFile(e.target.files[i]);
         const objectURL = URL.createObjectURL(e.target.files[i]);
 
         const isSmall = await checkImgQuality(objectURL);
@@ -60,6 +70,7 @@ function SelectionSection() {
       }
       dispatch(setImgFiles({ payload: _imgFiles }));
     }
+    dispatch(setloadingTilesCountCount({ payload: 0 }));
   };
 
   async function handleInstagram() {
@@ -123,8 +134,10 @@ function SelectionSection() {
 
   return (
     <Container>
-      {imgFiles.length > 0 ? (
-        <TileImages selectedImages={imgFiles} />
+      {imgFiles.length > 0 || loadingTilesCount > 0 ? (
+        <>
+          <TileImages selectedImages={imgFiles} />
+        </>
       ) : (
         <GetStartedContainer>
           <h3>Escolha algumas fotos para começar</h3>
@@ -146,14 +159,6 @@ function SelectionSection() {
       )}
     </Container>
   );
-}
-
-function readFile(file: File) {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => resolve(reader.result), false);
-    reader.readAsDataURL(file);
-  });
 }
 
 export default SelectionSection;

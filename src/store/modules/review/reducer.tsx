@@ -48,6 +48,7 @@ const INITIAL_STATE = {
     selected: [] as Array<{ id: string; url: string }>,
   },
   files: [] as Array<ImgFile>,
+  loadingTilesCount: 0,
 };
 
 function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
@@ -231,10 +232,18 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
         loadingFbToken: payload,
       };
       break;
+
     case '@review/SET_MAX_KWADROS':
       state = {
         ...state,
         max_kwadros: payload,
+      };
+      break;
+
+    case '@review/SET_LOADING_TILES':
+      state = {
+        ...state,
+        loadingTilesCount: payload,
       };
       break;
 
