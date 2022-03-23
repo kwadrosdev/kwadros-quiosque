@@ -1,7 +1,7 @@
 {
     "theme_color": "#8a199c",
     "background_color": "#ffffff",
-    "display": "browser",
+    "display": "standalone",
     "orientation": "portrait",
     "scope": "/",
     "start_url": "/",

@@ -4,6 +4,8 @@ self.addEventListener('install', () => {
   console.log('Service Worker Installed🤙');
 });
 
+self.addEventListener('fetch', (e) => {});
+
 self.addEventListener('sync', (event) => {
   const tag = `${event.tag}`;
   if (tag.startsWith('uploadFile:')) {
