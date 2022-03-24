@@ -8,7 +8,7 @@ const createImage = (url: any) =>
   });
 
 export function resizeImage(file: File) {
-  return new Promise((resolve) => {
+  return new Promise<string>((resolve) => {
     const reader = new FileReader();
 
     // Set the image for the FileReader

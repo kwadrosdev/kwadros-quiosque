@@ -29,8 +29,8 @@ import {
   setInstagramNextPage,
   setloadingTilesCountCount,
 } from '@modules/review/actions';
-import { checkImgQuality, readFile } from 'src/utils/common_functions';
-// import { resizeImage } from 'src/utils/resizeImage';
+import { checkImgQuality } from 'src/utils/common_functions';
+import { resizeImage } from 'src/utils/resizeImage';
 
 import api from 'src/services/api';
 import { db } from 'src/db';
@@ -58,8 +58,7 @@ function TileImages({ selectedImages }: { selectedImages: any[] }) {
     dispatch(setloadingTilesCountCount({ payload: e?.target?.files ? e.target.files.length : 0 }));
     if (e?.target?.files && e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i++) {
-        // const fileData: any = await resizeImage(e.target.files[i]);
-        const fileData = await readFile(e.target.files[i]);
+        const fileData = await resizeImage(e.target.files[i]);
         const objectURL = URL.createObjectURL(e.target.files[i]);
 
         const isSmall = await checkImgQuality(objectURL);
