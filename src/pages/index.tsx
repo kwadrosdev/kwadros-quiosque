@@ -10,7 +10,7 @@ import img1 from 'public/images/hero_image_1.jpg';
 import img2 from 'public/images/hero_image_2.jpg';
 import img3 from 'public/images/hero_image_3.jpg';
 import img_mobile from 'public/images/hero_image_mobile.jpg';
-import img_3by129 from 'public/images/3_por_129.jpg';
+import wall_kwadros from 'public/images/wall_kwadros.jpg';
 
 import {
   MainSection,
@@ -68,11 +68,11 @@ function Home() {
         <Divider responsive margin={'15px'} />
         <GifSection>
           <GifImg>
-            <Image src={img_3by129} alt="gif_img" layout="fill" objectFit="cover" quality={100} />
+            <Image src={wall_kwadros} alt="gif_img" layout="fill" objectFit="cover" quality={100} />
           </GifImg>
           <GifSectionText>
-            <h3>{'Três "Kwadros" por R$129,00'}</h3>
-            <span>{'Kwadro adicional: R$24,90'}</span>
+            <h3>{'Três "Kwadros" por R$99,00'}</h3>
+            <span>{'Kwadro adicional: R$19,90'}</span>
             <span>{'Frete grátis* 💜  '}</span>
             <span className="subscript">{'* para capitais e regiões metropolitanas. Demais regiões frete fixo R$25'}</span>
           </GifSectionText>
@@ -138,13 +138,13 @@ function Home() {
       </InfoSection>
       <GifSection>
         <GifSectionText>
-          <h3>{'Três "Kwadros" por R$129,00'}</h3>
-          <span>{'Kwadro adicional: R$24,90'}</span>
+          <h3>{'Três "Kwadros" por R$99,00'}</h3>
+          <span>{'Kwadro adicional: R$19,90'}</span>
           <span>{'Frete grátis* 💜  '}</span>
           <span className="subscript">{'* para capitais e regiões metropolitanas. Demais regiões frete fixo R$25'}</span>
         </GifSectionText>
         <GifImg>
-          <Image src={img_3by129} alt="gif_img" layout="fill" objectFit="cover" quality={100} />
+          <Image src={wall_kwadros} alt="gif_img" layout="fill" objectFit="cover" quality={100} />
         </GifImg>
       </GifSection>
       <FeedbackSection>

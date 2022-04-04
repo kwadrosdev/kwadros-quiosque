@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, useRef, FormEvent, SyntheticEvent } from 'react';
 import { useSelector, useDispatch } from '@hooks';
 
 import Head from 'next/head';
@@ -20,7 +20,35 @@ function GetStarted() {
   const email = useSelector((state) => state.user.email);
 
   const [_name, _setName] = useState(name);
-  const [_email, _setEmail] = useState(email);
+  const [_email1, _setEmail1] = useState(email);
+  const [_email2, _setEmail2] = useState(email);
+
+  const emailRef = useRef<any>(null);
+
+  function handleNameChange(e: SyntheticEvent & { target: HTMLInputElement }) {
+    e.preventDefault();
+    const fullName = e.target.value.split(' ').filter((e) => e !== '');
+
+    if (fullName.length < 2) {
+      e.target.setCustomValidity('Por favor, insira seu nome completo');
+    } else {
+      e.target.setCustomValidity('');
+    }
+
+    _setName(e.target.value);
+  }
+
+  function handleEmailChange(e: SyntheticEvent & { target: HTMLInputElement }) {
+    e.preventDefault();
+
+    if (e.target.value !== '' && e.target.value !== _email1) {
+      e.target.setCustomValidity('Os dois emails devem ser iguais');
+    } else {
+      e.target.setCustomValidity('');
+    }
+
+    _setEmail2(e.target.value);
+  }
 
   function handleBack() {
     if (step) {
@@ -33,7 +61,11 @@ function GetStarted() {
     e.preventDefault();
 
     if (step === 1) {
-      dispatch(setEmail({ payload: _email }));
+      if (_email1 !== _email2) {
+        return;
+      }
+
+      dispatch(setEmail({ payload: _email2 }));
       return dispatch(setStep({ payload: step + 1 }));
     }
 
@@ -73,9 +105,9 @@ function GetStarted() {
                     required
                     type="name"
                     value={_name}
-                    onChange={({ target }) => _setName(target.value)}
+                    onChange={handleNameChange}
                     placeholder={'Qual é o seu nome?'}
-                    maxLength={20}
+                    maxLength={40}
                   />
                   <MainBtn type="submit">Continuar</MainBtn>
                 </Transition1>
@@ -85,9 +117,19 @@ function GetStarted() {
                   <FormInput
                     required
                     type="email"
-                    value={_email}
-                    onChange={({ target }) => _setEmail(target.value)}
-                    placeholder={'Qual é o seu email?'}
+                    value={_email1}
+                    onChange={({ target }) => _setEmail1(target.value)}
+                    placeholder={'Insira seu email'}
+                    maxLength={80}
+                  />
+                  <FormInput
+                    id="email2"
+                    ref={emailRef}
+                    required
+                    type="email"
+                    value={_email2}
+                    onChange={handleEmailChange}
+                    placeholder={'Confirme seu email'}
                     maxLength={80}
                   />
                   <MainBtn type="submit">Escolher Fotos</MainBtn>

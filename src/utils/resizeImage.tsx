@@ -15,6 +15,10 @@ export function resizeImage(file: File) {
     reader.addEventListener(
       'load',
       async () => {
+        if (file.size / 1024 / 1024 <= 6) {
+          return resolve(typeof reader.result === 'string' ? reader.result : '');
+        }
+
         const img: any = await createImage(reader.result);
         const canvas = document.createElement('canvas');
 
@@ -27,22 +31,21 @@ export function resizeImage(file: File) {
 
         ctx.drawImage(img, 0, 0);
 
-        const MAX_WIDTH = 1440;
-        const MAX_HEIGHT = 1440;
+        const MAX_WIDTH = 1920;
+        const MAX_HEIGHT = 1920;
         let width = img.width;
         let height = img.height;
 
         // Add the resizing logic
         if (width > height) {
-          if (width > MAX_WIDTH) {
-            height = (height / width) * MAX_WIDTH;
-            width = MAX_WIDTH;
-          }
+          // if (width > MAX_WIDTH) {
+          width = (width / height) * MAX_WIDTH;
+          height = MAX_HEIGHT;
+          // width = MAX_WIDTH;
+          // }
         } else {
-          if (height > MAX_HEIGHT) {
-            width = (width / height) * MAX_HEIGHT;
-            height = MAX_HEIGHT;
-          }
+          height = (height / width) * MAX_HEIGHT;
+          width = MAX_WIDTH;
         }
 
         //Specify the resizing result

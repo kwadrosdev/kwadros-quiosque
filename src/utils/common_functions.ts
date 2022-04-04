@@ -1,7 +1,7 @@
 export const checkImgQuality = (src: string) => {
   return new Promise<boolean>((resolve, reject) => {
     const img = new Image();
-    img.onload = () => resolve(img.width <= 499 || img.height <= 499);
+    img.onload = () => resolve(img.width <= 1080 || img.height <= 1080);
     img.onerror = reject;
     img.src = src;
   });
