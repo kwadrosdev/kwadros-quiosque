@@ -54,7 +54,7 @@ function Home() {
         </Head>
         <MainSection>
           <TextSection>
-            <MainText>{'Seu cantinho decorado\n com recordações e \nbons sentimentos'}</MainText>
+            <MainText>{'Transforme suas Fotos\n em lindas artes \nde parede'}</MainText>
           </TextSection>
           <ResponsiveImage>
             <Image src={img_mobile} priority alt="logoImg" layout="fill" objectFit="cover" quality={100} />
@@ -71,7 +71,7 @@ function Home() {
             <Image src={wall_kwadros} alt="gif_img" layout="fill" objectFit="cover" quality={100} />
           </GifImg>
           <GifSectionText>
-            <h3>{'Três "Kwadros" por R$99,00'}</h3>
+            <h3>{'Três "Kwadros" com suas fotos por R$99'}</h3>
             <span>{'Kwadro adicional: R$19,90'}</span>
             <span>{'Frete grátis* 💜  '}</span>
             <span className="subscript">{'* para capitais e regiões metropolitanas. Demais regiões frete fixo R$25'}</span>
@@ -119,7 +119,7 @@ function Home() {
           </Col>
         </ImagesSection>
         <TextSection>
-          <MainText>{'Seu cantinho decorado\n com recordações e \nbons sentimentos'}</MainText>
+          <MainText>{'Transforme suas Fotos\n em lindas artes \nde parede'}</MainText>
           <SubText>{'Acessíveis, de qualidade única e que não\n danificam a parede'}</SubText>
           <Link passHref href="/get-started">
             <MainBtn>Selecionar Fotos</MainBtn>
@@ -138,7 +138,7 @@ function Home() {
       </InfoSection>
       <GifSection>
         <GifSectionText>
-          <h3>{'Três "Kwadros" por R$99,00'}</h3>
+          <h3>{'Três "Kwadros" com suas fotos por R$99'}</h3>
           <span>{'Kwadro adicional: R$19,90'}</span>
           <span>{'Frete grátis* 💜  '}</span>
           <span className="subscript">{'* para capitais e regiões metropolitanas. Demais regiões frete fixo R$25'}</span>
