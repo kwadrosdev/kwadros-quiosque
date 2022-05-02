@@ -13,7 +13,7 @@ function Yampi() {
       return { id: sku?.variations.length && sku?.variations[0].value, url: sku.purchase_url, price: sku.price_sale };
     });
 
-    const maxKwadros = Math.floor(yampiProducts.length / 4 + 2);
+    const maxKwadros = yampiProducts?.length ? Math.floor(yampiProducts.length / 4 + 2) : 12;
 
     dispatch(setMaxKwadros({ payload: maxKwadros }));
     dispatch(setYampiProducts({ payload: yampiProducts }));

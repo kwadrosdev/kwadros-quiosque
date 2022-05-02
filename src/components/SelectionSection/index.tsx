@@ -11,7 +11,7 @@ import {
   setInstagramModalOpen,
   setInstagramLoading,
   setInstagramNextPage,
-  setloadingTilesCountCount,
+  setLoadingTilesCount,
 } from '@modules/review/actions';
 import { checkImgQuality } from 'src/utils/common_functions';
 import { resizeImage } from 'src/utils/resizeImage';
@@ -48,7 +48,7 @@ function SelectionSection() {
   const onFileChange = async (e: HTMLInputEvent) => {
     const _imgFiles: any[] = [];
 
-    dispatch(setloadingTilesCountCount({ payload: e?.target?.files ? e.target.files.length : 0 }));
+    dispatch(setLoadingTilesCount({ payload: e?.target?.files ? e.target.files.length : 0 }));
     if (e?.target?.files && e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i++) {
         const fileData = await resizeImage(e.target.files[i]);
@@ -69,7 +69,7 @@ function SelectionSection() {
       }
       dispatch(setImgFiles({ payload: _imgFiles }));
     }
-    dispatch(setloadingTilesCountCount({ payload: 0 }));
+    dispatch(setLoadingTilesCount({ payload: 0 }));
   };
 
   async function handleInstagram() {

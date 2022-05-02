@@ -16,6 +16,7 @@ import CropModal from '@components/TileImages/CropModal';
 import InstagramModal from '@components/InstagramModal';
 import LowQualityModal from '@components/LowQualityModal';
 import Loading from '@components/Loading';
+import PurchaseScreen from '@components/PurchaseScreen';
 
 import api from 'src/services/api';
 
@@ -105,6 +106,7 @@ function Review() {
         <LowQualityModal />
         <Loading />
         <Loading fb_token={true} />
+        <PurchaseScreen />
       </Container>
     </>
   );

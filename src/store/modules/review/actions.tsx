@@ -150,9 +150,16 @@ export function setMaxKwadros({ payload }: { payload: number }) {
   };
 }
 
-export function setloadingTilesCountCount({ payload }: { payload: number }) {
+export function setLoadingTilesCount({ payload }: { payload: number }) {
   return {
     type: '@review/SET_LOADING_TILES',
+    payload,
+  };
+}
+
+export function setPurchaseScreenOpen({ payload }: { payload: boolean }) {
+  return {
+    type: '@review/SET_PURCHASE_SCREEN_OPEN',
     payload,
   };
 }

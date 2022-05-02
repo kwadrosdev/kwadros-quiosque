@@ -49,6 +49,7 @@ const INITIAL_STATE = {
   },
   files: [] as Array<ImgFile>,
   loadingTilesCount: 0,
+  purchaseScreenOpen: false,
 };
 
 function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
@@ -244,6 +245,13 @@ function reviewReducer(state = INITIAL_STATE, { type, payload }: AnyAction) {
       state = {
         ...state,
         loadingTilesCount: payload,
+      };
+      break;
+    
+      case '@review/SET_PURCHASE_SCREEN_OPEN':
+      state = {
+        ...state,
+        purchaseScreenOpen: payload,
       };
       break;
 

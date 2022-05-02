@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from '@hooks';
 
 import { Drawer, PreviewContainer, PreviewTitle, CheckoutBtn } from './styles';
 
-import { setCheckoutLoading, setOpenCheckoutPreview } from '@modules/review/actions';
+import { setCheckoutLoading, setOpenCheckoutPreview, setPurchaseScreenOpen } from '@modules/review/actions';
 
 import { formatPrice } from 'src/utils/common_functions';
 import { uploadFile, updateFileOrder, createTransaction, createOrder } from 'src/services/api';
@@ -72,9 +72,10 @@ function CheckoutPreview() {
       await db.files.clear();
 
       dispatch(setCheckoutLoading({ payload: false }));
-      location.href = `${url}?utm_name=${name}&utm_email=${email}`;
+      dispatch(setPurchaseScreenOpen({ payload: true }));
     } catch (error) {
       dispatch(setCheckoutLoading({ payload: false }));
+      dispatch(setPurchaseScreenOpen({ payload: false }));
       window.alert('Ocorreu um erro ao processar a sua compra, por favor, tente novamente!');
     }
   }
